@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bio-firewall"
+version = "0.3.0"
+description = "BioFirewall — a rule-governed, genome-writing-native biosecurity middleware that supervises agentic design AI (allow / flag-for-review / refuse, with cited evidence)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Anees Ahmed Mahaboob Ali" }]
+keywords = ["biosecurity", "genome-writing", "ai-safety", "guardrails", "dual-use", "middleware"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: Apache Software License",
+  "Intended Audience :: Science/Research",
+]
+# Imports pen-stack for the reusable machinery (rules engine, verify()/Verdict, conformal/OOD). It GOVERNS
+# pen-stack (and any tool) via the adapter; it does NOT re-implement genome design.
+dependencies = ["pen-stack>=6.6.0", "pyyaml>=6.0"]
+
+[project.optional-dependencies]
+# function-aware cargo ML (Phase 1) + synthesis-screen clients; kept optional so the core spine installs light.
+ml = ["pyhmmer", "fair-esm"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+include = ["bio_firewall*"]
+
+[tool.ruff]
+line-length = 120
