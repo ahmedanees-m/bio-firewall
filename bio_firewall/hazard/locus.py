@@ -10,8 +10,12 @@ from __future__ import annotations
 from bio_firewall.data import dosage, gene_roles
 from bio_firewall.hazard.finding import Finding, finding
 
-# well-known insertional-oncogenesis CIS genes (literature facts, not source-specific)
-_GENOTOXIC_CIS = {"LMO2", "MECOM", "EVI1", "CCND2", "PRDM16", "HMGA2"}
+# Clinical insertional-oncogenesis CIS genes — loci near which vector integration drove clonal expansion /
+# leukemia / MDS in ACTUAL human gene-therapy trials (SCID-X1, WAS, CGD, beta-thalassemia). Literature facts,
+# source-independent. The Tier-1 benchmark gate audits this list for completeness; MDS1 (the MDS1-EVI1 locus,
+# CGD trials) was added after the Tier-1 audit surfaced its omission.
+_GENOTOXIC_CIS = {"LMO2", "LMO1", "MECOM", "EVI1", "MDS1", "CCND2", "CCND1",
+                  "PRDM16", "HMGA2", "SETBP1", "MN1", "BMI1"}
 
 
 def screen_locus(plan: dict) -> Finding:

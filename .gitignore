@@ -4,5 +4,13 @@ __pycache__/
 build/
 dist/
 licensed_data/
+# license-restricted benchmark oracles (COSMIC/OncoKB), run artifacts, frontier verdicts, Guardian configs —
+# NEVER committed; live outside the repo (BF_BENCH_ORACLES / PEN_STACK_HOME) per the benchmark protocol.
+bench_oracles/
+bench_run/
+pen_stack_home/
+*cosmic*.tsv
+*cancerGeneList*
+b1_verdicts.json
 .pytest_cache/
 .ruff_cache/

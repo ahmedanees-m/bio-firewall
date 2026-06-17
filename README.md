@@ -8,7 +8,7 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-22%20passing-success.svg)
+![Tests](https://img.shields.io/badge/tests-26%20passing-success.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -140,18 +140,25 @@ bio-firewall/
 └─ pyproject.toml / LICENSE / DATA_LICENSES.md
 ```
 
-## Result (safe proxies)
+## Result (de-circularized benchmark)
 
-On a benchmark of structural-hazard plans carrying **benign cargo** (so the hazard lives in *where / how /
-inheritance / scale*), a homology-only synthesis screen intercepts **0%** — while the five-axis firewall intercepts
-**100%**, with full interception in every differentiating axis and a **0% false-block rate** on benign somatic plans.
-Reframing and prompt-injection never flip `refuse → allow`.
+Hazard is **labeled by independent oracles the firewall does not use** (12 clinical insertional-oncogenesis genes +
+COSMIC Cancer Gene Census v104), so a high score means the firewall **generalized** — not that it recognized its own
+gene list. Baselines are **earned**: B0 runs the real Guardian signature screen; **B1 is a frontier LLM
+(`claude-opus-4-8`) as a blind safety reviewer**. Full method + honest reading: **[docs/BENCHMARK.md](docs/BENCHMARK.md)**.
 
-| | homology-only baseline | **BioFirewall** |
-|---|:--:|:--:|
-| structural-hazard interception | 0% | **100%** |
-| per-axis (locus/edit/germline/scale) | 0 | **full** |
-| false-block on benign somatic | — | **0%** |
+| benchmark | firewall | B0 homology | B1 frontier LLM |
+|---|:--:|:--:|:--:|
+| Tier-1 clinical-CIS gold (mandatory) | **100%** (12/12) | 0% | 100% |
+| structural-hazard interception (n=771) | **80.4%** (CI .78–.83) | **0%** | 77.3%* |
+| false-refuse on legitimate research | **0%** | — | **40%** (refused TP53, APC) |
+| red-team flip `refuse→allow` (46 attacks) | **0%** | — | — |
+
+\* B1 on a pre-registered stratified sample. **Honest reading:** the homology floor catches **0%** (the design-stage
+gap is real); a frontier LLM is a **strong** locus-recall baseline (≈ the rule firewall) **but over-refuses
+legitimate research** and is non-deterministic/non-auditable. The firewall's contribution is **deterministic,
+flag-not-block, auditable** governance — not a claim of higher raw recall. (The earlier "100% vs 0%" was a
+tautological wiring test and has been replaced.)
 
 ## Honest limitations
 

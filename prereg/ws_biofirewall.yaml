@@ -28,7 +28,38 @@ dual_use_plan:
 implemented:   # v0.3.0 — all eight planes
   - "P1 spine + P2 five-axis (cargo: Guardian + function-aware ESM2 nearest-centroid; locus: CancerMine/DepMap/gnomAD CC0; edit: curated oncogenic-fusion set; germline: full; scale: amplifier)."
   - "P3 rules + P4 signed passport (HMAC) + P5 escalation + P7 hash-chained audit + P8 conformal calibration (confidence tiers + abstention)."
-  - "P6/§7 benchmark: homology-baseline 0% vs BioFirewall 100% per-axis interception, 0% false-block; red-team: reframing/frontier-orchestration never downgrades refuse->allow. 22 tests pass."
-remaining_validation:
-  - "the rigorous homology-clustered <=40%-identity ESM evaluation (TPR@1%FPR + shortcut probes) — the pre-registered cargo gate above."
-  - "wet-lab outcome validation of the locus flags (the standing real-data bottleneck) — declared future work."
+
+# ==================================================================================================================
+# BENCHMARK PROTOCOL v1.0 (de-circularized) — replaces the v0.3 tautological demo. The v0.3 '100% vs 0%' was
+# tautological (hardcoded return-allow baseline; proxies named the firewall's own genes). This is the real one.
+# eval/hazard_bench/. SHA-lock the oracles + generation (seed 1234) + baselines + metrics BEFORE running.
+# ==================================================================================================================
+benchmark_v1:
+  de_circularization: "The firewall flags loci via CancerMine/DepMap/gnomAD. The benchmark LABELS hazard via
+    INDEPENDENT oracles the firewall does NOT use: Tier-1 hand-curated clinical insertional-oncogenesis genes
+    (gene-therapy adverse events, 12 genes, DOIs) + Tier-2 COSMIC Cancer Gene Census v104 (768 genes, license-
+    restricted -> LOCAL-ONLY via BF_BENCH_ORACLES, NEVER committed). A high score = the firewall GENERALIZED."
+  baselines:
+    B0_homology: "PEN-STACK Guardian signature screen on the cargo function ONLY (blind to where/how/inherit/scale)
+      — EARNED, not the v0.3 hardcoded return-allow. Needs PEN_STACK_HOME (Guardian configs)."
+    B1_frontier: "blind safety reviewers, model=claude-opus-4-8, date 2026-06-17, neutral pinned prompt (no firewall
+      axes leaked), stratified sample n=142. THE key comparison (can a smart LLM catch structural hazards?)."
+  metrics: "per-stratum interception (CI: nonparametric bootstrap over genes), lift=firewall-max(B0,B1), false-refuse
+    on legitimate research (deployment gate), false-flag on clearly-benign, Tier-1 gold table, failure analysis,
+    risk-coverage + tier validity, red-team flip-rate."
+  results_2026_06_17:   # FROZEN run (seed 1234)
+    benchmark1_locus: "overall firewall interception of independent label = 80.4% CI[0.776,0.831] (n=771); B0=0.0%.
+      Strata: tier1_gold 100% (12/12 PASS), cosmic_overlap 100%, cosmic_generalization 40% CI[0.33,0.46] (the honest
+      generalization limit; 151 COSMIC genes missed). De-circularized, NOT tautological."
+    benchmark1_B1_headtohead: "on the SAME 75 sampled hazardous genes: firewall 74.7% vs frontier-Claude 77.3% (a
+      STRONG baseline) vs B0 0%. HONEST: a frontier LLM matches the rule firewall on locus RECALL — BUT it
+      over-refuses legitimate research (false-refuse 2/5: TP53, APC) where the firewall is 0/5, and is non-
+      deterministic/non-auditable. The firewall's lift is DETERMINISM + flag-not-block + auditability, NOT recall."
+    benchmark3_redteam: "46 attacks across reframing/prompt-injection/obfuscation/frontier-orchestration -> flip-rate
+      refuse->allow = 0%, grounding-violations = 0. PASS."
+    benchmark4_calibration: "tier accuracy high=0.789, moderate=0.938 (INVERTED — confidence reflects which axis
+      fired, not epistemic uncertainty; high-conf allows include confident misses). Honest limit, reported."
+  pending:
+    benchmark2_cargo_ML: "the pre-registered cargo gate (axis1_function_aware_ml above): ESM2-650M head vs homology
+      B0 on MMseqs2 <=40%-identity held-out clusters, TPR@1%FPR + shortcut probes. Runs on the GPU VM (cargo_bench/)."
+    wet_lab: "outcome validation of the locus flags (the standing real-data bottleneck) — declared future work."
