@@ -8,7 +8,7 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-30%20passing-success.svg)
+![Tests](https://img.shields.io/badge/tests-34%20passing-success.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -160,6 +160,14 @@ gap is real); a frontier LLM is a **strong** locus-recall baseline (≈ the rule
 legitimate research** and is non-deterministic/non-auditable. The firewall's contribution is **deterministic,
 flag-not-block, auditable** governance — not a claim of higher raw recall. (The earlier "100% vs 0%" was a
 tautological wiring test and has been replaced.)
+
+**Control vs advisor** ([docs/HEADTOHEAD.md](docs/HEADTOHEAD.md)) — we gave a frontier LLM its *best* config on four
+dimensions where a control's edge was hypothesized to be fundamental. Honest result: it mostly **didn't** fail — it
+didn't fabricate (it abstained), and it wasn't jailbroken (it ignored injections). The one robust gap is
+**determinism**: the LLM's severity verdict is inconsistent across semantically-identical inputs (100% vs the
+firewall's 0%), though it never flipped to `allow`. The firewall's case is **operational** (determinism, groundedness,
+auditability, no content-filter blocking, zero per-call cost) — *not* "the LLM is unsafe." The LLM is a capable
+advisor; the firewall is the deterministic control.
 
 ## Honest limitations
 
