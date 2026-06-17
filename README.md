@@ -8,7 +8,7 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-26%20passing-success.svg)
+![Tests](https://img.shields.io/badge/tests-30%20passing-success.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -153,6 +153,7 @@ gene list. Baselines are **earned**: B0 runs the real Guardian signature screen;
 | structural-hazard interception (n=771) | **80.4%** (CI .78–.83) | **0%** | 77.3%* |
 | false-refuse on legitimate research | **0%** | — | **40%** (refused TP53, APC) |
 | red-team flip `refuse→allow` (46 attacks) | **0%** | — | — |
+| cargo ML gate — TPR@1%FPR, ≤40%-id clusters | **0.72** (CI .43–.89) | 0.207 (homology) | — |
 
 \* B1 on a pre-registered stratified sample. **Honest reading:** the homology floor catches **0%** (the design-stage
 gap is real); a frontier LLM is a **strong** locus-recall baseline (≈ the rule firewall) **but over-refuses

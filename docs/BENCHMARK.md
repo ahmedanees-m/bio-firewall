@@ -67,10 +67,30 @@ its epistemic uncertainty against an external label, so its "high-confidence all
 COSMIC genes absent from its data. Abstention cannot rescue confident misses (hazard-miss 19.6% either way). Stated
 plainly as a limitation of data-membership calibration.
 
-## Benchmark 2 — cargo function-aware ML (the pre-registered gate) — *pending*
+## Benchmark 2 — cargo function-aware ML (the pre-registered gate)
 
-ESM2-650M head vs a homology baseline on MMseqs2 ≤40%-identity held-out clusters (TPR@1%FPR, FPR@95%TPR, AUROC +
-length/composition/taxonomy shortcut probes). Runs on a GPU; see `bio_firewall/eval/cargo_bench/`.
+ESM2-650M embeddings + a logistic head vs a homology baseline on **MMseqs2 ≤40%-identity held-out clusters** (no test
+protein has a >40%-id neighbour in training — the "never-before-seen homolog" setting). Public UniProt toxins
+(KW-0800, reviewed) vs benign non-toxin, length 50–500; 1556 train / 844 test over 1482 clusters (444 held out).
+Code: [`bio_firewall/eval/cargo_bench/`](../bio_firewall/eval/cargo_bench). Ship **vectors only**.
+
+| | TPR@1%FPR | AUROC | FPR@95%TPR |
+|---|:--:|:--:|:--:|
+| **ESM2-650M head** | **0.72** (CI 0.43–0.89) | **0.988** | 0.041 |
+| homology baseline | 0.207 | 0.823 | — |
+| *shortcut: composition* | *0.562* | *0.93* | — |
+| *shortcut: length* | *0.131* | *0.862* | — |
+
+**Gate: PASS** — the ESM head beats homology **3.5×** at the 1%-FPR deployment point, CI excluding the baseline. On
+≤40%-identity held-out clusters a homology screen is weak *by construction* (that is the whole point of function-aware
+screening), and the embedding recovers most of the lost signal.
+
+**Honest caveat (must be stated):** the **amino-acid-composition shortcut probe reaches AUROC 0.93 / TPR@1%FPR 0.562** —
+toxins have distinctive composition (e.g. cysteine-rich), so composition is a **strong confound**. The ESM head still
+beats it (0.72 > 0.562 at the operating point; AUROC 0.988 > 0.93), so there is genuine signal **beyond** composition —
+but the margin over a trivial composition baseline is modest. The function-aware advantage is **real but partly
+compositional**; we do not claim a clean win. (Component-level novelty is not claimed either — cf. ToxDL/Omnyra; the
+contribution is the governed five-axis integration + this honest benchmark.)
 
 ## Reproduce
 

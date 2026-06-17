@@ -59,7 +59,11 @@ benchmark_v1:
       refuse->allow = 0%, grounding-violations = 0. PASS."
     benchmark4_calibration: "tier accuracy high=0.789, moderate=0.938 (INVERTED — confidence reflects which axis
       fired, not epistemic uncertainty; high-conf allows include confident misses). Honest limit, reported."
+    benchmark2_cargo_ML: "GATE PASS. ESM2-650M head vs homology on MMseqs2 <=40%-id held-out clusters (1556 train/
+      844 test, 1482 clusters): TPR@1%FPR 0.72 CI[0.434,0.891] vs homology 0.207 (3.5x, CI excludes baseline);
+      AUROC 0.988 vs 0.823. HONEST CAVEAT: amino-acid COMPOSITION shortcut probe reaches AUROC 0.93 / TPR@1%FPR
+      0.562 — a strong confound; the ESM head beats it (0.72>0.562) so signal exists BEYOND composition, but the
+      margin is modest. Function-aware advantage is REAL BUT PARTLY COMPOSITIONAL — no clean-win claim. UniProt
+      KW-0800 toxins vs benign, safe public proxies, vectors shipped never sequences."
   pending:
-    benchmark2_cargo_ML: "the pre-registered cargo gate (axis1_function_aware_ml above): ESM2-650M head vs homology
-      B0 on MMseqs2 <=40%-identity held-out clusters, TPR@1%FPR + shortcut probes. Runs on the GPU VM (cargo_bench/)."
     wet_lab: "outcome validation of the locus flags (the standing real-data bottleneck) — declared future work."
