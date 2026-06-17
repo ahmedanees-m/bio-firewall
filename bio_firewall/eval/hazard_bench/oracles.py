@@ -83,9 +83,31 @@ def cosmic_fusion_genes() -> frozenset[str]:
     return frozenset(g for g, role in cosmic_cgc().items() if "fusion" in role.lower())
 
 
+@lru_cache(maxsize=1)
+def oncokb_cgl() -> dict[str, str]:
+    """OncoKB Cancer Gene List: gene (UPPER) -> Gene Type. Local-only, license-restricted, NEVER committed.
+    (Free for academic use with registration; treated like COSMIC — validation-only, gitignored.)"""
+    p = _oracle_dir() / "oncokb_cancerGeneList.tsv"
+    if not p.exists():
+        return {}
+    out: dict[str, str] = {}
+    with p.open(encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter="\t"):
+            g = (r.get("Hugo Symbol") or "").strip().upper()
+            if g:
+                out[g] = (r.get("Gene Type") or "").strip()
+    return out
+
+
+@lru_cache(maxsize=1)
+def oncokb_genes() -> frozenset[str]:
+    """OncoKB genes with a definite cancer role (ONCOGENE / TSG / both) — excludes INSUFFICIENT_EVIDENCE / NEITHER."""
+    return frozenset(g for g, t in oncokb_cgl().items() if t in ("ONCOGENE", "TSG", "ONCOGENE_AND_TSG"))
+
+
 def independent_hazard_genes() -> frozenset[str]:
-    """The union independent hazard label for the locus axis: Tier-1 clinical CIS + COSMIC CGC."""
-    return frozenset(tier1_genes() | cosmic_genes())
+    """The union independent hazard label for the locus axis: Tier-1 clinical CIS + COSMIC CGC (+ OncoKB if mounted)."""
+    return frozenset(tier1_genes() | cosmic_genes() | oncokb_genes())
 
 
 def oracle_status() -> dict:
@@ -95,6 +117,8 @@ def oracle_status() -> dict:
         "cosmic_cgc_v104": len(cosmic_genes()),
         "cosmic_oncogene_tagged": len(cosmic_oncogenes()),
         "cosmic_fusion_tagged": len(cosmic_fusion_genes()),
+        "oncokb_cancer_genes": len(oncokb_genes()),
+        "oncokb_present": bool(oncokb_genes()),
         "oracle_dir": str(_oracle_dir()),
         "cosmic_present": bool(cosmic_genes()),
     }

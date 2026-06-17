@@ -50,6 +50,26 @@ genes **6.8%**; dosage-sensitive negatives 120/120 flagged correctly, 0 wrongly 
 **Failure analysis (honest):** the firewall **misses 151 COSMIC genes** (20%) that are absent from its CancerMine
 data and not caught via the essential/dosage axes — the real generalization limit, reported rather than hidden.
 
+## Benchmark 1b — two independent censuses (COSMIC + OncoKB)
+
+To show the 80% is not an artifact of one curation, the firewall is scored against a **second** independent cancer-gene
+census — **OncoKB** (844 genes; license-restricted, local-only, never committed) — which the firewall also does not use.
+COSMIC and OncoKB are genuinely different curations (455 overlap; 313 COSMIC-only, 389 OncoKB-only).
+
+| firewall recall vs | recall | n |
+|---|:--:|:--:|
+| COSMIC (+Tier-1) | 80.4% | 771 |
+| OncoKB (+Tier-1) | 82.0% | 848 |
+| union | 78.0% | 1160 |
+| **consensus** (genes *both* censuses call cancer genes) | **89.2%** | 455 |
+| — OncoKB-only genes | 73.3% | 389 |
+| — COSMIC-only genes | 67.4% | 313 |
+
+**Reading:** recall is **consistent across two independent censuses** (80% / 82%), highest on the **consensus** genes
+both agree on (**89.2%**), and lower on the contested single-census genes (67–73%) — exactly the shape an honest
+generalization should have. The firewall is most reliable on well-established cancer genes and weaker on niche/contested
+ones; that gradient is reported, not hidden.
+
 ## Benchmark 3 — robustness / red-team
 
 46 systematic attacks across four evasion families (reframing, prompt-injection, obfuscation, combined

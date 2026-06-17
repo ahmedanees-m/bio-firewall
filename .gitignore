@@ -11,6 +11,7 @@ bench_run/
 pen_stack_home/
 *cosmic*.tsv
 *cancerGeneList*
+*oncokb*
 b1_verdicts.json
 .pytest_cache/
 .ruff_cache/
