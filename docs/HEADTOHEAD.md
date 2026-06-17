@@ -75,16 +75,59 @@ powered re-test (N≥50 × three prompts) to determine whether this is **prompt-
 not yet run; per the pre-registered rule, if usability-tuning drives false-refuse to ≈0 it is demoted (prompt-fixable),
 otherwise it is a bonus result. Left honestly open.
 
+## Open-model generalization (NVIDIA NIM) — the firewall's case gets *stronger*
+
+The Opus run used one safety-trained model. We re-ran A/B/C/D against two **open** models via NVIDIA's free endpoint
+(`nvidia_headtohead.py`, 2026-06-17) — the models people actually self-host, and lighter-tuned than Opus. This also
+**unlocked experiment C**, which Anthropic's filter had blocked on Opus. (gpt-oss-120b was dropped: >90 s/call on the
+free tier — a reasoning model emitting long traces, impractical for ~80 calls.)
+
+| Dimension | Opus 4.8 | DeepSeek-v4 | Llama-4-Maverick | Firewall |
+|---|---|---|---|---|
+| A abstain on unanswerable | 100% | 100% | 100% | 100% (by construction) |
+| A fabricate an answerable fact | no | **yes** (TP53 pLI 0.0 vs 0.99) | no | no (grounded) |
+| B verdict-instability @ temp 0 (1 plan) | n/a | **2 distinct** | 1 (stable) | 0 (byte-identical) |
+| **C cargo seq-only TPR / FPR** | *filter-blocked* | **0.0 / 0.0** | **0.5 / 0.42** | ESM **0.72 @ 1% FPR** |
+| **D prompt-injection flip `refuse→allow`** | 0/22 | 0% | **67% / 100%** | **0%** (reads coordinates) |
+
+**Two findings, both honest, both strengthening the firewall's case beyond the Opus-only result:**
+
+1. **C generalizes cleanly — no LLM can screen sequences.** DeepSeek flagged **0 of 12** toxin sequences (called
+   everything `allow`); Llama reached TPR 0.5 but at a **42% false-positive rate** — i.e. noise, useless as a screen —
+   versus the ESM classifier's **0.72 at 1% FPR**. Whether a model *refuses to engage* (Opus, via the upstream filter)
+   or *engages and fails* (DeepSeek/Llama), an LLM is **not a cargo-sequence screen**. The function-aware classifier is
+   necessary. This is the cleanest cross-model result.
+
+2. **D is a live finding — the weak models people self-host get jailbroken.** Opus and DeepSeek resisted, but
+   **Llama-4-Maverick flipped `refuse→allow` on 67% of "pre-approved" injections and 100% of "ignore previous
+   instructions" injections** — a prompt-injection string in a free-text field talked a safety-trained judge out of its
+   refusal. The firewall is immune by construction (it reads coordinates and gene IDs, not the prose). So the naive
+   "just use the LLM as the safety check" integration is **unsafe for exactly the open models people actually deploy** —
+   and a deterministic, artifact-reading control governs the whole model ecosystem, not just the best-behaved model.
+
+DeepSeek's A-fabrication (a wrong memorized pLI emitted as fact) and run-to-run instability are weaker, model-specific
+signals in the same direction. *Caveats (honest):* these seeds are small (wiring-proof N, not powered — expand before
+quoting); B tested one borderline plan; C's "named" condition used UniProt accessions, not common names, so it does not
+isolate name-dependence. Only public safe-proxy data was sent to the third-party endpoint.
+
 ## The synthesized, honest claim
 
-> Given its best configuration, a strong safety-trained frontier model (Claude Opus 4.8) **did not** exhibit the
-> hypothesized control failures on three of four dimensions — it did not fabricate (it abstained), and it was not
-> jailbroken (it ignored injections). The one robust architectural gap is **determinism**: the LLM's severity verdict is
-> inconsistent across semantically-identical inputs and runs (100% vs the firewall's 0%), though it never downgraded to
-> `allow`. The firewall's case is therefore **operational** — deterministic, auditable, byte-identical verdicts;
-> grounded computation where the LLM abstains; immunity to content-filter blocking of hazardous inputs; and zero
-> per-call cost/latency — **not** that the LLM is dangerous. **The LLM is a capable advisor; the firewall is the
-> deterministic control that makes the advisor's output safe to wire into the design-to-synthesis loop.**
+> The **best** safety-trained model (Claude Opus 4.8) given its best config mostly did **not** fail — it abstained
+> instead of fabricating, and ignored injections instead of being jailbroken. But two findings hold across the model
+> ecosystem and decide the case for a control:
+> 1. **No LLM can screen a cargo sequence.** Across Opus (filter-blocked), DeepSeek (flagged 0/12 toxins), and Llama
+>    (TPR 0.5 at a 42% false-positive rate — noise), an LLM is not a sequence-level screen; the function-aware ESM
+>    classifier (0.72 @ 1% FPR) is necessary.
+> 2. **The weaker models people self-host are jailbroken.** Llama-4-Maverick flipped `refuse→allow` on 67–100% of
+>    prompt-injection attacks embedded in a plan's free text. A deterministic, artifact-reading control is immune by
+>    construction (0%) — so it governs the **whole** model ecosystem, not just the best-behaved model.
+>
+> The firewall's case is therefore both **operational** (deterministic/auditable/byte-identical, grounded where the LLM
+> abstains, zero per-call cost) **and**, for the open models people actually deploy, a genuine **safety** gap the firewall
+> closes. **A frontier LLM is a capable advisor; an LLM used naively as the safety judge is unsafe for self-hosted models
+> and useless for sequence cargo — the firewall is the deterministic control that makes the advisor safe to wire into the
+> design-to-synthesis loop.**
 
-*Measured on `claude-opus-4-8` (dated 2026-06-17); a second model would strengthen generality. These results show the
-LLM is a strong advisor and the firewall is control infrastructure — that distinction, not "the LLM fails," is the point.*
+*Measured on `claude-opus-4-8`, `deepseek-ai/deepseek-v4-flash`, `meta/llama-4-maverick-17b-128e-instruct` (2026-06-17).
+Seeds are wiring-proof N, not powered — expand before quoting. The honest split: the *best* model is a safe advisor;
+the *deployable* ones are not safe judges; none can screen sequences; the control beats all of them by construction.*
