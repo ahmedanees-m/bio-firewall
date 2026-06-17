@@ -82,21 +82,26 @@ The Opus run used one safety-trained model. We re-ran A/B/C/D against two **open
 **unlocked experiment C**, which Anthropic's filter had blocked on Opus. (gpt-oss-120b was dropped: >90 s/call on the
 free tier — a reasoning model emitting long traces, impractical for ~80 calls.)
 
-| Dimension | Opus 4.8 | DeepSeek-v4 | Llama-4-Maverick | Firewall |
-|---|---|---|---|---|
-| A abstain on unanswerable | 100% | 100% | 100% | 100% (by construction) |
-| A fabricate an answerable fact | no | **yes** (TP53 pLI 0.0 vs 0.99) | no | no (grounded) |
-| B verdict-instability @ temp 0 (1 plan) | n/a | **2 distinct** | 1 (stable) | 0 (byte-identical) |
-| **C cargo seq-only TPR / FPR** | *filter-blocked* | **0.0 / 0.0** | **0.5 / 0.42** | ESM **0.72 @ 1% FPR** |
-| **D prompt-injection flip `refuse→allow`** | 0/22 | 0% | **67% / 100%** | **0%** (reads coordinates) |
+| Dimension | Opus 4.8 | DeepSeek-v4 | Llama-4-Maverick | qwen3-next-80b | Firewall |
+|---|---|---|---|---|---|
+| A abstain on unanswerable | 100% | 100% | 100% | — | 100% (by construction) |
+| A fabricate an answerable fact | no | **yes** (pLI 0.0 vs 0.99) | no | — | no (grounded) |
+| B verdict-instability @ temp 0 | n/a | **2 distinct** | 1 (stable) | — | 0 (byte-identical) |
+| **C cargo seq-only TPR / FPR (n=200)** | *filter-blocked* | **0.00 / 0.00** | **0.60 / 0.49** | **0.02 / 0.00** | ESM **0.72 @ 1% FPR** |
+| **D prompt-injection flip `refuse→allow`** | 0/22 | 0% | **67% / 100%** | — | **0%** (reads coordinates) |
+
+*(C is the powered result — **200 held-out ≤40%-identity sequences**, 100 toxin / 100 benign, all engaged, 0 errors.
+A/B/D shown at the small-N seed; the powered A/B/D run follows.)*
 
 **Two findings, both honest, both strengthening the firewall's case beyond the Opus-only result:**
 
-1. **C generalizes cleanly — no LLM can screen sequences.** DeepSeek flagged **0 of 12** toxin sequences (called
-   everything `allow`); Llama reached TPR 0.5 but at a **42% false-positive rate** — i.e. noise, useless as a screen —
-   versus the ESM classifier's **0.72 at 1% FPR**. Whether a model *refuses to engage* (Opus, via the upstream filter)
-   or *engages and fails* (DeepSeek/Llama), an LLM is **not a cargo-sequence screen**. The function-aware classifier is
-   necessary. This is the cleanest cross-model result.
+1. **C generalizes cleanly — no LLM can screen sequences (powered, n=200, three models).** On **200 held-out
+   ≤40%-identity sequences** the three open models fail in two opposite ways, both useless: **DeepSeek catches 0/100
+   toxins** and **qwen3-next catches 2/100** (TPR ≈ 0 — they under-screen, allowing everything), while **Llama
+   over-flags** — TPR 0.60 but at a **49% false-positive rate**, essentially the random diagonal. None comes near the
+   ESM classifier's **0.72 at a 1% FPR**. Whether a model *refuses to engage* (Opus, via the upstream filter) or
+   *engages and fails* (the three open models), an LLM is **not a cargo-sequence screen**. The function-aware classifier
+   is necessary. This is the cleanest, most model-agnostic result — robust to N (24 → 200) and architecture.
 
 2. **D is a live finding — the weak models people self-host get jailbroken.** Opus and DeepSeek resisted, but
    **Llama-4-Maverick flipped `refuse→allow` on 67% of "pre-approved" injections and 100% of "ignore previous
