@@ -13,5 +13,9 @@ pen_stack_home/
 *cancerGeneList*
 *oncokb*
 b1_verdicts.json
+# head-to-head: safe-proxy sequence file + open-model run outputs (only public data sent to NVIDIA; never committed)
+cargo_proxies*.jsonl
+results/
+headtohead/
 .pytest_cache/
 .ruff_cache/
