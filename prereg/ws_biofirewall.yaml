@@ -136,6 +136,22 @@ upgrade_v04_v10:
       false-refuse guarantee is the operational headline (NOT determinism); outcome-validated locus upgrades the
       novel surface; integrated five-axis governed system + benchmark + red-team is the framing novelty. The
       withdrawn claims (determinism, fabrication) and any access-gated status travel into the paper UNEDITED."
+  tier1_results_2026_06_18:   # FROZEN v0.4.0 run (seed 1234), evaluated against the pre-registered criteria above
+    cargo_decorr: "HONEST-FAILURE PATH INVOKED (pre-committed). Held-out <=40%-id test: 482 toxin / 362 benign.
+      Composition is GENUINELY SEPARABLE (no composition-matched benign set constructible; energy permutation p<0.05
+      even on the common-support region) -> the confound is real. The pre-registered TPR@1%FPR gate is UNDERPOWERED
+      (362 negatives set the 1%-FPR threshold on ~3-4 proteins; all heads' CIs span ~0.0-0.9; paired DANN-composition
+      TPR@1%FPR diff -0.005 CI[-0.57,0.52]) -> does NOT pass. POWERED adjudication (AUROC + TPR@5%FPR): the
+      composition-INVARIANT (gradient-reversal DANN) head retains AUROC 0.985 CI[0.973,0.993] and TPR@5%FPR 0.967
+      CI[0.833,0.994] vs composition-probe 0.930/0.768; PAIRED AUROC diff +0.054 CI[0.025,0.099] (excludes 0).
+      CONCLUSION: signal is SUBSTANTIALLY NON-COMPOSITIONAL in ranking; C DEMOTED from 'cleanest claim'; the operating
+      -point margin over composition is not established; lead on D + operational. Did NOT tune the matched set."
+    conformal: "GATE PASS. False-refuse certificate: 0/288 legitimate-research plans refused -> Clopper-Pearson 95%
+      upper bound 0.0103 -> passes alpha in {0.01,0.05,0.10} (<= alpha+0.02). Competence-conditioned confidence is
+      MONOTONE: high 1.000 (n=248) > moderate 0.686 (n=490) > low 0.100 (n=10; 9/10 are real out-of-KB misses,
+      correctly routed to low) -> P8 inversion resolved (the v0.3 'allow'-tier 0.782 ~= 'flag'-tier 0.782 was
+      uninformative). Coverage: 610 in-KB / 869 constraint-only / 17 out-of-KB. Selective-abstention Pareto reported."
+
   residual_limits_even_at_v1:
     - "no wet-lab validation — even an outcome-validated locus axis is retrospective, not a prospective confirmation."
     - "safe proxies bound every cargo claim (TEVV necessity)."

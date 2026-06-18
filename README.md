@@ -8,7 +8,8 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-34%20passing-success.svg)
+![Tests](https://img.shields.io/badge/tests-45%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.4.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -127,7 +128,9 @@ bio-firewall/
 │  │  ├─ germline.py                    axis 4 — heritability / germline-accessibility
 │  │  ├─ scale.py                       axis 5 — megabase / high-multiplex amplifier
 │  │  ├─ combine.py · finding.py        stratified integration + the per-axis Finding contract
-│  ├─ passport/ · audit/ · calibrate/   P4 signed passport · P7 hash-chained audit · P8 confidence+abstention
+│  ├─ passport/ · audit/                P4 signed passport · P7 hash-chained audit
+│  ├─ calibrate/                    P8 confidence — confidence.py (tiers+abstention) · conformal.py (v0.4.0:
+│  │                                     competence-conditioned confidence + Neyman-Pearson false-refuse certificate)
 │  ├─ adapters/                     tool-agnostic artifact contract + the PEN-STACK reference integration
 │  ├─ data.py                       open-data loaders (CancerMine/DepMap/gnomAD/fusions)
 │  └─ eval/                         the benchmark suites (the empirical evidence)
@@ -137,13 +140,15 @@ bio-firewall/
 │     │  ├─ redteam.py · calibrate_bench.py         B3 evasion/flip-rate · B4 risk-coverage + tier validity
 │     │  ├─ run_all.py · report.py                  driver + manuscript tables
 │     │  └─ nvidia_headtohead.py                    open-model head-to-head (A/B/C/D via NVIDIA NIM)
-│     ├─ cargo_bench/run.py             Benchmark 2 — ESM2-650M vs homology @ ≤40%-id MMseqs2 clusters (TPR@1%FPR)
+│     ├─ cargo_bench/run.py · decorr.py Benchmark 2 — ESM2-650M vs homology @ ≤40%-id clusters; 2b — composition-
+│     │                                     decorrelation (DANN + composition-matched eval, v0.4.0)
+│     ├─ hazard_bench/conformal_bench.py Benchmark 4b — conformal false-refuse certificate + monotone confidence (v0.4.0)
 │     ├─ headtohead/                    v1.1 control-vs-advisor — fabrication · paraphrase · jailbreak-judge
 │     └─ bench.py · redteam.py          the original v0.3 wiring tests (superseded; kept for provenance)
 ├─ vendored_data/                  open (CC0/CC-BY) hazard data, as parquet/yaml (vectors only, never sequences)
 ├─ docs/                           THREAT_MODEL · HAZARD_TAXONOMY · BENCHMARK (results) · HEADTOHEAD (control-vs-advisor)
 ├─ prereg/ws_biofirewall.yaml      pre-registered criteria + benchmark protocol + frozen results + honest limits
-├─ tests/                          34 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
+├─ tests/                          45 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
 └─ pyproject.toml / LICENSE / DATA_LICENSES.md
 ```
 
@@ -195,13 +200,35 @@ weak claims and confirmed two strong ones** — the honest result:
 **A frontier LLM is a capable advisor; an LLM used naively as the safety judge is jailbroken on self-hosted models and
 useless for sequence cargo — the firewall is the deterministic, artifact-reading control that makes the advisor safe.**
 
+### v0.4.0 — "The Hardened Core" ([docs/BENCHMARK.md](docs/BENCHMARK.md))
+
+Two pre-registered workstreams hardening the load-bearing claims before manuscript drafting (each with a pre-committed
+honest-failure path):
+
+- **Cargo decorrelation (B2b)** — is the cargo signal function-driven or the amino-acid-composition shortcut?
+  **Honest result:** toxin/benign composition is *genuinely separable* (the confound is real), and the strict 1%-FPR
+  operating-point gate is **underpowered** (362 held-out negatives ⇒ CIs span ~0–0.9), so we **demote claim C from
+  "clean win."** But the *powered* adjudication is decisive: a composition-**invariant** representation (gradient-
+  reversal DANN) retains **AUROC 0.985** and **TPR@5%FPR 0.967** vs the composition probe's 0.930 / 0.768 — **paired
+  AUROC +0.054 (CI 0.025–0.099, excludes 0)**. The signal is **substantially non-compositional in ranking**.
+- **Conformal false-refuse ceiling (B4b)** — replaces the *withdrawn determinism* headline with the operational moat
+  an LLM cannot offer: **0/288** legitimate-research plans refused ⇒ a **certified ≤ 0.0103** ceiling on
+  P(refuse | legitimate research) (passes α∈{.01,.05,.10}). And a **competence-conditioned** confidence resolves the
+  v0.3 inversion — monotone **high 1.00 > moderate 0.69 > low 0.10**, with out-of-knowledge-base allows honestly
+  routed to *low* (9/10 of them are real misses).
+
 ## Honest limitations
 
 - The **locus axis flags on mechanism**, not a validated prediction — its genotoxicity proxy is *not* outcome-
   validated, so it routes elevated risk to human review; it does **not** output a cancer probability.
 - The **function-aware cargo ML is not novel at the component level** (cf. ToxDL / Omnyra); the contribution is the
   *integrated five-axis governed system + the benchmark + the red-team*, with the locus/edit/germline/scale axes as
-  the new screening capability.
+  the new screening capability. **v0.4.0 honest finding:** the cargo signal is substantially non-compositional in
+  *ranking* (AUROC/TPR@5%FPR), but its advantage over a composition baseline at the strict **1%-FPR operating point**
+  is **not** statistically established on the held-out set — so the paper does **not** lead on the cargo gate.
+- The **conformal false-refuse ceiling bounds *over-refusal*, not hazard-catch** — it certifies P(refuse | legitimate
+  research) ≤ α; it does **not** prove all hazards are caught. The competence-conditioned confidence *flags* the
+  knowledge-base boundary (out-of-KB allows → low confidence) but does not eliminate the underlying coverage gap.
 - **Safe proxies bound the claims** (a methodological necessity). Wet-lab validation is **declared future work** — the
   benchmark measures *concordance with an independent hazard model + lift over real baselines*, which is necessary but
   **not sufficient** for real-world safety.
