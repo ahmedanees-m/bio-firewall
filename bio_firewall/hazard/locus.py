@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from bio_firewall.data import dosage, gene_roles
 from bio_firewall.hazard.finding import Finding, finding
+from bio_firewall.hazard.locus_pos import positional_finding
 
 # Clinical insertional-oncogenesis CIS genes — loci near which vector integration drove clonal expansion /
 # leukemia / MDS in ACTUAL human gene-therapy trials (SCID-X1, WAS, CGD, beta-thalassemia). Literature facts,
@@ -58,4 +59,9 @@ def screen_locus(plan: dict) -> Finding:
                        f"disruption of a dosage-sensitive / haploinsufficient gene ({gene}; gnomAD pLI={dz[0]:.2f}"
                        + (f", LOEUF={dz[1]:.2f}" if dz[1] is not None else "") + ")",
                        provenance={"source": "gnomAD constraint (pLI/LOEUF), open aggregate data"}, extrapolating=True)
+    # v0.6.0 WS-LOCUS-POS: gene-membership is clear, but the insertion COORDINATE may sit in an oncogene's
+    # promoter/enhancer window (the SCID-X1/LMO2 mechanism a gene-body lookup misses).
+    pos_finding = positional_finding(locus.get("chrom"), locus.get("pos"))
+    if pos_finding is not None:
+        return pos_finding
     return finding("clear", None, "locus", "no locus hazard signal (CancerMine/DepMap/gnomAD CC0/open)")

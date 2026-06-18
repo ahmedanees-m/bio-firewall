@@ -48,6 +48,39 @@ def dosage(gene: str) -> tuple[float, float | None] | None:
 
 
 @lru_cache(maxsize=1)
+def _oncogene_tss() -> dict:
+    """chrom -> (sorted TSS array, gene array, role array) for the oncogene/driver/genotoxic-CIS TSS reference
+    (GENCODE coords × CancerMine CC0 roles). Powers the WS-LOCUS-POS positional screen. Empty if not vendored."""
+    p = _VD / "oncogene_tss.parquet"
+    if not p.exists():
+        return {}
+    import pandas as pd
+    df = pd.read_parquet(p)
+    out: dict = {}
+    for chrom, g in df.groupby("chrom"):
+        g = g.sort_values("tss")
+        out[str(chrom)] = (g["tss"].to_numpy(), g["gene"].astype(str).to_numpy(), g["role"].astype(str).to_numpy())
+    return out
+
+
+def nearest_oncogene_tss(chrom: str, pos: int) -> tuple[str, int, str, int] | None:
+    """Nearest oncogene TSS to (chrom, pos): (gene, tss, role, distance_bp), or None. For positional locus risk."""
+    import numpy as np
+    d = _oncogene_tss().get(str(chrom))
+    if d is None:
+        return None
+    tss, genes, roles = d
+    j = int(np.clip(np.searchsorted(tss, pos), 0, len(tss) - 1))
+    best = None
+    for k in (j - 1, j):
+        if 0 <= k < len(tss):
+            dist = abs(int(tss[k]) - int(pos))
+            if best is None or dist < best[3]:
+                best = (str(genes[k]), int(tss[k]), str(roles[k]), dist)
+    return best
+
+
+@lru_cache(maxsize=1)
 def oncogenic_fusions() -> dict[str, dict]:
     """Curated open set of canonical oncogenic gene fusions. Key = sorted gene pair 'A::B'."""
     p = _VD / "oncogenic_fusions.yaml"

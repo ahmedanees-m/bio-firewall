@@ -11,7 +11,7 @@ def normalize(artifact: dict) -> dict:
         "intent": artifact.get("intent") or artifact.get("purpose") or "",
         "cargo": artifact.get("cargo") or {"function": artifact.get("cargo_function")},
         "locus": artifact.get("locus") or {"gene": artifact.get("gene"), "chrom": artifact.get("chrom"),
-                                           "cell_type": artifact.get("cell_type")},
+                                           "pos": artifact.get("pos"), "cell_type": artifact.get("cell_type")},
         "edit": artifact.get("edit") or {},
         "germline": artifact.get("germline") or {},
         "scale": artifact.get("scale") or {},
