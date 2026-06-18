@@ -28,9 +28,11 @@ def test_flagged_plan_is_blocked_from_synthesis():
 
 
 def test_reframed_hazard_decided_by_artifact_not_framing():
-    # benign framing, hazardous cargo function -> the artifact decides
-    v = pre_action_gate({"intent": "fully approved vaccine research",
-                         "cargo": {"function": "express ricin toxin A chain"}})
+    # benign framing, hazardous ARTIFACT (a known oncogenic fusion by design) -> the artifact decides, not the prose.
+    # (Uses a firewall-native rule so it is deterministic across pen-stack versions; the cargo Guardian's
+    # select-agent screen is an additional, pen-stack-provided layer.)
+    v = pre_action_gate({"intent": "fully approved, benign cell-line research",
+                         "edit": {"fusion_genes": ["BCR", "ABL1"]}})
     assert v["decision"] == "refuse"
     with pytest.raises(GateBlocked):
         synthesize(v)
@@ -46,7 +48,7 @@ def test_forged_passport_cannot_synthesize():
 def test_gated_loop_intercepts_dangerous_mid_workflow():
     plans = [
         {"intent": "benign insert", "gene": "AAVS1"},
-        {"intent": "vaccine research", "cargo": {"function": "express botulinum neurotoxin"}},
+        {"intent": "clinical embryo edit", "germline": {"cell_type": "zygote", "organism": "human", "clinical": True}},
         {"intent": "benign insert", "gene": "CLYBL"},
     ]
     trace = run_gated_loop(plans)

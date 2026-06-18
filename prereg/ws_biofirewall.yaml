@@ -205,7 +205,9 @@ upgrade_v04_v10:
       on OVER-refusal not hazard-catch; in/out-of-scope; 9 failure modes; a scope/limit line per headline claim."
     integrate: "DONE. bio_firewall/integrate + examples/agent_integration.py: synthesize() HARD-GATED on a verifiable
       allow-passport. Recorded trace (examples/agent_trace.json): 6 plans -> 2 reach synthesis, 4 INTERCEPTED
-      mid-workflow incl. a REFRAMED ricin cargo refused on its artifact; audit chain intact. 6 tests."
+      mid-workflow incl. a REFRAMED oncogenic fusion (benign prose, hazardous artifact) refused on its artifact +
+      a germline-clinical edit refused; audit chain intact. Firewall-native rules -> deterministic across pen-stack
+      versions (the cargo Guardian's select-agent screen is an additional pen-stack-provided layer). 6 tests."
     living_kb: "DONE. Versioned signed hazard KB (vendored_data/hazard_kb/1.0.0.yaml, 80 entries) — per-entry
       provenance + content_sha256 + hmac_sha256; CI consistency gate (KB superset of in-code signatures). 4 tests."
     panel: "DONE (docs/PANEL.md). The control-vs-advisor head-to-head formalized as a fair, pre-registered, one-command

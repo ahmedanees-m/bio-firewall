@@ -268,8 +268,9 @@ Move each novel axis from a *lookup* to a *mechanism*, so the screen catches wha
 - **Living, signed hazard KB** ([docs/HAZARD_KB.md](docs/HAZARD_KB.md)) — 80 versioned, provenanced, HMAC-signed
   signatures; a CI consistency gate ensures the KB can't drift from what the screen uses.
 - **Real in-workflow trace** ([examples/agent_integration.py](examples/agent_integration.py)) — a design agent run
-  through the gate; 4 of 6 plans intercepted mid-workflow (incl. a **reframed** ricin cargo refused on its artifact),
-  2 benign reach synthesis, audit chain intact. `synthesize()` is **hard-gated** on a verifiable allow-passport.
+  through the gate; 4 of 6 plans intercepted mid-workflow (incl. a **reframed** oncogenic fusion — benign prose,
+  hazardous artifact — refused on its artifact), 2 benign reach synthesis, audit chain intact. `synthesize()` is
+  **hard-gated** on a verifiable allow-passport.
 - **Fair, pre-registered panel** ([docs/PANEL.md](docs/PANEL.md)) — the control-vs-advisor comparison as a reusable
   artifact (fixed prompt/rubric, LLM given its best config, on-prem-vs-API axis). *(Independent re-run + Zenodo DOI
   mint are flagged as external/author actions.)*
