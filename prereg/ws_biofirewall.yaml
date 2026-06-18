@@ -77,3 +77,68 @@ benchmark_v1:
       Model+date-specific (2026-06-17); only public safe-proxy data sent to NVIDIA. docs/HEADTOHEAD.md."
   pending:
     wet_lab: "outcome validation of the locus flags (the standing real-data bottleneck) — declared future work."
+
+# ==================================================================================================================
+# UPGRADE PRE-REGISTRATION v0.4.0 -> v1.0.0 (SHA-lock this block BEFORE running any v0.4.0 experiment).
+# Mirrors BIOFIREWALL_UPGRADE_EXECUTION_PLAN_v0_4-v1_0.md. Each criterion is falsifiable and carries a
+# pre-committed HONEST-FAILURE path (abstain / document / demote — never overclaim). Strategic frame (plan 0):
+# the empirically-strongest claims (C: no LLM screens a cargo sequence; D: open LLM judges are jailbroken) sit on
+# the LEAST-novel component, while the novel axes (locus/edit/germline/scale) are the unvalidated part. This plan
+# closes that gap in dependency order; v0.4.0 (Tier-1) is the only hard precondition for manuscript drafting.
+# ==================================================================================================================
+upgrade_v04_v10:
+  locked_before_results: true            # this block is committed + tagged BEFORE the v0.4.0 runs produce numbers
+  tier1_v0_4_0_the_hardened_core:
+    cargo_decorr: "decorrelated ESM2-650M head on a COMPOSITION-MATCHED negative test set (20-dim AA-frequency matched;
+      match verified by a 2-sample energy/MMD permutation test, p>0.05) retains TPR@1%FPR >= 0.60 with a
+      cluster-bootstrap CI whose LOWER bound EXCEEDS the composition-shortcut probe (0.562). Report both the
+      decorrelated and the original head, and the composition probe re-measured ON the matched set (expected to
+      collapse to ~chance). Attribution (per-residue saliency / integrated-gradients) localizes to functional
+      residues for >= 70% of sampled true positives. HONEST-FAILURE: if the CI does not exclude 0.562 -> report
+      'cargo signal is substantially compositional', DEMOTE C from 'cleanest claim', lead the paper on D +
+      operational properties. Do NOT tune the matched set to rescue the margin."
+    conformal: "Mondrian (class-conditional, per decision-stratum) conformal + a Neyman-Pearson alpha-knob: empirical
+      false-refuse on a held-out legitimate-research set <= alpha + 0.02 for alpha in {0.01, 0.05, 0.10}, with the
+      nominal-vs-empirical COVERAGE CURVE reported. The P8 inversion is RESOLVED: confidence monotone in empirical
+      correctness (high-conf accuracy > moderate > low). HONEST-FAILURE: if monotonicity still fails -> keep the
+      verdict, ship the conformal p-value, name the residual as a limit, do NOT claim calibrated confidence. If no
+      alpha achieves the catch-rate floor at acceptable false-refuse -> report the achievable operating points
+      (Pareto frontier); the GUARANTEE is the contribution, not a specific point."
+  tier2_v0_5_0_the_validated_edge:
+    locus_outcome: "on >= 1 real integration-site outcome dataset, locus-risk shows significant enrichment for observed
+      adverse clonal events: OR with CI excluding 1, OR AUROC with CI excluding 0.5. A MODEST validated AUROC is the
+      win. ACCESS-GATED HONEST PATH (pre-committed): if controlled-access (dbGaP/EGA) approval does not land in-cycle,
+      ship the mechanism-flag unchanged, label it 'outcome-validation pending — data access in review', claim NO
+      validated risk model. (User decision 2026-06-18: defer controlled-access; use open RID + published trial
+      supplements as the floor.)"
+    decomp: "the session-level aggregator (assembly/junction inference + cumulative scale + intent clustering, over the
+      P7 hash-chained audit log) catches a measurable, CI-reported fraction of decomposed plans that pass per-artifact,
+      on a pre-registered decomposition test set; per-category red-team table published, no category omitted.
+      HONEST-FAILURE: if catch-rate ~0 -> scope the per-artifact screen as single-call, name decomposition an open
+      architectural limit."
+  tier3_v0_6_0_the_generalized_screen:
+    struct: "structural remote-homology channel (ESMFold/ColabFold -> Foldseek vs public hazard FOLDS only) adds
+      incremental TPR@1%FPR over ESM-alone on the <=40%-id holdout (CI reported); 3-signal ensemble disagreement
+      correctly triggers abstention on a held-out conflict set."
+    combine_mono: "monotone evidence combiner provably monotone (added hazard signal never lowers severity, verified on
+      a perturbation suite) and reproduces every hard-rule refuse exactly; thresholds documented + pre-registered."
+    edit_mech: "de-novo fusion detection generalizes to off-list oncogenic fusions (promoter/enhancer<->oncogene,
+      kinase+dimerization architecture); controlled FPR with CI on benign/research fusion constructs."
+    locus_pos: "positional locus (distance-to-TSS, enhancer/super-enhancer proximity, chromatin accessibility) improves
+      the outcome-AUROC over gene-membership-only; flags enhancer-proximal insertions the gene-body lookup misses.
+      ACCESS-GATED: depends on locus_outcome data; if gated, ship positional features + mechanism-flag, defer the
+      AUROC-improvement claim."
+  tier4_v0_7_0_reproducible_artifact:
+    repro_indep: "`make reproduce` regenerates every headline number on a clean image within numerical tolerance;
+      Zenodo DOI minted; an independent re-run by one external person confirms within tolerance (deltas documented)."
+  tier5_v1_0_0_publication:
+    spine: "manuscript leads with C + D -> need a deterministic, calibrated, sequence-aware control; conformal
+      false-refuse guarantee is the operational headline (NOT determinism); outcome-validated locus upgrades the
+      novel surface; integrated five-axis governed system + benchmark + red-team is the framing novelty. The
+      withdrawn claims (determinism, fabrication) and any access-gated status travel into the paper UNEDITED."
+  residual_limits_even_at_v1:
+    - "no wet-lab validation — even an outcome-validated locus axis is retrospective, not a prospective confirmation."
+    - "safe proxies bound every cargo claim (TEVV necessity)."
+    - "the screen is a safeguard not a guarantee — the false-refuse ceiling bounds OVER-refusal, not hazard-catch."
+    - "knowledge-base coverage is finite — the locus axis still misses genes absent from its data (the 20% COSMIC miss)."
+    - "novelty = the integrated governed system + benchmark + red-team; the cargo ML component is conceded non-novel."
