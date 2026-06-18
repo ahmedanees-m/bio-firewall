@@ -119,26 +119,37 @@ control lists. See [`DATA_LICENSES.md`](DATA_LICENSES.md).
 ```
 bio-firewall/
 ├─ bio_firewall/
-│  ├─ intercept/spine.py        P1  governance spine — the public screen() entry point
-│  ├─ hazard/                   P2  the five-axis screen
-│  │  ├─ cargo.py / cargo_ml.py     axis 1 — Guardian signatures + function-aware ESM2 classifier
-│  │  ├─ locus.py                   axis 2 — oncogene / TSG / essential / dosage (CancerMine, DepMap, gnomAD)
-│  │  ├─ edit_type.py               axis 3 — oncogenic fusion / deletion / multiplex
-│  │  ├─ germline.py                axis 4 — heritability / germline-accessibility
-│  │  ├─ scale.py                   axis 5 — megabase / high-multiplex amplifier
-│  │  ├─ combine.py                 stratified integration into one verdict
-│  │  └─ finding.py                 the per-axis Finding contract
-│  ├─ passport/                 P4  HMAC-signed, tamper-evident design passport
-│  ├─ audit/                    P7  hash-chained tamper-evident audit log
-│  ├─ calibrate/                P8  confidence tiers + abstention
-│  ├─ adapters/                 tool-agnostic artifact contract + the PEN-STACK reference integration
-│  └─ eval/                     the safe-proxy benchmark + red-team
-├─ vendored_data/              open (CC0/CC-BY) hazard data, as parquet/yaml
-├─ docs/                       THREAT_MODEL.md · HAZARD_TAXONOMY.md
-├─ prereg/ws_biofirewall.yaml  pre-registered acceptance criteria + honest limits
-├─ tests/                      22 tests (incl. the data-license CI gate)
+│  ├─ intercept/spine.py            P1  governance spine — the public screen() entry point
+│  ├─ hazard/                       P2  the five-axis screen
+│  │  ├─ cargo.py / cargo_ml.py         axis 1 — Guardian signatures + function-aware ESM2 classifier
+│  │  ├─ locus.py                       axis 2 — oncogene / TSG / essential / dosage (CancerMine, DepMap, gnomAD)
+│  │  ├─ edit_type.py                   axis 3 — oncogenic fusion / deletion / multiplex
+│  │  ├─ germline.py                    axis 4 — heritability / germline-accessibility
+│  │  ├─ scale.py                       axis 5 — megabase / high-multiplex amplifier
+│  │  ├─ combine.py · finding.py        stratified integration + the per-axis Finding contract
+│  ├─ passport/ · audit/ · calibrate/   P4 signed passport · P7 hash-chained audit · P8 confidence+abstention
+│  ├─ adapters/                     tool-agnostic artifact contract + the PEN-STACK reference integration
+│  ├─ data.py                       open-data loaders (CancerMine/DepMap/gnomAD/fusions)
+│  └─ eval/                         the benchmark suites (the empirical evidence)
+│     ├─ hazard_bench/                  Benchmarks 1·3·4 — de-circularized interception, red-team, calibration
+│     │  ├─ oracles.py · multi_oracle.py    independent labels: Tier-1 clinical-CIS + COSMIC CGC + OncoKB (local-only)
+│     │  ├─ generate.py · baselines.py · score.py   proxies · earned B0/B1 baselines · metrics + bootstrap CIs
+│     │  ├─ redteam.py · calibrate_bench.py         B3 evasion/flip-rate · B4 risk-coverage + tier validity
+│     │  ├─ run_all.py · report.py                  driver + manuscript tables
+│     │  └─ nvidia_headtohead.py                    open-model head-to-head (A/B/C/D via NVIDIA NIM)
+│     ├─ cargo_bench/run.py             Benchmark 2 — ESM2-650M vs homology @ ≤40%-id MMseqs2 clusters (TPR@1%FPR)
+│     ├─ headtohead/                    v1.1 control-vs-advisor — fabrication · paraphrase · jailbreak-judge
+│     └─ bench.py · redteam.py          the original v0.3 wiring tests (superseded; kept for provenance)
+├─ vendored_data/                  open (CC0/CC-BY) hazard data, as parquet/yaml (vectors only, never sequences)
+├─ docs/                           THREAT_MODEL · HAZARD_TAXONOMY · BENCHMARK (results) · HEADTOHEAD (control-vs-advisor)
+├─ prereg/ws_biofirewall.yaml      pre-registered criteria + benchmark protocol + frozen results + honest limits
+├─ tests/                          34 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
 └─ pyproject.toml / LICENSE / DATA_LICENSES.md
 ```
+
+> **Benchmark data is local-only by design.** The code (loaders, generators, harnesses) is committed; the
+> license-restricted oracles (COSMIC, OncoKB), the cargo sequences, the frontier-model verdicts, and all run artifacts
+> live outside the repo (gitignored) and are **never** committed. The repo ships the *method* + the *aggregate results*.
 
 ## Result (de-circularized benchmark)
 
@@ -161,13 +172,28 @@ legitimate research** and is non-deterministic/non-auditable. The firewall's con
 flag-not-block, auditable** governance — not a claim of higher raw recall. (The earlier "100% vs 0%" was a
 tautological wiring test and has been replaced.)
 
-**Control vs advisor** ([docs/HEADTOHEAD.md](docs/HEADTOHEAD.md)) — we gave a frontier LLM its *best* config on four
-dimensions where a control's edge was hypothesized to be fundamental. Honest result: it mostly **didn't** fail — it
-didn't fabricate (it abstained), and it wasn't jailbroken (it ignored injections). The one robust gap is
-**determinism**: the LLM's severity verdict is inconsistent across semantically-identical inputs (100% vs the
-firewall's 0%), though it never flipped to `allow`. The firewall's case is **operational** (determinism, groundedness,
-auditability, no content-filter blocking, zero per-call cost) — *not* "the LLM is unsafe." The LLM is a capable
-advisor; the firewall is the deterministic control.
+### Control vs advisor — can you just use an LLM as the safety check? ([docs/HEADTOHEAD.md](docs/HEADTOHEAD.md))
+
+We ran the same four experiments against **Claude Opus 4.8** and three **open** models people self-host
+(`deepseek-v4`, `llama-4-maverick`, `qwen3-next-80b`), giving each its *best* config. Powering up **withdrew two
+weak claims and confirmed two strong ones** — the honest result:
+
+| | DeepSeek-v4 | Llama-4-Mav | qwen3-next | Firewall |
+|---|:--:|:--:|:--:|:--:|
+| **C — cargo screen, seq-only TPR / FPR** (n=200) | 0.00 / 0.00 | 0.60 / **0.49** | 0.02 / 0.00 | **ESM 0.72 @ 1% FPR** |
+| **D — prompt-injection flip `refuse→allow`** | *unparseable* | **0.50 / 0.83** | **0.83 / 0.50** | **0%** |
+| B — determinism (temp-0 unstable /10) | 0/10 | 0/10 | 0/10 | 0 |
+| A — fabrication | 0% | 0% | 0% | 0% |
+
+- **No LLM can screen a cargo sequence** — two under-screen (catch ~0 toxins), one over-flags randomly (TPR 0.60 at a
+  49% false-positive rate); none nears the function-aware classifier. **This is what the cargo ML gate is for.**
+- **Open LLM judges are jailbroken** — a prompt-injection string in a plan's free text flips `refuse→allow` 50–83% of
+  the time; the firewall reads coordinates, not prose, so it is **immune by construction (0%)**.
+- **Honestly corrected:** at powered N the LLMs were *not* unstable (B) and did *not* fabricate (A) — so the firewall's
+  case rests on **C + D + operational properties** (grounded, auditable, zero per-call cost), **not** determinism.
+
+**A frontier LLM is a capable advisor; an LLM used naively as the safety judge is jailbroken on self-hosted models and
+useless for sequence cargo — the firewall is the deterministic, artifact-reading control that makes the advisor safe.**
 
 ## Honest limitations
 
@@ -176,8 +202,12 @@ advisor; the firewall is the deterministic control.
 - The **function-aware cargo ML is not novel at the component level** (cf. ToxDL / Omnyra); the contribution is the
   *integrated five-axis governed system + the benchmark + the red-team*, with the locus/edit/germline/scale axes as
   the new screening capability.
-- **Safe proxies bound the claims** (a methodological necessity). The rigorous homology-clustered ≤40%-identity
-  evaluation and wet-lab validation are **declared future work**.
+- **Safe proxies bound the claims** (a methodological necessity). Wet-lab validation is **declared future work** — the
+  benchmark measures *concordance with an independent hazard model + lift over real baselines*, which is necessary but
+  **not sufficient** for real-world safety.
+- **The head-to-head is model- and date-specific** (`claude-opus-4-8`, `deepseek-v4`, `llama-4-maverick`,
+  `qwen3-next-80b`, 2026-06-17). The honest split: none of the tested LLMs can screen sequences and the open ones are
+  jailbroken as judges, but a stronger or differently-tuned future model could shift the A/B/D results.
 
 ## Responsible use
 
