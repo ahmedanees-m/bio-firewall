@@ -8,8 +8,8 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-45%20passing-success.svg)
-![Version](https://img.shields.io/badge/version-0.4.0-blue.svg)
+![Tests](https://img.shields.io/badge/tests-53%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.5.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -121,6 +121,7 @@ control lists. See [`DATA_LICENSES.md`](DATA_LICENSES.md).
 bio-firewall/
 ├─ bio_firewall/
 │  ├─ intercept/spine.py            P1  governance spine — the public screen() entry point
+│  ├─ intercept/session.py          v0.5.0 WS-DECOMP — session aggregator (assembly/scale/coordinated-loci)
 │  ├─ hazard/                       P2  the five-axis screen
 │  │  ├─ cargo.py / cargo_ml.py         axis 1 — Guardian signatures + function-aware ESM2 classifier
 │  │  ├─ locus.py                       axis 2 — oncogene / TSG / essential / dosage (CancerMine, DepMap, gnomAD)
@@ -143,12 +144,14 @@ bio-firewall/
 │     ├─ cargo_bench/run.py · decorr.py Benchmark 2 — ESM2-650M vs homology @ ≤40%-id clusters; 2b — composition-
 │     │                                     decorrelation (DANN + composition-matched eval, v0.4.0)
 │     ├─ hazard_bench/conformal_bench.py Benchmark 4b — conformal false-refuse certificate + monotone confidence (v0.4.0)
+│     ├─ hazard_bench/decomp_redteam.py   Benchmark 5 — decomposition red-team (v0.5.0 WS-DECOMP)
+│     ├─ hazard_bench/locus_outcome.py    Benchmark 6 — locus outcome floor on VISDB (v0.5.0 WS-LOCUS-OUTCOME)
 │     ├─ headtohead/                    v1.1 control-vs-advisor — fabrication · paraphrase · jailbreak-judge
 │     └─ bench.py · redteam.py          the original v0.3 wiring tests (superseded; kept for provenance)
 ├─ vendored_data/                  open (CC0/CC-BY) hazard data, as parquet/yaml (vectors only, never sequences)
 ├─ docs/                           THREAT_MODEL · HAZARD_TAXONOMY · BENCHMARK (results) · HEADTOHEAD (control-vs-advisor)
 ├─ prereg/ws_biofirewall.yaml      pre-registered criteria + benchmark protocol + frozen results + honest limits
-├─ tests/                          45 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
+├─ tests/                          53 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
 └─ pyproject.toml / LICENSE / DATA_LICENSES.md
 ```
 
@@ -217,6 +220,22 @@ honest-failure path):
   v0.3 inversion — monotone **high 1.00 > moderate 0.69 > low 0.10**, with out-of-knowledge-base allows honestly
   routed to *low* (9/10 of them are real misses).
 
+### v0.5.0 — "The Validated Edge" ([docs/BENCHMARK.md](docs/BENCHMARK.md))
+
+- **Decomposition aggregator (B5)** — closes the one untested attack: a hazard **split across N calls** that each
+  pass. The `SessionMonitor` screens the cross-call aggregate (assembly/junction inference, cumulative scale,
+  coordinated loci). On the two **genuine** decomposition evasions — a >1 Mb restructuring split into sub-50 kb
+  deletions, and a cargo split into Gibson/Type-IIS fragments — the per-artifact screen is blind (`evade per-call
+  1.00`) and the session catches **100% (CI [1.0,1.0]) at 0% false-positive**. (`coordinated_loci` is reported
+  honestly as defense-in-depth, not an evasion.)
+- **Locus outcome floor (B6) — access-gated, honest negative.** We built the enrichment harness and ran it on the
+  open **VISDB** integration-site catalogue (127,234 sites). The pre-registered enrichment gate is **not met**
+  (overall AUROC 0.449, OR 0.577) — and the *diagnosis* is the value: 96% of open "tumor" sites are **HTLV** (ATL),
+  whose integration biology is viral-oncoprotein-driven, **not** insertional-oncogenesis-at-oncogenes. The readily-
+  open data is the **wrong biology** to validate a gammaretroviral insertional-oncogenesis model, so the locus axis
+  ships unchanged and outcome-validation remains **pending** on the deferred controlled-access clonal-outcome data —
+  a status the floor now *evidences* rather than asserts.
+
 ## Honest limitations
 
 - The **locus axis flags on mechanism**, not a validated prediction — its genotoxicity proxy is *not* outcome-
@@ -233,6 +252,11 @@ honest-failure path):
 - **Safe proxies bound the claims** (a methodological necessity). Wet-lab validation is **declared future work** — the
   benchmark measures *concordance with an independent hazard model + lift over real baselines*, which is necessary but
   **not sufficient** for real-world safety.
+- **The locus axis is not yet outcome-validated.** The v0.5.0 open-data floor (VISDB) honestly **failed** to validate
+  it, because the open integration catalogues (HTLV/HIV) are the wrong integration biology; the gammaretroviral
+  clonal-outcome data that *would* validate it is controlled-access and deferred — so outcome-validation is **pending**.
+- **The decomposition aggregator is necessary, not sufficient** — it catches the assembly/scale/coordinated-loci
+  decompositions it models; a novel cross-call obfuscation can still evade it (a named, reported residual).
 - **The head-to-head is model- and date-specific** (`claude-opus-4-8`, `deepseek-v4`, `llama-4-maverick`,
   `qwen3-next-80b`, 2026-06-17). The honest split: none of the tested LLMs can screen sequences and the open ones are
   jailbroken as judges, but a stronger or differently-tuned future model could shift the A/B/D results.

@@ -196,6 +196,59 @@ for; the low tier *flags* this boundary, it does not eliminate it.)
 
 ---
 
+# v0.5.0 — "The Validated Edge" (pre-registered: `prereg/ws_biofirewall.yaml::upgrade_v04_v10`)
+
+## Benchmark 5 — decomposition red-team (WS-DECOMP), seed 1234
+
+The single-call red-team (Benchmark 3) cannot see a hazard **split across N calls** that each pass — the ABC-Bench
+fragment-design threat ([arXiv:2606.11150](https://arxiv.org/abs/2606.11150)). The **SessionMonitor**
+([`bio_firewall/intercept/session.py`](../bio_firewall/intercept/session.py)) holds per-call facets (local-only;
+the P7 audit chain carries the decision record) and screens the aggregate via three aggregators: assembly/junction
+inference (Gibson homology + Golden-Gate Type-IIS), cumulative scale, and coordinated-loci clustering. For each
+category we synthesize attacks (a flagged plan split into passing sub-plans) and benign controls (n=60 each):
+
+| category | catch-rate (CI) | attacks that evade per-call | false-positive | true decomposition-evasion? |
+|---|:--:|:--:|:--:|:--:|
+| **cumulative_scale** (>1 Mb → sub-50 kb deletions) | **1.00** [1.0, 1.0] | **1.00** | 0.00 | yes |
+| **fragment_assembly** (cargo → Gibson/Type-IIS fragments) | **1.00** [1.0, 1.0] | **1.00** | 0.00 | yes |
+| coordinated_loci (many distinct CIS/oncogene loci) | 1.00 [1.0, 1.0] | 0.00 | 0.00 | no — defense-in-depth |
+
+**Reading:** the two **genuine** decomposition evasions (cumulative scale, fragment assembly) each defeat the
+per-artifact screen (`attacks that evade per-call = 1.00`) and the session aggregator catches **100% at 0%
+false-positive**. `coordinated_loci` is honestly reported as **defense-in-depth, not an evasion** — those loci are
+individually flagged anyway (`evade per-call = 0.00`). **Honest limit:** this is *necessary, not sufficient* —
+assembly inference catches the Gibson/Type-IIS junctions it models; a novel obfuscation can still evade it (a named
+residual). The false-positive control matters: an earlier internal Type-IIS detector fired on chance 6-bp motifs in
+random DNA (21.7% FP) and was tightened to require terminal-proximity + a fragment majority → 0% FP.
+
+## Benchmark 6 — locus outcome-validation, the open-data floor (WS-LOCUS-OUTCOME), seed 1234
+
+§6 limit #2: the locus axis flags on *mechanism* and is **not** outcome-validated; the two gene-census benchmarks
+are recall-against-curation, not validation-against-outcomes. We built the enrichment harness
+([`bio_firewall/eval/hazard_bench/locus_outcome.py`](../bio_firewall/eval/hazard_bench/locus_outcome.py)) — OR/AUROC
+with a gene-clustered bootstrap — and ran it on the **open-data floor: VISDB** (Viral Integration Site DataBase,
+Tang et al. 2020, [10.1093/nar/gkz867](https://doi.org/10.1093/nar/gkz867); local-only, the same catalogue PEN-STACK's
+genotoxicity oracle uses). Each of **127,234** integration sites (mapped to 35,047 genes) carries a **Sample type**
+(tumor vs not); the test asks whether firewall-flagged loci enrich among tumor-associated sites.
+
+| stratum | n sites | AUROC (CI) | odds ratio (CI) | gate |
+|---|:--:|:--:|:--:|:--:|
+| overall (HIV + HTLV) | 127,234 | 0.449 [0.442, 0.456] | 0.577 [0.533, 0.628] | ✗ |
+| HIV | 82,995 | 0.494 [0.481, 0.506] | 0.925 [0.816, 1.038] | ✗ (null) |
+| HTLV | 44,239 | 0.455 [0.443, 0.468] | 0.607 [0.532, 0.701] | ✗ |
+
+**Honest result — ACCESS-GATED PATH (pre-committed; controlled-access deferred):** the pre-registered enrichment
+gate is **not met** — flagged loci are if anything slightly *depleted* among tumor-associated sites (OR < 1), and
+HIV is null. **The diagnosis is the informative part:** 96% of the open "tumor" sites are **HTLV** (adult T-cell
+leukemia), whose integration biology is **viral-oncoprotein-driven, not insertional-oncogenesis-at-oncogenes**;
+HIV does not cause cancer by insertion either. The readily-**open** catalogues are therefore the **wrong integration
+biology** to validate a *gammaretroviral* insertional-oncogenesis locus model — and the right open data (MLV/XMLV
+gene-therapy sites) is too sparse in VISDB (~60 sites). So the locus axis **ships unchanged** (mechanism-flag), and
+outcome-validation remains **pending** on the deferred controlled-access gammaretroviral clonal-outcome data — a
+status the floor now **evidences** rather than asserts. No validated risk-model claim is made.
+
+---
+
 ## Reproduce
 
 ```bash
@@ -210,6 +263,13 @@ python -c "from bio_firewall.eval.hazard_bench import conformal_bench as c; impo
 
 # v0.4.0 — Benchmark 2b (composition-decorrelation); needs the frozen Benchmark-2 vectors + the ml extra (torch)
 BF_B2_DIR=/path/to/bf_b2 python -c "from bio_firewall.eval.cargo_bench import decorr; import json; print(json.dumps(decorr.run()['gate'], indent=2))"
+
+# v0.5.0 — Benchmark 5 (decomposition red-team)
+python -c "from bio_firewall.eval.hazard_bench import decomp_redteam as d; import json; print(json.dumps(d.run(), indent=2))"
+
+# v0.5.0 — Benchmark 6 (locus outcome floor); needs the local VISDB + GENCODE gene coords (VM only)
+BF_VISDB_DIR=/path/to/visdb BF_GENE_COORDS=/path/to/gene_coords.parquet \
+  python -c "from bio_firewall.eval.hazard_bench import locus_outcome as lo; import json; print(json.dumps(lo.run_visdb()['overall'], indent=2))"
 ```
 
 Tier-1 is committed (public literature facts). COSMIC and the run artifacts are **local-only** — without them the

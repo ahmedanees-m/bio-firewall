@@ -152,6 +152,26 @@ upgrade_v04_v10:
       correctly routed to low) -> P8 inversion resolved (the v0.3 'allow'-tier 0.782 ~= 'flag'-tier 0.782 was
       uninformative). Coverage: 610 in-KB / 869 constraint-only / 17 out-of-KB. Selective-abstention Pareto reported."
 
+  tier2_results_2026_06_18:   # FROZEN v0.5.0 run (seed 1234)
+    decomp: "GATE PASS (per-category catch-rate + CI published, no category omitted). Two GENUINE decomposition-
+      evasion categories — cumulative_scale (a >1 Mb restructuring split into sub-50 kb deletions) and
+      fragment_assembly (a cargo split into Gibson/Type-IIS fragments) — each EVADE the per-artifact screen
+      (attacks_that_evade_per_call=1.0) yet the SessionMonitor catches 100% (CI [1.0,1.0]) at 0% false-positive
+      (n=60 each, seed 1234). coordinated_loci is defense-in-depth not an evasion (caught 100% but
+      evade_per_call=0.0 — those loci are individually flagged). HONEST: necessary-not-sufficient; assembly
+      inference catches the Gibson/Type-IIS junctions it models; novel obfuscation is a named residual."
+    locus_outcome: "ACCESS-GATED HONEST PATH INVOKED (pre-committed; user deferred controlled-access 2026-06-18).
+      Built the enrichment harness (OR/AUROC + gene-clustered sample-weight bootstrap) + ran the OPEN VISDB floor
+      (127,234 integration sites mapped to 35,047 genes; 42,778 tumor-associated). Pre-registered gate (OR CI
+      excludes 1 OR AUROC CI excludes 0.5 in the ENRICHMENT direction) NOT met: overall AUROC 0.449 [0.442,0.456],
+      OR 0.577 [0.533,0.628] (flagged loci slightly DEPLETED, not enriched); HIV null (OR 0.925, CI incl. 1).
+      DIAGNOSIS (the honest, informative finding): 96% of open 'tumor' sites are HTLV (ATL), whose integration
+      biology is viral-oncoprotein-driven NOT insertional-oncogenesis-at-oncogenes — the readily-open catalogues
+      are the WRONG biology to validate a gammaretroviral insertional-oncogenesis locus model (VISDB has only ~60
+      MLV/XMLV sites). -> locus axis ships UNCHANGED (mechanism-flag), labelled 'outcome-validation pending'; the
+      RIGHT data is the deferred controlled-access gammaretroviral clonal-outcome set. The floor EVIDENCES the
+      pending status rather than asserting it. No validated risk-model claim made."
+
   residual_limits_even_at_v1:
     - "no wet-lab validation — even an outcome-validated locus axis is retrospective, not a prospective confirmation."
     - "safe proxies bound every cargo claim (TEVV necessity)."
