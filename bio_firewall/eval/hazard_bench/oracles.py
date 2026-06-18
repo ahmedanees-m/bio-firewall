@@ -84,6 +84,24 @@ def cosmic_fusion_genes() -> frozenset[str]:
 
 
 @lru_cache(maxsize=1)
+def cosmic_fusion_pairs() -> frozenset[tuple[str, str]]:
+    """Independent held-out oncogenic-fusion PAIRS from COSMIC's TRANSLOCATION_PARTNER column (gene -> 'A, B, C').
+    Sorted gene-pair tuples; local-only (COSMIC), never committed. The WS-EDIT-MECH generalization label."""
+    p = _oracle_dir() / "cosmic_cgc_v104.tsv"
+    if not p.exists():
+        return frozenset()
+    pairs: set[tuple[str, str]] = set()
+    with p.open(encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter="\t"):
+            g = (r.get("GENE_SYMBOL") or "").strip().upper()
+            for partner in (r.get("TRANSLOCATION_PARTNER") or "").split(","):
+                partner = partner.strip().upper()
+                if g and partner and partner != g:
+                    pairs.add(tuple(sorted((g, partner))))
+    return frozenset(pairs)
+
+
+@lru_cache(maxsize=1)
 def oncokb_cgl() -> dict[str, str]:
     """OncoKB Cancer Gene List: gene (UPPER) -> Gene Type. Local-only, license-restricted, NEVER committed.
     (Free for academic use with registration; treated like COSMIC — validation-only, gitignored.)"""

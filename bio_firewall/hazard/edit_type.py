@@ -4,6 +4,7 @@ flagged (unknown oncogenicity is a known-unknown)."""
 from __future__ import annotations
 
 from bio_firewall.data import is_oncogenic_fusion
+from bio_firewall.hazard.edit_mech import oncogenic_fusion_mechanism
 from bio_firewall.hazard.finding import Finding, finding
 
 
@@ -16,6 +17,14 @@ def screen_edit(plan: dict) -> Finding:
             return finding("hard_reject", "edit.oncogenic_fusion_by_design", "edit_type",
                            f"breakpoint creates the known oncogenic fusion {rec.get('name')} ({rec.get('cancer')}) by design",
                            provenance={"source": "curated open oncogenic-fusion set", "citation": [rec.get("citation")]})
+        # v0.6.0 WS-EDIT-MECH: de-novo detection — flag an off-list fusion by MECHANISM (kinase activation /
+        # oncogene juxtaposition / IG-TCR enhancer) even though the pair is on no curated list (generalization).
+        is_mech, mech = oncogenic_fusion_mechanism(fg[0], fg[1])
+        if is_mech:
+            return finding("soft_penalty", "edit.denovo_oncogenic_fusion", "edit_type",
+                           f"designed fusion {fg[0]}-{fg[1]} is oncogenic by mechanism ({mech}) — not on the curated "
+                           "list but flagged by the de-novo mechanism screen", extrapolating=True,
+                           provenance={"source": "WS-EDIT-MECH mechanism screen (fusion-kinase / oncogene roles, CC0)"})
         return finding("soft_penalty", "edit.fusion_unknown_oncogenicity", "edit_type",
                        f"designed gene fusion {fg[0]}-{fg[1]} of unknown oncogenicity — flag for review", extrapolating=True)
     if e.get("fusion") or e.get("oncogenic_fusion"):
