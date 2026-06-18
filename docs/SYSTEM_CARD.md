@@ -1,4 +1,4 @@
-# BioFirewall - System Card (v0.8.0)
+# BioFirewall - System Card (v0.9.0)
 
 A model-card-style statement of what BioFirewall **is**, what a verdict **does and does not guarantee**, its
 **scope boundaries**, its **enumerated failure modes**, and a **scope/limit statement for every headline claim**.
@@ -53,9 +53,12 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
 1. **Finite knowledge-base coverage.** The locus axis misses genes absent from its CC0 data (~20% of COSMIC on the
    benchmark). Mitigation: out-of-KB `allow`s are routed to **low** confidence (v0.4 competence-conditioned tiers);
    the living KB (v0.7) narrows but never closes the gap.
-2. **The locus axis is not outcome-validated.** It flags on mechanism; the genotoxicity proxy is not a cancer rate.
-   The v0.5 open-data outcome floor (VISDB) **failed** to validate it (wrong virus biology); causal validation is
-   **pending** controlled-access integration-site data.
+2. **The locus axis flags on mechanism (not a cancer rate), and is outcome-validated only modestly, in mouse.** As of
+   v0.9.0 it is outcome-validated against mouse in vivo insertional-oncogenesis drivers (CCGD; non-circular held-out
+   AUROC 0.605, OR 3.34), which reconciles the v0.5 VISDB null (wrong, HTLV-driven biology, AUROC 0.449). The effect is
+   modest (a significant enrichment, not a strong classifier). Three rungs remain: event-level positional validation
+   (coordinate + clonality data), human (not mouse) validation, and human clinical clonal-outcome (controlled-access) +
+   wet-lab confirmation.
 3. **Safe proxies bound every cargo claim.** The function-aware ML and its benchmarks use safe public proxies - a
    TEVV methodological necessity, not a claim about real agents-of-concern.
 4. **The cargo signal's operating-point margin over composition is modest.** At a strict 1% FPR the function-aware
@@ -88,6 +91,7 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
 | **D - open LLM judges are jailbroken; firewall is not** | Prompt-injection flips 50-83% on open models; firewall 0% by construction | Tested models/date-specific; a stronger future model could shift it; firewall immunity is architectural (reads structured plan) |
 | **Certified false-refuse ceiling** | Clopper-Pearson 0/288 -> <=0.0103, alpha in {.01,.05,.10} | Bounds **over-refusal only**; says nothing about hazard-catch |
 | **Locus interception 80-82% (two censuses)** | Concordance with COSMIC/OncoKB independent labels | Concordance-with-curation, **not** prevented harm; misses ~20% of COSMIC |
+| **Locus outcome-validated (mouse, v0.9)** | CCGD held-out AUROC 0.605 / OR 3.34, non-circular | Modest effect; mouse + gene-level; positional/human/wet-lab pending |
 | **De-novo fusion recall 0.909 (kinase 1.0)** | 471 off-list COSMIC fusion pairs, 0% benign FP | Recall partly role-driven; FP control is non-cancer pairs |
 | **Decomposition 100% catch / 0% FP** | Two modeled evasion families | Necessary-not-sufficient; novel obfuscation can evade |
 | **Positional catches 10,834 gene-body misses** | VISDB coverage count | A count, not a calibrated/validated rate |

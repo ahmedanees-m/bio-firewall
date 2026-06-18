@@ -33,6 +33,12 @@ references:
     year: 2026
     notes: "Grounds the v0.8 managed-access plane (P9)."
   - type: article
+    title: "The Candidate Cancer Gene Database: a database of cancer driver genes from forward genetic screens in mice"
+    authors: [{family-names: "Abbott", given-names: "Kenneth L."}]
+    year: 2015
+    doi: "10.1093/nar/gku770"
+    notes: "CCGD - the v0.9 locus outcome-validation source (mouse insertional-oncogenesis drivers). NAR 43:D844-8."
+  - type: article
     title: "Strengthening nucleic acid biosecurity screening against generative protein design tools"
     authors: [{family-names: "Wittmann", given-names: "et al."}]
     year: 2025

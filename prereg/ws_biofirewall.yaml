@@ -366,3 +366,24 @@ upgrade_v08_completeness:
     - "standards alignment tracks a MOVING target (the 2024 OSTP Framework may be revised per the 2025-05-05 EO; IBBIS
       DSSC standards still forming) - intent + hooks where not yet public, no conformance claim."
     - "all prior v1.0 residual limits stand (no wet-lab validation; safe proxies; finite KB coverage; non-novel cargo ML)."
+
+# ==================================================================================================================
+# v0.9.0 "The Outcome-Validated Edge" - the standing locus limitation FALLS. The screening CODE is unchanged from
+# v0.8.0; this cycle adds an OUTCOME-validation of the locus axis against in vivo insertional oncogenesis. Full
+# pre-registration in prereg/ws_locus_mouse_outcome.yaml (SHA-locked); script locus_mouse_outcome_validation.py;
+# derived positives data/locus_outcome_inputs/; frozen result results/locus_mouse_outcome.json.
+# ==================================================================================================================
+ws_locus_mouse_outcome_summary:
+  see: "prereg/ws_locus_mouse_outcome.yaml (authoritative, SHA-locked)"
+  data: "CCGD (Abbott et al. 2015, NAR 43:D844-8); mouse transposon forward-genetic screens; open, derived symbol
+    lists only (RTCGD Akagi 2004 as the retroviral cross-check)."
+  result_2026_06_19: "GATE MET (non-circular). Held-out (CCGD drivers NOT in the axis's CancerMine source) locus risk
+    is significantly enriched for in vivo insertional-oncogenesis drivers: AUROC 0.605 (95% CI 0.596-0.614), OR 3.34
+    (95% CI 3.07-3.65); recurrent >=2-screen drivers, 3,625 held-out. Operational AUROC 0.618. Held-out signal carried
+    by gnomAD dosage (1,068) + DepMap essentiality (450), none via the CIS list. MODEST effect (a significant
+    enrichment, not a strong classifier) - the honest headline is the effect size, not the easy gate. Reconciles the
+    v0.5 VISDB null (wrong biology, HTLV, AUROC 0.449). Re-derived + re-run this cycle: counts + every field EXACT."
+  limitation_2_update: "from 'the locus genotoxicity proxy flags on mechanism and is NOT outcome-validated' -> 'the
+    locus axis is OUTCOME-VALIDATED against mouse in vivo insertional-oncogenesis drivers (non-circular held-out
+    AUROC 0.605, OR 3.34; modest effect). Remaining: event-level positional validation (coordinate+clonality data),
+    human clinical clonal-outcome (controlled-access), and wet-lab confirmation.'"

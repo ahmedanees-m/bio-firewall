@@ -9,8 +9,8 @@ signed design passport. It is the missing design-stage guardrail: a firewall for
 [![CI](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-109%20passing-success.svg)
-![Version](https://img.shields.io/badge/version-0.8.0-blue.svg)
+![Tests](https://img.shields.io/badge/tests-113%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.9.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > **Scope and maturity.** BioFirewall is a defensive, early-stage, computational reference implementation evaluated on
@@ -169,13 +169,16 @@ bio-firewall/
 |       |   |-- nvidia_headtohead.py          the control-vs-advisor panel (A/B/C/D via NVIDIA NIM)
 |       |-- cargo_bench/run.py, decorr.py, struct_bench.py, struct_gated_bench.py   B2 gate; B2b; B10; v0.8 gated struct
 |       |-- headtohead/              the v1.1 control-vs-advisor experiments (fabrication / paraphrase / jailbreak)
+|-- locus_mouse_outcome_validation.py   v0.9 WS-LOCUS-MOUSE-OUTCOME: CCGD outcome-validation runner (non-circular)
 |-- vendored_data/                   open (CC0 / CC-BY) hazard data as parquet / yaml; hazard_kb/ signed KB releases
+|-- data/locus_outcome_inputs/       v0.9 CCGD-derived human-ortholog driver lists (ccgd_recurrent/all.txt) + SOURCE
+|-- results/locus_mouse_outcome*.json   v0.9 frozen CCGD outcome-validation results (held-out AUROC 0.605, OR 3.34)
 |-- standards/nist_benchmark_export.json   v0.8 NIST-compatible benchmark export (blinded ids + answer key)
 |-- docs/                            THREAT_MODEL, HAZARD_TAXONOMY, BENCHMARK, HEADTOHEAD, SYSTEM_CARD, PANEL, HAZARD_KB, STANDARDS
 |-- examples/                        demo.py; agent_integration.py + agent_trace.json (the recorded in-workflow trace)
 |-- tools/build_hazard_kb.py, tools/export_nist_benchmark.py   regenerate the signed KB; regenerate the NIST export
-|-- prereg/ws_biofirewall.yaml       pre-registered criteria, benchmark protocol, frozen results, limitations
-|-- tests/                           109 tests (incl. the data-license CI gate and the Tier-1 100%-catch regression gate)
+|-- prereg/                          ws_biofirewall.yaml (criteria + frozen results); ws_locus_mouse_outcome.yaml (v0.9)
+|-- tests/                           113 tests (incl. the data-license CI gate and the Tier-1 100%-catch regression gate)
 |-- Makefile, REPRODUCTION.md        one-command reproduction + the clean-image protocol
 |-- CITATION.cff, .zenodo.json       citation and Zenodo deposit metadata
 |-- pyproject.toml, LICENSE, DATA_LICENSES.md
@@ -339,13 +342,44 @@ BioSafe GenAI workshop, not ICML). Per a pre-registered publication gate, three 
   confidence, which gating cannot fix. The structure channel remains a ranking-level corroborator (composition-free
   AUROC 0.882); no operating-point lift is claimed.
 
+### v0.9.0 - The Outcome-Validated Edge
+
+This cycle converts the project's central standing limitation: the locus axis previously flagged on mechanism and was
+not outcome-validated. The screening code is unchanged; v0.9.0 adds an outcome-validation against real in vivo
+insertional-oncogenesis drivers from mouse transposon forward-genetic screens (CCGD, the Candidate Cancer Gene
+Database; Abbott et al., 2015). All references were independently re-verified, and the positive sets were re-derived
+from the live source and the result re-run to an exact match before integration.
+
+- **Locus axis, outcome-validated (non-circular).** Because the axis already encodes curated oncogene and tumour
+  -suppressor roles, the load-bearing test is the held-out subset of CCGD drivers absent from the axis's curated source,
+  for which the axis can only fire through dosage-sensitivity, essentiality, or the clinical CIS list. On this held-out,
+  non-circular subset the locus risk is significantly enriched for outcome-defined drivers: AUROC 0.605 (95% CI
+  0.596-0.614), odds ratio 3.34 (95% CI 3.07-3.65), on recurrent (>=2-screen) drivers, with the enrichment carried by
+  gnomAD dosage-sensitivity (1,068) and DepMap essentiality (450) rather than the curated list (0). The operational
+  (full-knowledge) enrichment is comparable (AUROC 0.618). The effect is modest, a significant enrichment rather than a
+  strong classifier, exactly as a mechanism-grounded flag that routes risk to review should be; the effect size, not the
+  easily cleared gate, is the headline.
+- **It reconciles the v0.5 null.** The same axis was anti-predictive on the open human catalogue (VISDB, AUROC 0.449),
+  which is the wrong biology (~96% HTLV, viral-oncoprotein-driven), and is enriched on the right one (insertion-site
+  -driven mouse screens). Same axis, opposite verdict, explained by biology.
+- **What remains.** The validation is gene-level and in mouse (the standard preclinical genotoxicity model, but not
+  human); the event-level positional score awaits coordinate-level integration data with clonal-outcome annotation;
+  human clinical clonal-outcome validation (controlled-access) and wet-lab confirmation are the higher-evidence rungs.
+
+The validation is pre-registered ([prereg/ws_locus_mouse_outcome.yaml](prereg/ws_locus_mouse_outcome.yaml)), the
+CCGD-derived positive sets and the frozen result are committed
+([data/locus_outcome_inputs/](data/locus_outcome_inputs), [results/locus_mouse_outcome.json](results/locus_mouse_outcome.json)),
+and it reproduces deterministically with `python locus_mouse_outcome_validation.py --positives data/locus_outcome_inputs/ccgd_recurrent.txt`.
+
 ## Limitations
 
-- The locus axis flags on mechanism, not a validated prediction. Its genotoxicity proxy is not outcome-validated, so
-  it routes elevated risk to human review and does not output a cancer probability. The v0.5 open-data floor (VISDB)
-  did not validate it, because the open integration catalogues (HTLV, HIV) are the wrong integration biology; the
-  gammaretroviral clonal-outcome data that would validate it is controlled-access and deferred, so outcome validation
-  remains pending.
+- The locus axis routes elevated risk to human review and does not output a cancer probability; it flags on mechanism
+  rather than emitting a calibrated rate. As of v0.9.0 it is outcome-validated against mouse in vivo
+  insertional-oncogenesis drivers (non-circular held-out AUROC 0.605, odds ratio 3.34), but the effect is modest and
+  three rungs remain: the validation is gene-level (the event-level positional score awaits coordinate-level data with
+  clonal-outcome annotation), it is in mouse rather than human, and human clinical clonal-outcome validation
+  (controlled-access dbGaP/EGA) and wet-lab confirmation are deferred. The earlier open human catalogue (VISDB) was not
+  predictive (AUROC 0.449) because it is the wrong, HTLV-driven biology.
 - The function-aware cargo ML is not novel at the component level (compare ToxDL, Pan et al. 2020; OmniTox /
   function-aware screening, Mathew et al. 2025, PMC12699701). The contribution is the integrated five-axis governed
   system plus the benchmark and red-team, with the locus, edit, germline, and scale axes as the new capability. The

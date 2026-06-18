@@ -16,7 +16,8 @@
     {"relation": "references", "identifier": "arXiv:2502.16513", "scheme": "arxiv"},
     {"relation": "references", "identifier": "10.3389/fbioe.2026.1832724", "scheme": "doi"},
     {"relation": "references", "identifier": "arXiv:2506.00195", "scheme": "arxiv"},
-    {"relation": "references", "identifier": "10.1101/2025.05.30.655379", "scheme": "doi"}
+    {"relation": "references", "identifier": "10.1101/2025.05.30.655379", "scheme": "doi"},
+    {"relation": "references", "identifier": "10.1093/nar/gku770", "scheme": "doi"}
   ],
   "notes": "Zenodo DOI to be minted by the author by connecting this GitHub repository to Zenodo and publishing a release. The restricted/local-only data (COSMIC, OncoKB, VISDB, controlled-access integration-site data) is NOT part of the deposit; only the open code + open vendored data + frozen pre-registration."
 }

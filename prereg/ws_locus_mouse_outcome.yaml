@@ -1,0 +1,67 @@
+# BioFirewall WS-LOCUS-MOUSE-OUTCOME - pre-registration (v0.9.0 "The Outcome-Validated Edge").
+# SHA-lock this block + locus_mouse_outcome_validation.py + data/locus_outcome_inputs/ BEFORE the manuscript-grade
+# re-run. The result is deterministic (seed 1234) given the CCGD-derived symbol lists; re-running does not change it.
+# All references independently re-verified (Final_Part_v3.0/Biofirewall/Locus_test verification + this cycle):
+# CCGD = Abbott et al. 2015, NAR 43(D1):D844-D848, doi:10.1093/nar/gku770, PMID 25190456 (TRANSPOSON forward-genetic
+# mouse screens; the retroviral counterpart RTCGD = Akagi 2004, NAR 32:D523, doi:10.1093/nar/gkh013 is a cross-check).
+version: "0.9.0"
+workstream: ws_locus_mouse_outcome
+locked_before_results: true
+
+claim_under_test: >-
+  The locus risk flag predicts genes that, when insertionally mutated in vivo, cause tumors - validation against an
+  OUTCOME anchor on the right (insertion-site-driven) biology, not recall-against-curation.
+
+data:
+  source: "CCGD - Candidate Cancer Gene Database (Abbott et al. 2015, NAR 43:D844-8). Live export accessed 2026-06-19
+    (http://ccgd-starrlab.oit.umn.edu/table_app/ccgd_export.csv): 27,960 CIS rows. Open; only the DERIVED human-ortholog
+    symbol lists are redistributed (data/locus_outcome_inputs/), CCGD cited as the source. CC BY-NC on the paper."
+  cleaning: "drop HumanName in {NA, empty}; drop the 18 unambiguous Excel date-corrupted symbols (the N-MON form
+    1-MAR..9-MAR, *-SEP). Real spelled-out symbols (DECR1, MARC1, ...) are NOT removed. Upper-case + dedupe."
+  positives_primary: "recurrent drivers hit in >=2 DISTINCT screens (Study), n = 4,689 - recurrence reduces passenger
+    contamination. FIXED before running; not tuned to the result. (data/locus_outcome_inputs/ccgd_recurrent.txt)"
+  positives_secondary: "all CCGD human-ortholog drivers, n = 9,219 (data/locus_outcome_inputs/ccgd_all.txt)."
+  background_universe: "the axis's own gene table (CancerMine roles + DepMap + gnomAD ~ all protein-coding), n ~ 19.4k."
+
+circularity_control: >-
+  The axis already encodes curated oncogene/TSG roles (CancerMine). So the LOAD-BEARING result is the HELD-OUT subset
+  (B): CCGD drivers NOT in the axis's CancerMine roles, for which the axis can only fire via DepMap-essentiality /
+  gnomAD-dosage / the 12-gene clinical-CIS list - i.e. signal BEYOND its curated cancer-gene list.
+
+acceptance:
+  gate: "on held-out (B): AUROC bootstrap CI excludes 0.5, OR odds-ratio CI excludes 1 (gene-clustered bootstrap, 800
+    reps, seed 1234, via the repo's validate_enrichment harness)."
+  honest_failure: "if (B) does not clear, report it; the axis's outcome signal is then confined to its curated list (a
+    real, reportable limit) and human-clinical / wet-lab validation remains the path. No tuning of gene sets/thresholds."
+  effect_size_is_the_headline: "with ~16k genes the bare CI-excludes-null gate is easy to clear; report the EFFECT SIZE
+    (AUROC, OR), framed as a MODEST significant enrichment - a coarse flag routing risk to review, not a cancer rate."
+
+caveats_verbatim:
+  - "Mouse, not human (species gap) - the tumor-prone forward-genetic mouse model is the field's preclinical standard
+    for vector genotoxicity (cf. Montini et al.); state the gap, do not hide it."
+  - "Gene-level, not event-level: the novel positional score (TSS/enhancer distance) is not tested here; it needs
+    coordinate-level integration data with clonality (some Sleeping Beauty datasets carry it) - declared next step."
+  - "Human clinical clonal-outcome validation (controlled-access dbGaP/EGA) and wet-lab confirmation remain higher rungs."
+
+results_2026_06_19:   # FROZEN deterministic re-run (seed 1234), independently re-derived CCGD positives - EXACT match
+  recurrent_primary:
+    B_heldout_non_cancermine: "AUROC 0.605 (95% CI 0.596-0.614), odds ratio 3.34 (95% CI 3.07-3.65); 3,625 held-out
+      drivers, 22.1% base rate. GATE MET (non-circular)."
+    A_operational: "AUROC 0.618 (95% CI 0.610-0.626), OR 2.98 (95% CI 2.78-3.18); 4,689 drivers."
+    held_out_decomposition: "of 3,625 held-out drivers, 1,321 (36.4%) flagged - via gnomAD dosage (1,068) + DepMap
+      essentiality (450), none via the CIS list. The held-out signal is carried by mechanistic constraint features."
+  all_secondary:
+    B_heldout_non_cancermine: "AUROC 0.576 (95% CI 0.569-0.582), OR 2.76 (95% CI 2.55-2.99); 7,479 held-out. gate met."
+    A_operational: "AUROC 0.588 (95% CI 0.581-0.594), OR 2.39 (95% CI 2.25-2.55); 9,219 drivers."
+  interpretation: >-
+    A genuine, non-circular, MODEST positive outcome-validation (AUROC ~0.60 is a significant enrichment, not a strong
+    classifier - exactly what a coarse mechanistic flag should be). It reconciles the v0.5 VISDB null (anti-predictive
+    on the wrong, HTLV-driven biology AUROC 0.449; enriched on the right, insertion-site-driven biology). The locus
+    SCREENING CODE is unchanged; what changed is that the axis is now outcome-validated where right-biology data exists.
+
+integrity_note: >-
+  The first execution returned a spurious 'pass' (OR 3.13, flagged_any 0, AUROC exactly 0.5) - a scoring-field bug:
+  the Finding's attribute is `decision`, not `severity`, so every gene scored null and the OR was a pure artifact of the
+  Haldane empty-cell correction. Found + fixed BEFORE any result left the bench; the numbers above are the corrected,
+  deterministic run. Independently re-derived (this cycle) from the live CCGD export: counts (9,219 all / 4,689
+  recurrent, 18 Excel artifacts) and every result field reproduce EXACTLY.

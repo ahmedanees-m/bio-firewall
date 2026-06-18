@@ -13,7 +13,7 @@ from bio_firewall.hazard import five_axis_screen
 from bio_firewall.passport.sign import sign_passport
 from bio_firewall.respond.graded import grade
 
-RULESET_VERSION = "0.8.0"
+RULESET_VERSION = "0.8.0"   # the SCREENING ruleset is unchanged in v0.9.0 (an outcome-validation cycle, no rule change)
 
 
 def screen(artifact: dict, *, audit=None) -> dict:

@@ -1,0 +1,47 @@
+{
+  "n_universe": 19445,
+  "A_all_drivers": {
+    "n_sites": 19445,
+    "n_outcome_pos": 9219,
+    "n_genes": 19445,
+    "AUROC": 0.5875,
+    "AUROC_CI": [
+      0.5812,
+      0.5942
+    ],
+    "odds_ratio": 2.3877,
+    "odds_ratio_CI": [
+      2.2533,
+      2.5462
+    ],
+    "gate_pass": true,
+    "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+    "n_positives": 9219
+  },
+  "B_heldout_non_cancermine": {
+    "n_sites": 16466,
+    "n_outcome_pos": 7479,
+    "n_genes": 16466,
+    "AUROC": 0.5759,
+    "AUROC_CI": [
+      0.5694,
+      0.5815
+    ],
+    "odds_ratio": 2.7631,
+    "odds_ratio_CI": [
+      2.5466,
+      2.987
+    ],
+    "gate_pass": true,
+    "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+    "n_positives": 7479
+  },
+  "held_out_feature_decomposition": {
+    "held_out_positives": 7479,
+    "via_CIS_list": 0,
+    "via_depmap_essential": 814,
+    "via_gnomad_dosage": 1533,
+    "flagged_any": 2087
+  },
+  "note": "Gate is on B (AUROC CI excludes 0.5 OR OR CI excludes 1). A and the decomposition are reported, not gated. Mouse preclinical model; species gap stated as a limitation."
+}

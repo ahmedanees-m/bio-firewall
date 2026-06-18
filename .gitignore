@@ -15,7 +15,11 @@ pen_stack_home/
 b1_verdicts.json
 # head-to-head: safe-proxy sequence file + open-model run outputs (only public data sent to NVIDIA; never committed)
 cargo_proxies*.jsonl
-results/
+# local run artifacts are ignored, but the v0.9 open CCGD outcome-validation results ARE committed (reproducible).
+# Use results/* (ignore CONTENTS, not the dir) so the explicit re-includes below take effect.
+results/*
+!results/locus_mouse_outcome.json
+!results/locus_mouse_outcome_all.json
 headtohead/
 .pytest_cache/
 .ruff_cache/
