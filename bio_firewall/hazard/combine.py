@@ -8,21 +8,20 @@ Legality ≠ confidence: the verdict carries the findings + an honesty note that
 """
 from __future__ import annotations
 
+from bio_firewall.hazard.combine_mono import monotone_severity
 from bio_firewall.hazard.finding import SEVERITY, Finding
 
 
 def combine(findings: list[Finding]) -> dict:
     worst = max(findings, key=lambda f: SEVERITY[f.decision]) if findings else None
-    sev = SEVERITY[worst.decision] if worst else 0
-    if sev >= 3:
-        decision = "refuse"
-    elif sev >= 1:
-        decision = "flag_for_review"
-    else:
-        decision = "allow"
+    # v0.6.0 WS-COMBINE-MONO: a provably-monotone, interaction-aware combiner (noisy-OR over per-axis risks, any
+    # hard_reject pinned to refuse). Its DECISION equals the v0.5 max-severity cascade (so behaviour is unchanged);
+    # it additionally surfaces a continuous, auditable `severity` that escalates co-occurring moderate signals.
+    severity, decision = monotone_severity(findings)
     triggered = [f.as_dict() for f in findings if f.decision != "clear"]
     return {
         "decision": decision,
+        "severity": severity,
         "axes": {f.axis: f.as_dict() for f in findings},
         "evidence": triggered,
         "honesty": ("stratified risk, not a blocklist; the locus axis flags on MECHANISM (the genotoxicity proxy is "
