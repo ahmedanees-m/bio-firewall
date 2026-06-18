@@ -193,6 +193,25 @@ upgrade_v04_v10:
       non-compositionality at the RANKING level (modest backstop, not at 1%-FPR). Abstain-on-disagreement works (49%
       abstained on conflicts; kept-set ESM TPR unchanged). Reported, not hidden."
 
+  tier4_results_2026_06_18:   # v0.7.0 "The Reproducible Artifact"
+    repro: "DONE. `make reproduce` regenerates the committed-data headline numbers (WS-COMBINE-MONO proof + the
+      79-test suite that validates every metric path); `make reproduce-local` for the data-dependent benchmarks;
+      pinned data releases in DATA_LICENSES.md; .zenodo.json + CITATION.cff for the DOI. Zenodo DOI MINTING is an
+      author action (connect repo to Zenodo + publish release) — flagged, not self-certified."
+    indep: "REPRODUCTION.md ships the clean-image protocol + expected per-benchmark numbers. The actual INDEPENDENT
+      re-run by a non-author is PENDING an external runner (flagged); this is the step that converts 'author says it
+      reproduces' into 'it reproduces'."
+    syscard: "DONE (docs/SYSTEM_CARD.md). What a green allow does/does-NOT guarantee; false-refuse ceiling = a ceiling
+      on OVER-refusal not hazard-catch; in/out-of-scope; 9 failure modes; a scope/limit line per headline claim."
+    integrate: "DONE. bio_firewall/integrate + examples/agent_integration.py: synthesize() HARD-GATED on a verifiable
+      allow-passport. Recorded trace (examples/agent_trace.json): 6 plans -> 2 reach synthesis, 4 INTERCEPTED
+      mid-workflow incl. a REFRAMED ricin cargo refused on its artifact; audit chain intact. 6 tests."
+    living_kb: "DONE. Versioned signed hazard KB (vendored_data/hazard_kb/1.0.0.yaml, 80 entries) — per-entry
+      provenance + content_sha256 + hmac_sha256; CI consistency gate (KB superset of in-code signatures). 4 tests."
+    panel: "DONE (docs/PANEL.md). The control-vs-advisor head-to-head formalized as a fair, pre-registered, one-command
+      artifact (fixed prompt/rubric, LLM best-config, on-prem-vs-API axis, per-model variance). Frozen result: C + D
+      confirmed; determinism + fabrication withdrawn at powered N (reported straight)."
+
   residual_limits_even_at_v1:
     - "no wet-lab validation — even an outcome-validated locus axis is retrospective, not a prospective confirmation."
     - "safe proxies bound every cargo claim (TEVV necessity)."

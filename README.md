@@ -8,8 +8,8 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-69%20passing-success.svg)
-![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)
+![Tests](https://img.shields.io/badge/tests-79%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -134,7 +134,8 @@ bio-firewall/
 │  ├─ passport/ · audit/                P4 signed passport · P7 hash-chained audit
 │  ├─ calibrate/                    P8 confidence — confidence.py (tiers+abstention) · conformal.py (v0.4.0:
 │  │                                     competence-conditioned confidence + Neyman-Pearson false-refuse certificate)
-│  ├─ adapters/                     tool-agnostic artifact contract + the PEN-STACK reference integration
+│  ├─ adapters/ · integrate/        tool-agnostic artifact contract · v0.7 in-workflow agent gate (synthesize()-hard-gated)
+│  ├─ kb/                           v0.7 versioned, signed hazard knowledge base loader (the living KB)
 │  ├─ data.py                       open-data loaders (CancerMine/DepMap/gnomAD/fusions)
 │  └─ eval/                         the benchmark suites (the empirical evidence)
 │     ├─ hazard_bench/                  Benchmarks 1·3·4 — de-circularized interception, red-team, calibration
@@ -151,9 +152,10 @@ bio-firewall/
 │     ├─ headtohead/                    v1.1 control-vs-advisor — fabrication · paraphrase · jailbreak-judge
 │     └─ bench.py · redteam.py          the original v0.3 wiring tests (superseded; kept for provenance)
 ├─ vendored_data/                  open (CC0/CC-BY) hazard data, as parquet/yaml (vectors only, never sequences)
-├─ docs/                           THREAT_MODEL · HAZARD_TAXONOMY · BENCHMARK (results) · HEADTOHEAD (control-vs-advisor)
+├─ docs/                           THREAT_MODEL · HAZARD_TAXONOMY · BENCHMARK · HEADTOHEAD · SYSTEM_CARD · PANEL · HAZARD_KB
+├─ examples/agent_integration.py   v0.7 in-workflow agent trace (+ agent_trace.json) · Makefile · REPRODUCTION.md · CITATION.cff
 ├─ prereg/ws_biofirewall.yaml      pre-registered criteria + benchmark protocol + frozen results + honest limits
-├─ tests/                          69 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
+├─ tests/                          79 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
 └─ pyproject.toml / LICENSE / DATA_LICENSES.md
 ```
 
@@ -255,6 +257,22 @@ Move each novel axis from a *lookup* to a *mechanism*, so the screen catches wha
   a 3-signal ensemble with abstain-on-disagreement. At 1% FPR it does **not** add over ESM (the ≤40%-id holdout makes
   toxins structurally distant) — but structure-alone AUROC **0.882**, composition-free, independently corroborates the
   v0.4 non-compositionality finding at the ranking level. Shipped; the 1%-FPR claim reported as not met.
+
+### v0.7.0 — "The Reproducible Artifact" — reproducible by a stranger, adoptable by an agent
+
+- **System card** ([docs/SYSTEM_CARD.md](docs/SYSTEM_CARD.md)) — what a green `allow` does and does **not** guarantee;
+  9 enumerated failure modes; a scope/limit line for every headline claim.
+- **One-command reproduction** — `make reproduce` (committed-data headline numbers + the 79-test suite that validates
+  every metric path); `make reproduce-local` for the data-dependent benchmarks; pinned data releases; `.zenodo.json`
+  + `CITATION.cff` for the DOI; full protocol in [REPRODUCTION.md](REPRODUCTION.md).
+- **Living, signed hazard KB** ([docs/HAZARD_KB.md](docs/HAZARD_KB.md)) — 80 versioned, provenanced, HMAC-signed
+  signatures; a CI consistency gate ensures the KB can't drift from what the screen uses.
+- **Real in-workflow trace** ([examples/agent_integration.py](examples/agent_integration.py)) — a design agent run
+  through the gate; 4 of 6 plans intercepted mid-workflow (incl. a **reframed** ricin cargo refused on its artifact),
+  2 benign reach synthesis, audit chain intact. `synthesize()` is **hard-gated** on a verifiable allow-passport.
+- **Fair, pre-registered panel** ([docs/PANEL.md](docs/PANEL.md)) — the control-vs-advisor comparison as a reusable
+  artifact (fixed prompt/rubric, LLM given its best config, on-prem-vs-API axis). *(Independent re-run + Zenodo DOI
+  mint are flagged as external/author actions.)*
 
 ## Honest limitations
 
