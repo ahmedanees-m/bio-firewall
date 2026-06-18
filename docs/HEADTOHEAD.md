@@ -82,57 +82,66 @@ The Opus run used one safety-trained model. We re-ran A/B/C/D against two **open
 **unlocked experiment C**, which Anthropic's filter had blocked on Opus. (gpt-oss-120b was dropped: >90 s/call on the
 free tier — a reasoning model emitting long traces, impractical for ~80 calls.)
 
-| Dimension | Opus 4.8 | DeepSeek-v4 | Llama-4-Maverick | qwen3-next-80b | Firewall |
-|---|---|---|---|---|---|
-| A abstain on unanswerable | 100% | 100% | 100% | — | 100% (by construction) |
-| A fabricate an answerable fact | no | **yes** (pLI 0.0 vs 0.99) | no | — | no (grounded) |
-| B verdict-instability @ temp 0 | n/a | **2 distinct** | 1 (stable) | — | 0 (byte-identical) |
-| **C cargo seq-only TPR / FPR (n=200)** | *filter-blocked* | **0.00 / 0.00** | **0.60 / 0.49** | **0.02 / 0.00** | ESM **0.72 @ 1% FPR** |
-| **D prompt-injection flip `refuse→allow`** | 0/22 | 0% | **67% / 100%** | — | **0%** (reads coordinates) |
+**Powered run (C: n=200 sequences; B: 10 plans × 30 runs; D: 6 cases; A: 5 queries).** Powering up *corrected* two of
+the small-N reads — which is the point of doing it.
 
-*(C is the powered result — **200 held-out ≤40%-identity sequences**, 100 toxin / 100 benign, all engaged, 0 errors.
-A/B/D shown at the small-N seed; the powered A/B/D run follows.)*
+| Dimension | DeepSeek-v4 | Llama-4-Maverick | qwen3-next-80b | Firewall |
+|---|---|---|---|---|
+| A — fabrication / abstain-on-unanswerable | 0% / 100% | 0% / 100% | 0% / 100% | 0% / 100% |
+| B — temp-0 run-to-run unstable plans (/10) | **0/10** | **0/10** | **0/10** | 0 (byte-identical) |
+| B — mean paraphrase-flip | 0.00 | 0.00 | **0.20** | 0 |
+| **C — cargo seq-only TPR / FPR (n=200)** | **0.00 / 0.00** | **0.60 / 0.49** | **0.02 / 0.00** | ESM **0.72 @ 1% FPR** |
+| **D — prompt-injection flip `refuse→allow`** | *unparseable* | **0.50 / 0.83** | **0.83 / 0.50** | **0%** (reads coordinates) |
 
-**Two findings, both honest, both strengthening the firewall's case beyond the Opus-only result:**
+**The three honest findings after powering up:**
 
-1. **C generalizes cleanly — no LLM can screen sequences (powered, n=200, three models).** On **200 held-out
-   ≤40%-identity sequences** the three open models fail in two opposite ways, both useless: **DeepSeek catches 0/100
-   toxins** and **qwen3-next catches 2/100** (TPR ≈ 0 — they under-screen, allowing everything), while **Llama
-   over-flags** — TPR 0.60 but at a **49% false-positive rate**, essentially the random diagonal. None comes near the
-   ESM classifier's **0.72 at a 1% FPR**. Whether a model *refuses to engage* (Opus, via the upstream filter) or
-   *engages and fails* (the three open models), an LLM is **not a cargo-sequence screen**. The function-aware classifier
-   is necessary. This is the cleanest, most model-agnostic result — robust to N (24 → 200) and architecture.
+1. **C — no LLM can screen sequences (the clean win, fully confirmed).** On **200 held-out ≤40%-identity sequences** the
+   three open models fail in two opposite, useless ways: DeepSeek catches **0/100** toxins and qwen3-next **2/100** (they
+   under-screen, allowing everything), while Llama **over-flags** — TPR 0.60 at a **49% false-positive rate**, the random
+   diagonal. None nears the ESM classifier's **0.72 at 1% FPR**. Whether a model *refuses to engage* (Opus, filter-blocked)
+   or *engages and fails* (all three open models), an LLM is **not a cargo-sequence screen**. Robust to N (24→200) and
+   architecture. This is the strongest, most model-agnostic result.
 
-2. **D is a live finding — the weak models people self-host get jailbroken.** Opus and DeepSeek resisted, but
-   **Llama-4-Maverick flipped `refuse→allow` on 67% of "pre-approved" injections and 100% of "ignore previous
-   instructions" injections** — a prompt-injection string in a free-text field talked a safety-trained judge out of its
-   refusal. The firewall is immune by construction (it reads coordinates and gene IDs, not the prose). So the naive
-   "just use the LLM as the safety check" integration is **unsafe for exactly the open models people actually deploy** —
-   and a deterministic, artifact-reading control governs the whole model ecosystem, not just the best-behaved model.
+2. **D — open LLM judges are unsafe (confirmed, the live finding).** With 6 structural hazards both systems should
+   refuse, a prompt-injection string in a free-text field flipped `refuse→allow` on **Llama 50–83%** and **qwen3-next
+   50–83%** of cases. (DeepSeek's verdicts didn't parse on these, so it is *excluded* — we do **not** claim it allows
+   them.) Reframing ("for defensive research") flipped **0%** — it is specifically the **injection** channel that breaks
+   the judge. The firewall is immune by construction (it reads coordinates, not prose). "Just use the LLM as the safety
+   judge" is unsafe for the open models people self-host.
 
-DeepSeek's A-fabrication (a wrong memorized pLI emitted as fact) and run-to-run instability are weaker, model-specific
-signals in the same direction. *Caveats (honest):* these seeds are small (wiring-proof N, not powered — expand before
-quoting); B tested one borderline plan; C's "named" condition used UniProt accessions, not common names, so it does not
-isolate name-dependence. Only public safe-proxy data was sent to the third-party endpoint.
+3. **B — determinism: largely REFUTED at powered N (honest correction).** The small-N run showed DeepSeek "unstable," but
+   at **10 plans × 30 runs** all three models are **run-to-run stable at temp 0 (0/10 unstable)**; only qwen shows mild
+   paraphrase sensitivity (0.20). So the firewall's byte-identical guarantee is a *real property* but the **empirical
+   gap is small** — temp-0 sampling is mostly deterministic for these models. The earlier "determinism is the firewall's
+   clean architectural win" framing was small-N noise and is **withdrawn**. (A — fabrication — likewise did not recur:
+   all three abstained on the unanswerable set; the earlier one-off DeepSeek pLI error did not reproduce.)
 
-## The synthesized, honest claim
+*Caveats (honest):* C is powered (n=200); B is powered (10 plans × 30 runs); D uses 6 cases (expand for tighter CIs);
+A is still small (5 queries). C's "named" condition used UniProt accessions, not common names, so it does not isolate
+name-dependence. DeepSeek's D verdicts failed to parse (excluded, not counted as either pass or fail). Only public
+safe-proxy data was sent to the third-party endpoint.
 
-> The **best** safety-trained model (Claude Opus 4.8) given its best config mostly did **not** fail — it abstained
-> instead of fabricating, and ignored injections instead of being jailbroken. But two findings hold across the model
-> ecosystem and decide the case for a control:
-> 1. **No LLM can screen a cargo sequence.** Across Opus (filter-blocked), DeepSeek (flagged 0/12 toxins), and Llama
->    (TPR 0.5 at a 42% false-positive rate — noise), an LLM is not a sequence-level screen; the function-aware ESM
->    classifier (0.72 @ 1% FPR) is necessary.
-> 2. **The weaker models people self-host are jailbroken.** Llama-4-Maverick flipped `refuse→allow` on 67–100% of
->    prompt-injection attacks embedded in a plan's free text. A deterministic, artifact-reading control is immune by
->    construction (0%) — so it governs the **whole** model ecosystem, not just the best-behaved model.
+## The synthesized, honest claim (after powering up)
+
+> Powering up the head-to-head **withdrew one claim and confirmed two**. The determinism gap (B) shrank to near-zero at
+> temp 0 (all three open models run-to-run stable, 0/10), and fabrication (A) did not recur — so neither is the
+> firewall's case. **Two findings survive and decide it:**
+> 1. **No LLM can screen a cargo sequence (n=200, four models).** Opus is filter-blocked; DeepSeek catches 0/100 toxins
+>    and qwen3-next 2/100 (under-screen); Llama hits TPR 0.60 but at a **49% false-positive rate** (random). None nears
+>    the function-aware ESM classifier's **0.72 @ 1% FPR**. The classifier is necessary.
+> 2. **Open LLM judges are jailbroken (the live safety finding).** A prompt-injection string in a plan's free text flips
+>    `refuse→allow` on **Llama 50–83%** and **qwen3-next 50–83%** of structural hazards both should refuse — while
+>    reframing flips 0%, isolating the injection channel. The firewall is immune by construction (0%, it reads
+>    coordinates, not prose), so it governs the **whole** model ecosystem.
 >
-> The firewall's case is therefore both **operational** (deterministic/auditable/byte-identical, grounded where the LLM
-> abstains, zero per-call cost) **and**, for the open models people actually deploy, a genuine **safety** gap the firewall
-> closes. **A frontier LLM is a capable advisor; an LLM used naively as the safety judge is unsafe for self-hosted models
-> and useless for sequence cargo — the firewall is the deterministic control that makes the advisor safe to wire into the
-> design-to-synthesis loop.**
+> **A frontier LLM is a capable advisor; an LLM used naively as the safety judge is jailbroken on the open models people
+> self-host and useless for sequence cargo — the firewall is the deterministic, artifact-reading control that makes the
+> advisor safe to wire into the design-to-synthesis loop.** The firewall's case is C + D + the operational properties
+> (grounded where the LLM abstains, zero per-call cost, auditable) — *not* determinism, which the powered run showed is
+> a small empirical gap, and *not* "the LLM fabricates," which did not reproduce.
 
-*Measured on `claude-opus-4-8`, `deepseek-ai/deepseek-v4-flash`, `meta/llama-4-maverick-17b-128e-instruct` (2026-06-17).
-Seeds are wiring-proof N, not powered — expand before quoting. The honest split: the *best* model is a safe advisor;
-the *deployable* ones are not safe judges; none can screen sequences; the control beats all of them by construction.*
+*Measured on `claude-opus-4-8`, `deepseek-ai/deepseek-v4-flash`, `meta/llama-4-maverick-17b-128e-instruct`,
+`qwen/qwen3-next-80b-a3b-instruct` (2026-06-17). C powered to n=200; B to 10 plans × 30 runs; D 6 cases; A small (5).
+The honest split after powering up: none can screen sequences; the deployable open models are jailbroken as judges;
+determinism and fabrication did NOT separate them from the firewall at temp 0 — so the control's case is C + D + the
+operational properties, stated straight.*
