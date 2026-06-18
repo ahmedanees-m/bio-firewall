@@ -4,7 +4,7 @@ Stratification, NOT a blocklist (almost every hazardous genome-write is also leg
   - any `hard_reject`              -> REFUSE   (the unambiguous: select-agent cargo, human heritable clinical, ...)
   - else any soft_penalty/scope_flag -> FLAG-FOR-REVIEW with the evidence (routed to human oversight)
   - else                           -> ALLOW    (+ a signed passport, Phase 2)
-Legality ≠ confidence: the verdict carries the findings + an honesty note that the locus axis flags on mechanism.
+Legality != confidence: the verdict carries the findings + a caveat note that the locus axis flags on mechanism.
 """
 from __future__ import annotations
 
@@ -24,8 +24,8 @@ def combine(findings: list[Finding]) -> dict:
         "severity": severity,
         "axes": {f.axis: f.as_dict() for f in findings},
         "evidence": triggered,
-        "honesty": ("stratified risk, not a blocklist; the locus axis flags on MECHANISM (the genotoxicity proxy is "
+        "caveat": ("stratified risk, not a blocklist; the locus axis flags on MECHANISM (the genotoxicity proxy is "
                     "NOT outcome-validated, PEN-STACK v6.6) and does not predict a cancer rate; screening reduces, "
-                    "does not eliminate; safe proxies ≠ real hazards."),
+                    "does not eliminate; safe proxies != real hazards."),
         "reason": (worst.mechanism if worst and worst.decision != "clear" else "no hazard signal across the five axes"),
     }

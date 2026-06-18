@@ -1,4 +1,4 @@
-"""Benchmark 4 — calibration, the HONEST (not conformal) version. No outcome labels exist, so we measure against
+"""Benchmark 4 - calibration, the (not conformal) version. No outcome labels exist, so we measure against
 Benchmark-1's INDEPENDENT hazard labels:
   - tier validity      : do high-confidence (deterministic) verdicts agree with the independent label more than
                          moderate (mechanism) than low (ML)?
@@ -60,7 +60,7 @@ def run_calibration(rows: list[dict]) -> dict:
             "hazard_miss_rate_all_allow": round(miss_all, 3),
             "hazard_miss_rate_highconf_allow": round(miss_high, 3),
             "note": "if the firewall's misses are CONFIDENT (high-conf allows of genes absent from its data), "
-                    "abstention cannot rescue them — an honest limit of data-membership calibration.",
+                    "abstention cannot rescue them - a limit of data-membership calibration.",
         },
     }
 

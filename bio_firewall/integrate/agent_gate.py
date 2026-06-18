@@ -19,9 +19,9 @@ def pre_action_gate(artifact: dict, audit=None) -> dict:
 
 def synthesize(verdict: dict) -> str:
     """A guarded downstream action (stand-in for a synthesis order / protocol export). It runs ONLY on an ALLOW
-    verdict with a verifiable passport — so a flagged/refused plan, or a forged passport, cannot reach synthesis."""
+    verdict with a verifiable passport - so a flagged/refused plan, or a forged passport, cannot reach synthesis."""
     if verdict.get("decision") != "allow":
-        raise GateBlocked(f"blocked: BioFirewall verdict is '{verdict.get('decision')}' — {verdict.get('reason')}")
+        raise GateBlocked(f"blocked: BioFirewall verdict is '{verdict.get('decision')}' - {verdict.get('reason')}")
     if not verify_passport(verdict.get("passport") or {}):
         raise GateBlocked("blocked: design passport does not verify (tampered or missing)")
     return "SYNTHESIS ORDER SUBMITTED"

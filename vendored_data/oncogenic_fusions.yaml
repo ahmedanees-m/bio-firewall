@@ -1,4 +1,4 @@
-# Known oncogenic gene fusions — open / literature-curated (well-established cancer facts, not a restricted DB
+# Known oncogenic gene fusions - open / literature-curated (well-established cancer facts, not a restricted DB
 # like Mitelman/COSMIC-fusion). Each is a canonical driver fusion. Used by Axis 3 (edit-type): a plan whose
 # breakpoint creates one of these by design is hard_reject; a declared fusion not on this list is flag-for-review.
 # Keys are unordered gene pairs (sorted, '::').

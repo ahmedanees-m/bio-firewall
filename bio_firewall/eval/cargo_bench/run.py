@@ -118,7 +118,7 @@ def run(out_dir: str = "bench_cargo", n_per_class: int | None = None, esm_model:
 
     Xtr, ytr = embed(train_k), np.array([label[k] for k in train_k])
     Xte, yte = embed(test_k), np.array([label[k] for k in test_k])
-    np.savez(wd / "vectors.npz", Xtr=Xtr, ytr=ytr, Xte=Xte, yte=yte)   # VECTORS ONLY — sequences not persisted
+    np.savez(wd / "vectors.npz", Xtr=Xtr, ytr=ytr, Xte=Xte, yte=yte)   # VECTORS ONLY - sequences not persisted
 
     # 4-5. trained head + metrics (cluster-bootstrap CIs)
     from sklearn.linear_model import LogisticRegression

@@ -1,6 +1,6 @@
 """WS-INTEGRATE end-to-end demo: a design agent proposes a batch of genome-writing plans; every one passes through
 the BioFirewall pre-action gate; only `allow` plans reach 'synthesis'. The dangerous plans are intercepted
-MID-WORKFLOW — the agent cannot route around the gate, and a reframed hazard is judged by its artifact, not its
+MID-WORKFLOW - the agent cannot route around the gate, and a reframed hazard is judged by its artifact, not its
 cover story. Run:  python examples/agent_integration.py  (writes examples/agent_trace.json)."""
 from __future__ import annotations
 
@@ -44,5 +44,5 @@ if __name__ == "__main__":
     print(f"plans={s['n_plans']}  reached_synthesis={s['reached_synthesis']}  intercepted={s['intercepted']}  "
           f"audit_intact={s['audit_chain_intact']}")
     for t in s["trace"]:
-        mark = "→ SYNTHESIS" if t["reached_synthesis"] else "✗ INTERCEPTED"
+        mark = "-> SYNTHESIS" if t["reached_synthesis"] else "no INTERCEPTED"
         print(f"  [{t['step']}] {t['decision']:<16} {mark:<14} {t['plan_intent'][:48]}")

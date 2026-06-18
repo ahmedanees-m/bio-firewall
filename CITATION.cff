@@ -26,7 +26,7 @@ references:
     title: "ABC-Bench: An Agentic Bio-Capabilities Benchmark for Biosecurity"
     authors: [{family-names: "Liu", given-names: "et al."}]
     year: 2026
-    notes: "arXiv:2606.11150 — the offense benchmark BioFirewall is the defensive mirror of."
+    notes: "arXiv:2606.11150 - the offense benchmark BioFirewall is the defensive mirror of."
   - type: article
     title: "Strengthening nucleic acid biosecurity screening against generative protein design tools"
     authors: [{family-names: "Wittmann", given-names: "et al."}]

@@ -1,7 +1,7 @@
-"""Experiment B — DETERMINISM + PARAPHRASE-INVARIANCE (the clean, infra-independent half).
+"""Experiment B - DETERMINISM + PARAPHRASE-INVARIANCE (the clean, infra-independent half).
 
 The firewall returns the IDENTICAL verdict for any SEMANTICALLY-identical input, because it reads the structured
-artifact (gene ID, coordinates) — not the prose. The LLM reads text, so rewording the free text or reordering the
+artifact (gene ID, coordinates) - not the prose. The LLM reads text, so rewording the free text or reordering the
 fields can move its verdict. For each plan we generate K semantically-identical paraphrases (same gene / same edit,
 different wording + field order + benign context) and measure the LLM's PARAPHRASE-FLIP rate. Firewall = 0 by
 construction (verified: same gene -> byte-identical verdict)."""

@@ -1,4 +1,4 @@
-"""WS-LOCUS-POS (v0.6.0) — the positional screen flags an insertion in an oncogene's promoter/enhancer window
+"""WS-LOCUS-POS (v0.6.0) - the positional screen flags an insertion in an oncogene's promoter/enhancer window
 even when it lands in NO oncogene gene body (the SCID-X1/LMO2 mechanism a membership lookup misses)."""
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from bio_firewall.hazard.locus_pos import positional_finding
 _VD = Path(__file__).resolve().parents[1] / "vendored_data"
 _HAS = (_VD / "oncogene_tss.parquet").exists()
 
-# LMO2 TSS (vendored, GENCODE hg38): chr11:33,892,076 (− strand, genotoxic-CIS).
+# LMO2 TSS (vendored, GENCODE hg38): chr11:33,892,076 (- strand, genotoxic-CIS).
 _LMO2_TSS = 33_892_076
 
 

@@ -15,7 +15,7 @@ class Finding:
     mechanism: str                # plain-language WHY (the evidence text)
     provenance: dict = field(default_factory=dict)
     score: float | None = None    # optional 0-1 axis score
-    extrapolating: bool = False    # honesty: mechanism-grounded flag, not a validated prediction
+    extrapolating: bool = False    # note: mechanism-grounded flag, not a validated prediction
 
     def as_dict(self) -> dict:
         return {"decision": self.decision, "rule_id": self.rule_id, "axis": self.axis,

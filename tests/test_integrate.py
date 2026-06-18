@@ -1,4 +1,4 @@
-"""WS-INTEGRATE (v0.7.0) — the in-workflow gate: a dangerous plan is intercepted before synthesis, a benign plan
+"""WS-INTEGRATE (v0.7.0) - the in-workflow gate: a dangerous plan is intercepted before synthesis, a benign plan
 reaches synthesis, a reframed hazard is judged by its artifact, and a forged passport cannot pass the guard."""
 from __future__ import annotations
 

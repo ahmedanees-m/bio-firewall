@@ -62,4 +62,4 @@ if __name__ == "__main__":
     out_dir.mkdir(parents=True, exist_ok=True)
     kb = build(version, released)
     (out_dir / f"{version}.yaml").write_text(yaml.safe_dump(kb, sort_keys=False), encoding="utf-8")
-    print(f"wrote hazard-KB v{version}: {kb['n_entries']} entries | content_sha256 {kb['content_sha256'][:16]}…")
+    print(f"wrote hazard-KB v{version}: {kb['n_entries']} entries | content_sha256 {kb['content_sha256'][:16]}...")

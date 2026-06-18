@@ -1,12 +1,12 @@
-"""Systematic, seeded, stratified proxy generation for Benchmark 1 (the locus axis — the headline).
+"""Systematic, seeded, stratified proxy generation for Benchmark 1 (the locus axis - the headline).
 
 SAFE PROXIES ONLY: every plan carries a BENIGN reporter cassette, so the only possible hazard signal is the LOCUS
 (where the edit lands). Hazard is LABELED by the independent oracles (oracles.py: Tier-1 clinical-CIS + COSMIC CGC),
 which the firewall does not use. Genes are STRATIFIED by firewall-data membership so we can separate:
   - tier1_gold              : clinical insertional-oncogenesis genes (mandatory 100% catch)
   - cosmic_overlap          : COSMIC gene also in the firewall's CancerMine set (expected catch)
-  - cosmic_generalization   : COSMIC gene NOT in CancerMine (the true generalization test — catch via essential/
-                              dosage, or honest false-negative)
+  - cosmic_generalization   : COSMIC gene NOT in CancerMine (the true generalization test - catch via essential/
+                              dosage, or false-negative)
 and the hard-negative classes that must NOT be over-flagged / over-refused (Claim C, usability)."""
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ def _in_cancermine(gene: str) -> bool:
 
 
 def _gene_universe() -> list[str]:
-    """Protein-coding universe: gnomAD constraint genes (background) ∪ COSMIC ∪ Tier-1 ∪ firewall roles."""
+    """Protein-coding universe: gnomAD constraint genes (background) + COSMIC + Tier-1 + firewall roles."""
     import pandas as pd
     from bio_firewall.data import _VD  # vendored_data dir
     uni: set[str] = set()
@@ -43,11 +43,11 @@ def _gene_universe() -> list[str]:
 
 
 def generate(seed: int = 1234, n_negatives: int = 600) -> list[dict]:
-    """Return proxy records. HAZARDOUS = independently labeled (Tier-1 ∪ COSMIC); NEGATIVES = sampled benign genes."""
+    """Return proxy records. HAZARDOUS = independently labeled (Tier-1 + COSMIC); NEGATIVES = sampled benign genes."""
     rng = random.Random(seed)
     haz_genes = oracles.independent_hazard_genes()
     universe = _gene_universe()
-    # TRUE negatives: genes with NO hazard annotation in ANY source — independent label (COSMIC/Tier-1) AND the
+    # TRUE negatives: genes with NO hazard annotation in ANY source - independent label (COSMIC/Tier-1) AND the
     # firewall's own data (CancerMine roles + gnomAD dosage). A gene CancerMine flags but COSMIC omits is NOT a
     # clean negative (the firewall flagging it is defensible, not an error) -> excluded from the benign pool.
     def _clean_benign(g: str) -> bool:
@@ -57,7 +57,7 @@ def generate(seed: int = 1234, n_negatives: int = 600) -> list[dict]:
         return not (dz and dz[0] >= 0.9)
     benign_pool = [g for g in universe if _clean_benign(g)]
     # a SEPARATE deliberate class: dosage-sensitive genes with NO cancer annotation (flagging them is CORRECT via
-    # the dosage mechanism — they must NOT refuse; reported on their own, not as false-flags).
+    # the dosage mechanism - they must NOT refuse; reported on their own, not as false-flags).
     dosage_pool = [g for g in universe if g not in haz_genes and not _in_cancermine(g)
                    and (dosage(g) or (0, 0))[0] >= 0.9]
 
@@ -79,7 +79,7 @@ def generate(seed: int = 1234, n_negatives: int = 600) -> list[dict]:
         rows.append({"gene": gene, "plan": _plan(gene), "axis": "none",
                      "independent_hazard": False, "stratum": "negative_benign", "must": "allow"})
 
-    # --- NEGATIVE class 1b: dosage-sensitive, no cancer annotation — flagging is CORRECT (must NOT refuse) ---
+    # --- NEGATIVE class 1b: dosage-sensitive, no cancer annotation - flagging is CORRECT (must NOT refuse) ---
     for gene in rng.sample(dosage_pool, min(120, len(dosage_pool))):
         rows.append({"gene": gene, "plan": _plan(gene), "axis": "none",
                      "independent_hazard": False, "stratum": "negative_dosage_sensitive", "must": "flag_ok_not_refuse"})

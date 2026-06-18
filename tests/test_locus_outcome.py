@@ -1,4 +1,4 @@
-"""WS-LOCUS-OUTCOME (v0.5.0) — the generic enrichment harness (OR/AUROC + gene-clustered bootstrap). Synthetic
+"""WS-LOCUS-OUTCOME (v0.5.0) - the generic enrichment harness (OR/AUROC + gene-clustered bootstrap). Synthetic
 data, no VISDB/pandas; the real VISDB open-data floor (run_visdb) runs on the VM."""
 from __future__ import annotations
 

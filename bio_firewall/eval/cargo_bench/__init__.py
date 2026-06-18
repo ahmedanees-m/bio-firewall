@@ -1,10 +1,10 @@
-"""Benchmark 2 — cargo function-aware ML, the pre-registered gate (prereg/ws_biofirewall.yaml::axis1_function_aware_ml).
+"""Benchmark 2 - cargo function-aware ML, the pre-registered gate (prereg/ws_biofirewall.yaml::axis1_function_aware_ml).
 
-The honest question: can an ESM2 embedding + a trained head catch a toxin homolog that a homology/BLAST screen
+The question: can an ESM2 embedding + a trained head catch a toxin homolog that a homology/BLAST screen
 MISSES because the test protein has no >40%-identity neighbour in the training set (the "never-before-seen AI
 homolog")? We answer it with a homology-clustered held-out evaluation:
 
-  1. public UniProt toxins (KW-0800, reviewed) vs benign (reviewed non-toxin, length-matched) — SAFE PROXIES
+  1. public UniProt toxins (KW-0800, reviewed) vs benign (reviewed non-toxin, length-matched) - SAFE PROXIES
   2. MMseqs2 easy-cluster @40% identity -> hold out WHOLE clusters (no test protein has a >40%-id train neighbour)
   3. ESM2-650M mean-pooled embeddings (SHIP VECTORS ONLY, never sequences)
   4. trained head (logistic regression) vs homology baseline (mmseqs search test->train-toxins by %identity)

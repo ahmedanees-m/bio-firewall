@@ -1,4 +1,4 @@
-"""v1.1 head-to-head — the FIREWALL-side properties (no LLM/sub-agents needed). The LLM (B1) verdicts are produced
+"""v1.1 head-to-head - the FIREWALL-side properties (no LLM/sub-agents needed). The LLM (B1) verdicts are produced
 out-of-band by blind reviewers; here we lock in the firewall's by-construction guarantees that the head-to-head
 contrasts against."""
 from __future__ import annotations
@@ -19,7 +19,7 @@ def test_firewall_paraphrase_invariant():
 
 
 def test_firewall_abstains_on_unanswerable():
-    """A: the firewall abstains on every unanswerable (no-ground-truth) quantitative query — it never fabricates."""
+    """A: the firewall abstains on every unanswerable (no-ground-truth) quantitative query - it never fabricates."""
     qs = fabrication.build_queries(seed=7)
     una = [q for q in qs if q["kind"] == "unanswerable"]
     assert una
@@ -37,7 +37,7 @@ def test_firewall_answers_answerable_grounded():
 
 @pytest.mark.skipif(not _HAS_PENSTACK, reason="pen-stack Guardian needed for structural refuse")
 def test_firewall_jailbreak_immune():
-    """D: the firewall refuses every structural jailbreak attempt (0 flips to allow) — it reads the artifact."""
+    """D: the firewall refuses every structural jailbreak attempt (0 flips to allow) - it reads the artifact."""
     from bio_firewall.eval.headtohead import jailbreak
     from bio_firewall.intercept.spine import screen
     attacks = jailbreak.build_attacks(structural_only=True)

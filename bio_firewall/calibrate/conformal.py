@@ -1,27 +1,27 @@
-"""WS-CONFORMAL (v0.4.0) — replace the WITHDRAWN 'determinism' headline with the operational moat an LLM cannot
+"""WS-CONFORMAL (v0.4.0) - replace the WITHDRAWN 'determinism' headline with the operational moat an LLM cannot
 offer: a CALIBRATED, certified ceiling on over-action, plus a competence-conditioned confidence that fixes the P8
-inversion. Three pieces, all distribution-free / finite-sample honest:
+inversion. Three pieces, all distribution-free / finite-sample:
 
   1. NEYMAN-PEARSON FALSE-REFUSE CERTIFICATE. The deployment moat (head-to-head claim D: open LLM judges flip
      refuse->allow 50-83% under injection AND a frontier LLM over-refuses legitimate research 40%). The firewall
-     refuses ONLY on unambiguous hard rules, so its empirical false-refuse on legitimate research is ~0 — we turn
+     refuses ONLY on unambiguous hard rules, so its empirical false-refuse on legitimate research is ~0 - we turn
      that into a CERTIFICATE: a Clopper-Pearson (1-delta) UPPER bound on P(refuse | legitimate research) <= alpha,
      reported as a nominal-vs-empirical coverage curve. (This is exactly what an LLM judge cannot promise.)
 
   2. COMPETENCE-CONDITIONED CONFIDENCE (fixes the P8 inversion). The v0.3 tiers were inverted (high 0.789 <
      moderate 0.938) because a CLEAN ALLOW was labelled 'high' regardless of whether the gene was inside the
-     firewall's knowledge base — so its confident MISSES (independently-hazardous genes ABSENT from its data) sat
+     firewall's knowledge base - so its confident MISSES (independently-hazardous genes ABSENT from its data) sat
      in the 'high' tier. The fix conditions confidence on KB-COVERAGE: a clean allow is high-confidence only when
      the gene is IN the firewall's data (we have evidence it is benign); an OUT-of-coverage allow is LOW confidence
      (the competence boundary, where the misses live) and is a candidate for abstention. This does NOT manufacture
-     a signal that is not there — it HONESTLY routes the unknown to 'low'.
+     a signal that is not there - it routes the unknown to 'low'.
 
   3. SELECTIVE-ABSTENTION operating curve. A continuous risk score (axis severity + continuous gnomAD pLI for the
      clear band, so constrained off-list genes rank above random benigns) drives a threshold sweep: each operating
-     point trades auto-allow MISS-rate against ESCALATION-rate. The honest deliverable is the achievable Pareto
-     frontier (the pre-committed honest-failure path: report operating points, the guarantee is the contribution).
+     point trades auto-allow MISS-rate against ESCALATION-rate. The deliverable is the achievable Pareto
+     frontier (the pre-committed pre-registered fallback path: report operating points, the guarantee is the contribution).
 
-Pure numpy/scipy — no torch/esm. Pre-registered gate: prereg/ws_biofirewall.yaml::upgrade_v04_v10.conformal.
+Pure numpy/scipy - no torch/esm. Pre-registered gate: prereg/ws_biofirewall.yaml::upgrade_v04_v10.conformal.
 """
 from __future__ import annotations
 
@@ -42,7 +42,7 @@ _STRONG_LOCUS = {"locus.genotoxic_proximity", "locus.tumor_suppressor_disruption
 def kb_coverage(gene: str) -> str:
     """Is the firewall COMPETENT to clear this gene? 'in' = a hazard role is known (CancerMine/DepMap);
     'constraint' = no hazard role but gnomAD constraint is known (a characterized gene); 'out' = absent from all
-    vendored data (the competence boundary — a clean allow here is epistemically a guess)."""
+    vendored data (the competence boundary - a clean allow here is epistemically a guess)."""
     if gene_roles(gene):
         return "in"
     if dosage(gene) is not None:
@@ -57,7 +57,7 @@ def _worst(verdict: dict):
 
 def risk_score(verdict: dict, gene: str = "") -> float:
     """Continuous hazard score in [0,1]: a severity band + a continuous gnomAD-pLI nudge inside the CLEAR band, so
-    a constrained (often cancer-relevant) off-list gene ranks above a random benign one — enabling selective
+    a constrained (often cancer-relevant) off-list gene ranks above a random benign one - enabling selective
     escalation that recovers misses at a lower false-flag cost than blanket escalation."""
     w = _worst(verdict)
     if w is None:                                   # clear -> within-band continuous signal from constraint
@@ -73,7 +73,7 @@ def calibrated_confidence(verdict: dict, gene: str = "") -> str:
     """Competence-conditioned confidence (monotone by construction, fixes the inversion):
       high     : a deterministic hard rule fired, OR a strong-positive locus flag (named clinical-CIS / role)
       moderate : a weak mechanism flag (dosage-only), OR a clean allow of an IN-CONSTRAINT-DATA gene
-      low      : a clean allow of an OUT-of-coverage gene (the competence boundary — the misses live here)."""
+      low      : a clean allow of an OUT-of-coverage gene (the competence boundary - the misses live here)."""
     w = _worst(verdict)
     if w is not None:
         if w.get("rule_id") in _DETERMINISTIC:
@@ -125,7 +125,7 @@ def _boot_ci(flags, reps=2000, seed=7):
 
 def mondrian_reliability(rows: list[dict]) -> dict:
     """rows carry: decision, correct (bool vs independent label). Per-decision-class empirical correctness (the
-    Mondrian conditioning) — REPLACES the inverted 3-tier table with an honest per-class reliability."""
+    Mondrian conditioning) - REPLACES the inverted 3-tier table with a per-class reliability."""
     by: dict[str, list[int]] = {}
     for r in rows:
         by.setdefault(r["decision"], []).append(int(r["correct"]))

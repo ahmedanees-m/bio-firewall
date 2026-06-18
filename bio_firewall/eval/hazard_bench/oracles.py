@@ -1,14 +1,14 @@
-"""Independent hazard-labeling oracles — the DE-CIRCULARIZATION core of Benchmark 1.
+"""Independent hazard-labeling oracles - the DE-CIRCULARIZATION core of Benchmark 1.
 
 The firewall flags loci via CancerMine + DepMap + gnomAD (its vendored data). The benchmark must therefore LABEL
 hazard from sources the firewall DOES NOT use, so a high score means the firewall *generalized* to an independent
-definition of hazard — not that it recognized its own gene list (the v0.3 demo's tautology).
+definition of hazard - not that it recognized its own gene list (the v0.3 demo's tautology).
 
 Two tiers:
   - TIER-1 (GOLD): genes implicated in ACTUAL insertional-oncogenesis ADVERSE EVENTS in human gene-therapy trials.
-    Hand-curated literature facts (gene symbol + primary DOI) — public knowledge, safe to commit. This is *measured
+    Hand-curated literature facts (gene symbol + primary DOI) - public knowledge, safe to commit. This is *measured
     harm*; the firewall MUST catch 100% of these (the named, mandatory gate).
-  - TIER-2 (BROAD): independent expert annotations — COSMIC Cancer Gene Census (v104) + NCG. These are LICENSE-
+  - TIER-2 (BROAD): independent expert annotations - COSMIC Cancer Gene Census (v104) + NCG. These are LICENSE-
     RESTRICTED data: loaded from a LOCAL path (`BF_BENCH_ORACLES`, default ../../bench_oracles), gitignored, NEVER
     committed. If absent, the loaders return empty and the broad benchmark is skipped with a clear message.
 
@@ -24,17 +24,17 @@ from pathlib import Path
 # These are the loci near which retroviral/lentiviral vector integration drove clonal expansion / leukemia / MDS in
 # actual patients. Curated from the gene-therapy safety literature (public facts).
 TIER1_CLINICAL_CIS: dict[str, tuple[str, str]] = {
-    "LMO2":   ("SCID-X1 gammaretroviral trials — T-ALL in 5 children", "10.1126/science.1088547"),
-    "CCND2":  ("SCID-X1 gammaretroviral — integration near CCND2 in leukemic clones (Howe 2008)", "10.1172/JCI35798"),
-    "MECOM":  ("CGD & WAS — MDS1-EVI1 activation, clonal dominance/MDS", "10.1038/nm.2088"),
-    "EVI1":   ("CGD — EVI1 activation, clonal dominance", "10.1038/nm.2088"),
-    "MDS1":   ("CGD — MDS1-EVI1 locus activation", "10.1038/nm.2088"),
-    "PRDM16": ("CGD — clonal dominance", "10.1038/nm.2088"),
-    "SETBP1": ("CGD — clonal expansion", "10.1038/nm.2088"),
-    "HMGA2":  ("beta-thalassemia lentiviral trial — clonal dominance", "10.1038/nature09328"),
+    "LMO2":   ("SCID-X1 gammaretroviral trials - T-ALL in 5 children", "10.1126/science.1088547"),
+    "CCND2":  ("SCID-X1 gammaretroviral - integration near CCND2 in leukemic clones (Howe 2008)", "10.1172/JCI35798"),
+    "MECOM":  ("CGD & WAS - MDS1-EVI1 activation, clonal dominance/MDS", "10.1038/nm.2088"),
+    "EVI1":   ("CGD - EVI1 activation, clonal dominance", "10.1038/nm.2088"),
+    "MDS1":   ("CGD - MDS1-EVI1 locus activation", "10.1038/nm.2088"),
+    "PRDM16": ("CGD - clonal dominance", "10.1038/nm.2088"),
+    "SETBP1": ("CGD - clonal expansion", "10.1038/nm.2088"),
+    "HMGA2":  ("beta-thalassemia lentiviral trial - clonal dominance", "10.1038/nature09328"),
     "BMI1":   ("integration-site clonal expansion (CGD/WAS analyses)", "10.1126/scitranslmed.3007280"),
-    "MN1":    ("WAS gammaretroviral trial — clonal expansion", "10.1126/scitranslmed.3007280"),
-    "CCND1":  ("WAS / SCID — proto-oncogene activation precedent", "10.1126/scitranslmed.3007280"),
+    "MN1":    ("WAS gammaretroviral trial - clonal expansion", "10.1126/scitranslmed.3007280"),
+    "CCND1":  ("WAS / SCID - proto-oncogene activation precedent", "10.1126/scitranslmed.3007280"),
     "LMO1":   ("LMO-family activation precedent (paralog of LMO2)", "10.1126/science.1088547"),
 }
 
@@ -79,7 +79,7 @@ def cosmic_oncogenes() -> frozenset[str]:
 
 @lru_cache(maxsize=1)
 def cosmic_fusion_genes() -> frozenset[str]:
-    """Genes COSMIC annotates as participating in oncogenic fusions — the independent edit-axis label."""
+    """Genes COSMIC annotates as participating in oncogenic fusions - the independent edit-axis label."""
     return frozenset(g for g, role in cosmic_cgc().items() if "fusion" in role.lower())
 
 
@@ -104,7 +104,7 @@ def cosmic_fusion_pairs() -> frozenset[tuple[str, str]]:
 @lru_cache(maxsize=1)
 def oncokb_cgl() -> dict[str, str]:
     """OncoKB Cancer Gene List: gene (UPPER) -> Gene Type. Local-only, license-restricted, NEVER committed.
-    (Free for academic use with registration; treated like COSMIC — validation-only, gitignored.)"""
+    (Free for academic use with registration; treated like COSMIC - validation-only, gitignored.)"""
     p = _oracle_dir() / "oncokb_cancerGeneList.tsv"
     if not p.exists():
         return {}
@@ -119,7 +119,7 @@ def oncokb_cgl() -> dict[str, str]:
 
 @lru_cache(maxsize=1)
 def oncokb_genes() -> frozenset[str]:
-    """OncoKB genes with a definite cancer role (ONCOGENE / TSG / both) — excludes INSUFFICIENT_EVIDENCE / NEITHER."""
+    """OncoKB genes with a definite cancer role (ONCOGENE / TSG / both) - excludes INSUFFICIENT_EVIDENCE / NEITHER."""
     return frozenset(g for g, t in oncokb_cgl().items() if t in ("ONCOGENE", "TSG", "ONCOGENE_AND_TSG"))
 
 

@@ -1,4 +1,4 @@
-"""WS-DECOMP (v0.5.0) — the session-level decomposition aggregator catches hazards split across calls that each
+"""WS-DECOMP (v0.5.0) - the session-level decomposition aggregator catches hazards split across calls that each
 pass the per-artifact screen. Deterministic, no torch/esm/COSMIC needed."""
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ _LINK2 = "TTGGCCAATTGGCCAATTGG"
 
 def test_cumulative_scale_caught_when_each_call_passes():
     """26 calls each deleting 45 kb: each is < the 50 kb edit-axis threshold (per-artifact clear), but the session
-    restructures ~1.17 Mb — only the cross-call aggregate trips the scale axis."""
+    restructures ~1.17 Mb - only the cross-call aggregate trips the scale axis."""
     sm = SessionMonitor("s1")
     for _ in range(26):
         plan = {"intent": "research deletion tiling", "edit": {"deleted_bp": 45_000}}

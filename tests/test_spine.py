@@ -1,4 +1,4 @@
-"""Phase-0 acceptance: the governance spine screens artifacts across the five axes and stratifies honestly.
+"""Phase-0 acceptance: the governance spine screens artifacts across the five axes and stratifies.
 CI-safe: the cargo axis falls back gracefully if the PEN-STACK Guardian isn't importable."""
 from __future__ import annotations
 

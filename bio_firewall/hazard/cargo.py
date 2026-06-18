@@ -1,4 +1,4 @@
-"""Axis 1 — CARGO (what you insert). REUSES PEN-STACK's Guardian (Pfam/InterPro + Select-Agent + Australia-Group,
+"""Axis 1 - CARGO (what you insert). REUSES PEN-STACK's Guardian (Pfam/InterPro + Select-Agent + Australia-Group,
 framing-stripped, no hazard sequences), PLUS a function-aware ESM2 layer (cargo_ml) that catches low-identity
 toxin homologs which evade signature/homology screens. The Guardian's declared-function REFUSE wins; the
 probabilistic function-aware signal routes to REVIEW (scope_flag)."""
@@ -13,7 +13,7 @@ from bio_firewall.hazard.finding import Finding, finding
 @lru_cache(maxsize=4096)
 def _guardian(func: str) -> tuple[str, str] | None:
     """(decision, reason) from the PEN-STACK Guardian for a cargo function, or None if unavailable. Cached:
-    identical cargo functions (the common case — a fixed cassette across many loci) screen once."""
+    identical cargo functions (the common case - a fixed cassette across many loci) screen once."""
     try:
         from pen_stack.safety import safety_gate
         v = safety_gate({"cargo_function": func}, actor="biofirewall")
@@ -34,7 +34,7 @@ def screen_cargo(plan: dict) -> Finding:
             return finding("hard_reject", "cargo.select_agent_or_toxin", "cargo", reason, provenance=prov)
         if d == "escalate":
             return finding("scope_flag", "cargo.dual_use_escalate", "cargo",
-                           reason + " — ambiguous dual-use (e.g. gain-of-function) routed to oversight (P3CO/DURC)", provenance=prov)
+                           reason + " - ambiguous dual-use (e.g. gain-of-function) routed to oversight (P3CO/DURC)", provenance=prov)
         if d == "flag":
             return finding("soft_penalty", "cargo.flag", "cargo", reason, provenance=prov)
     if any(t in func.lower() for t in ("gene drive", "gene_drive", "homing endonuclease drive")):
@@ -45,6 +45,6 @@ def screen_cargo(plan: dict) -> Finding:
     if available and score is not None and score > 0.02:
         return finding("scope_flag", "cargo.function_aware_ml", "cargo",
                        f"function-aware ESM2 screen flags a toxin-leaning cargo (lean-score {score:+.3f}) that may evade "
-                       "signature/homology screens — route to review",
+                       "signature/homology screens - route to review",
                        provenance={"source": "ESM2 nearest-centroid (public toxin/benign refs)"}, score=score, extrapolating=True)
     return finding("clear", None, "cargo", "no cargo hazard signature")

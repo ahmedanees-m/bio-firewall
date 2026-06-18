@@ -1,4 +1,4 @@
-"""WS-STRUCT (v0.6.0) — the 3-signal ensemble + abstain-on-disagreement math. Synthetic, no Foldseek/torch; the
+"""WS-STRUCT (v0.6.0) - the 3-signal ensemble + abstain-on-disagreement math. Synthetic, no Foldseek/torch; the
 AlphaFold-DB + Foldseek run is on the VM (struct_bench via run_struct_vm)."""
 from __future__ import annotations
 

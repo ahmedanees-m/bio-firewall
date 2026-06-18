@@ -1,8 +1,8 @@
 """Versioned, signed hazard-KB loader + verifier. A KB release is a YAML in vendored_data/hazard_kb/<version>.yaml:
 
   kb_version, released, schema_version, entries:[{id, type, value, provenance, added_in}, ...],
-  content_sha256  (keyless integrity digest — anyone reproduces it),
-  hmac_sha256     (HMAC over the same canonical content — tamper-evident signature).
+  content_sha256  (keyless integrity digest - anyone reproduces it),
+  hmac_sha256     (HMAC over the same canonical content - tamper-evident signature).
 
 content_sha256 is the reproducible integrity check (committed + CI-verified). hmac_sha256 adds a signed release with
 a key (a public default key here for integrity; a maintainer signs production releases with a private key)."""
@@ -34,7 +34,7 @@ def sign_kb(kb: dict, key: bytes = DEFAULT_KEY) -> str:
 
 
 def verify_kb(kb: dict, key: bytes = DEFAULT_KEY) -> bool:
-    """True iff the content digest AND the HMAC signature both match — a single edited entry breaks both."""
+    """True iff the content digest AND the HMAC signature both match - a single edited entry breaks both."""
     ok_digest = hmac.compare_digest(kb.get("content_sha256", ""), content_digest(kb))
     ok_sig = hmac.compare_digest(kb.get("hmac_sha256", ""), sign_kb(kb, key))
     return ok_digest and ok_sig

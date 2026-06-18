@@ -1,4 +1,4 @@
-"""Benchmark 1 — de-circularized structural-hazard interception (the headline).
+"""Benchmark 1 - de-circularized structural-hazard interception (the headline).
 
 Run:  python -c "from bio_firewall.eval.hazard_bench import run_benchmark1, summary; print(summary(run_benchmark1()))"
 B1 (frontier) verdicts are loaded from BF_B1_VERDICTS (a JSON {gene: decision}) if present; otherwise B1 is skipped."""
@@ -35,11 +35,11 @@ def run_benchmark1(seed: int = 1234, b1_path: str | None = None) -> dict:
 def summary(result: dict) -> str:
     o = result["overall"]
     lines = [
-        "=== BioFirewall Benchmark 1 — de-circularized structural-hazard interception ===",
+        "=== BioFirewall Benchmark 1 - de-circularized structural-hazard interception ===",
         f"oracles: {result['oracles']}",
         f"strata : {result['strata_counts']}",
         "",
-        f"OVERALL firewall interception of INDEPENDENT hazard label (Tier-1 ∪ COSMIC CGC): "
+        f"OVERALL firewall interception of INDEPENDENT hazard label (Tier-1 + COSMIC CGC): "
         f"{o['firewall_interception']:.1%}  CI{o['firewall_ci']}  (n={o['n_hazard']})",
         f"  B0 homology floor: {o['b0_homology_interception']:.1%}"
         + (f"   |  B1 frontier: {o['b1_frontier_interception']:.1%} (n={o['b1_n']})"
@@ -64,7 +64,7 @@ def summary(result: dict) -> str:
         f"  dosage-sensitive negatives (flagging is CORRECT): {u['dosage_sensitive']['flagged_correctly']}/"
         f"{u['dosage_sensitive']['n']} flagged, {u['dosage_sensitive']['wrongly_refused']} wrongly refused",
         f"FAILURE ANALYSIS: firewall missed {fa['n_missed']} independently-hazardous genes "
-        f"(honest false-negatives) e.g. {[m['gene'] for m in fa['missed'][:12]]}",
+        f"(false-negatives) e.g. {[m['gene'] for m in fa['missed'][:12]]}",
     ]
     return "\n".join(lines)
 

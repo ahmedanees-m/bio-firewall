@@ -1,12 +1,12 @@
-"""Benchmark 8 (v0.6.0) — WS-EDIT-MECH generalization. Does the de-novo mechanism screen flag known oncogenic
+"""Benchmark 8 (v0.6.0) - WS-EDIT-MECH generalization. Does the de-novo mechanism screen flag known oncogenic
 fusions that are ABSENT from the curated gene-pair list, with a controlled false-positive on benign constructs?
 
 De-circularization: the curated list is `vendored_data/oncogenic_fusions.yaml` (14 canonical pairs). The held-out
-oncogenic label is **COSMIC's TRANSLOCATION_PARTNER** pairs (local-only, never committed) — pairs the firewall's
+oncogenic label is **COSMIC's TRANSLOCATION_PARTNER** pairs (local-only, never committed) - pairs the firewall's
 mechanism rules (a CC0 fusion-kinase family + CancerMine roles) do NOT enumerate. A high recall = generalization.
 
-Benign false-positive control: random pairs of NON-cancer, non-kinase genes (gnomAD universe) — a benign research
-construct that must NOT trip the oncogenic-mechanism flag. (Honest caveat: a research fusion of a real oncogene
+Benign false-positive control: random pairs of NON-cancer, non-kinase genes (gnomAD universe) - a benign research
+construct that must NOT trip the oncogenic-mechanism flag. (Caveat: a research fusion of a real oncogene
 legitimately flags; the FP control is therefore non-cancer pairs, the construct that should be allowed.)"""
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ def run(seed: int = SEED, n_benign: int = 400) -> dict:
     curated = {tuple(sorted(k.split("::"))) for k in oncogenic_fusions()}
     heldout = [p for p in oracles.cosmic_fusion_pairs() if p not in curated]
     if not heldout:
-        return {"error": "COSMIC fusion pairs not mounted (BF_BENCH_ORACLES) — generalization benchmark skipped"}
+        return {"error": "COSMIC fusion pairs not mounted (BF_BENCH_ORACLES) - generalization benchmark skipped"}
 
     flagged = [int(oncogenic_fusion_mechanism(a, b)[0]) for a, b in heldout]
     kin = [(a, b) for a, b in heldout if a in KINASE_FUSION_GENES or b in KINASE_FUSION_GENES]
@@ -54,8 +54,8 @@ def run(seed: int = SEED, n_benign: int = 400) -> dict:
         "benign_fp_CI": _boot_ci(fp),
         "gate_pass": bool(_boot_ci(flagged)[0] > 0.0 and _boot_ci(fp)[1] < 0.20),
         "gate": "generalization recall CI lower-bound > 0 AND benign-FP CI upper-bound < 0.20",
-        "honest_note": "COSMIC fusion genes overlap CancerMine oncogene roles, so recall is partly role-driven; the "
+        "note": "COSMIC fusion genes overlap CancerMine oncogene roles, so recall is partly role-driven; the "
                        "kinase-family subset is the cleaner generalization signal (a CC0 family list, not COSMIC). A "
-                       "research fusion of a real oncogene legitimately flags — the FP control is non-cancer pairs.",
+                       "research fusion of a real oncogene legitimately flags - the FP control is non-cancer pairs.",
         "seed": seed,
     }

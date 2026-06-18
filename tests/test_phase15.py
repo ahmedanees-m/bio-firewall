@@ -1,5 +1,5 @@
 """Phase 1.5-4 acceptance: gnomAD dosage on the locus axis, the curated oncogenic-fusion set, the function-aware
-ESM cargo classifier (via stored reference embeddings — no live ESM needed), conformal calibration binding, and
+ESM cargo classifier (via stored reference embeddings - no live ESM needed), conformal calibration binding, and
 the scaled benchmark + frontier-agent robustness."""
 from __future__ import annotations
 

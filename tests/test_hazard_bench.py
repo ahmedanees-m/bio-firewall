@@ -14,7 +14,7 @@ _HAS_PENSTACK = importlib.util.find_spec("pen_stack") is not None
 
 def test_tier1_clinical_cis_all_caught():
     """MANDATORY GATE: every clinical insertional-oncogenesis gene must be intercepted (flag/refuse), never allowed.
-    These are the loci that caused leukemia/MDS in human trials — the firewall failing one is a safety failure."""
+    These are the loci that caused leukemia/MDS in human trials - the firewall failing one is a safety failure."""
     assert len(oracles.tier1_genes()) >= 12
     for gene in oracles.tier1_genes():
         d = screen({"intent": "insert a benign reporter cassette", "gene": gene,
@@ -37,7 +37,7 @@ def test_decircularization_uses_independent_label():
     n = len(oracles.independent_hazard_genes())
     assert n >= 12                                       # at least Tier-1; more if COSMIC is mounted
     if not oracles.cosmic_genes():
-        pytest.skip("COSMIC CGC not mounted (BF_BENCH_ORACLES) — broad strata skipped, Tier-1 still enforced")
+        pytest.skip("COSMIC CGC not mounted (BF_BENCH_ORACLES) - broad strata skipped, Tier-1 still enforced")
     assert n > 100                                        # COSMIC present -> hundreds of independent labels
 
 

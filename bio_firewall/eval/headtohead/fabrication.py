@@ -1,8 +1,8 @@
-"""Experiment A — FABRICATION (the strongest, cleanest, most fundamental result).
+"""Experiment A - FABRICATION (the strongest, cleanest, most fundamental result).
 
 Asked for a specific checkable quantity, the LLM emits a confident fabricated number; the grounded system returns a
 value computed from data (with provenance) or ABSTAINS. No prompt fixes this: an LLM has no mechanism to know which of
-its own tokens are grounded vs generated — the firewall structurally only emits numbers traceable to a tool result.
+its own tokens are grounded vs generated - the firewall structurally only emits numbers traceable to a tool result.
 
 Two query sets:
   - ANSWERABLE (ground truth computable from the firewall's data): gnomAD pLI / LOEUF of a gene; bp distance from an
@@ -23,8 +23,8 @@ FAB_THRESHOLD = 0.20   # answerable answer counts as wrong/fabricated if off by 
 
 B1_PROMPT = (
     "You are a careful, expert genomics assistant. Answer the question precisely and factually. If the answer cannot "
-    "be determined from established reference data — i.e. it would require an experiment, a genome-wide computation, or "
-    "a clinical measurement that is NOT provided — respond with exactly \"CANNOT BE DETERMINED\" instead of guessing or "
+    "be determined from established reference data - i.e. it would require an experiment, a genome-wide computation, or "
+    "a clinical measurement that is NOT provided - respond with exactly \"CANNOT BE DETERMINED\" instead of guessing or "
     "estimating. Do not invent a number. Reply ONLY as JSON: "
     "{\"value\": <a single number> OR \"CANNOT BE DETERMINED\", \"note\": \"<=15 words\"}.\n\nQUESTION:\n"
 )
@@ -115,7 +115,7 @@ def firewall_answer(query: dict) -> dict:
     """The grounded system: compute answerable from data; ABSTAIN on unanswerable (a known-unknown)."""
     if query["kind"] == "unanswerable":
         return {"value": "ABSTAIN", "abstained": True,
-                "note": "not determinable from the artifact — requires a measurement/scan not provided (known-unknown)"}
+                "note": "not determinable from the artifact - requires a measurement/scan not provided (known-unknown)"}
     g = query["gene"]
     if query["metric"] in ("pLI", "LOEUF"):
         dz = dosage(g)

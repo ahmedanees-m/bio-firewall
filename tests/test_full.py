@@ -41,7 +41,7 @@ def test_audit_log_chains_and_detects_tampering():
     assert log.verify() is False
 
 
-# ---- §7 per-axis interception benchmark ----
+# ---- Section 7 per-axis interception benchmark ----
 def test_benchmark_intercepts_what_homology_misses():
     r = run()
     assert r["homology_baseline_interception"] == 0.0     # homology screen is blind to structural hazards

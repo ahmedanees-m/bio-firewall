@@ -50,7 +50,7 @@ def dosage(gene: str) -> tuple[float, float | None] | None:
 @lru_cache(maxsize=1)
 def _oncogene_tss() -> dict:
     """chrom -> (sorted TSS array, gene array, role array) for the oncogene/driver/genotoxic-CIS TSS reference
-    (GENCODE coords × CancerMine CC0 roles). Powers the WS-LOCUS-POS positional screen. Empty if not vendored."""
+    (GENCODE coords x CancerMine CC0 roles). Powers the WS-LOCUS-POS positional screen. Empty if not vendored."""
     p = _VD / "oncogene_tss.parquet"
     if not p.exists():
         return {}

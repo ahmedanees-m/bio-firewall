@@ -1,19 +1,19 @@
-"""WS-LOCUS-OUTCOME (v0.5.0) — outcome-validate the locus axis on REAL integration-site data, the open-data floor.
+"""WS-LOCUS-OUTCOME (v0.5.0) - outcome-validate the locus axis on REAL integration-site data, the open-data floor.
 
-§6 limit #2: the locus genotoxicity proxy flags on MECHANISM and is NOT outcome-validated; the two gene-census
+Section 6 limit #2: the locus genotoxicity proxy flags on MECHANISM and is NOT outcome-validated; the two gene-census
 benchmarks (COSMIC 80.4%, OncoKB 82.0%) are recall-against-curation, not validation-against-outcomes. This module
 tests whether the firewall's locus-risk ENRICHES for an integration-site OUTCOME signal in real data.
 
-Open-data floor: **VISDB** (Viral Integration Site DataBase, Tang et al. 2020, NAR 10.1093/nar/gkz867) — the same
+Open-data floor: **VISDB** (Viral Integration Site DataBase, Tang et al. 2020, NAR 10.1093/nar/gkz867) - the same
 catalogue PEN-STACK's v5.2 genotoxicity oracle uses (local-only on the VM; never committed). Each integration site
 carries a **Sample type** (Tumor vs non-tumor); we map each site to its nearest gene (GENCODE coords) and test
 whether firewall-flagged loci are enriched among TUMOR-associated integration sites.
 
 PRE-REGISTERED gate (prereg upgrade_v04_v10.locus_outcome): OR with CI excluding 1, OR AUROC with CI excluding 0.5.
-HONEST status (pre-committed, user deferred controlled-access dbGaP/EGA 2026-06-18): this VISDB floor is an
-ASSOCIATIVE, RETROSPECTIVE enrichment — 'tumor sample-source' is not a causal insertional-oncogenesis outcome and
-is confounded by virus biology (HTLV→ATL, HIV in cancer patients). A modest validated enrichment is the floor; the
-CAUSAL / prospective clonal-outcome validation remains 'outcome-validation pending — data access in review'.
+STATUS (pre-committed, user deferred controlled-access dbGaP/EGA 2026-06-18): this VISDB floor is an
+ASSOCIATIVE, RETROSPECTIVE enrichment - 'tumor sample-source' is not a causal insertional-oncogenesis outcome and
+is confounded by virus biology (HTLV->ATL, HIV in cancer patients). A modest validated enrichment is the floor; the
+CAUSAL / prospective clonal-outcome validation remains 'outcome-validation pending - data access in review'.
 
 Harness (`validate_enrichment`) is generic + torch-free (numpy/sklearn); the VISDB run (`run_visdb`) needs pandas +
 the local VISDB + gene_coords (VM only).
@@ -29,7 +29,7 @@ WINDOW_BP = 50_000
 
 
 # --------------------------------------------------------------------------------------------------------------
-# generic enrichment harness (gene-clustered bootstrap — a gene appears at many sites; cluster to avoid pseudo-rep)
+# generic enrichment harness (gene-clustered bootstrap - a gene appears at many sites; cluster to avoid pseudo-rep)
 # --------------------------------------------------------------------------------------------------------------
 def _auroc(y, p, w=None):
     from sklearn.metrics import roc_auc_score
@@ -40,7 +40,7 @@ def _odds_ratio(flag, outcome, w=None):
     import numpy as np
     flag, outcome = np.asarray(flag, int), np.asarray(outcome, int)
     w = np.ones(len(flag)) if w is None else np.asarray(w, float)
-    a = w[(flag == 1) & (outcome == 1)].sum() + 0.5          # Haldane–Anscombe correction
+    a = w[(flag == 1) & (outcome == 1)].sum() + 0.5          # Haldane-Anscombe correction
     b = w[(flag == 1) & (outcome == 0)].sum() + 0.5
     c = w[(flag == 0) & (outcome == 1)].sum() + 0.5
     d = w[(flag == 0) & (outcome == 0)].sum() + 0.5
@@ -169,7 +169,7 @@ def run_visdb(out_dir: str = "bf_locus_outcome", visdb_dir: str | None = None,
     mapped["flag"] = [x[1] for x in rf]
 
     res = validate_enrichment(mapped["risk"], mapped["flag"], mapped["tumor"], mapped["gene"])
-    # per-virus split (HTLV→ATL is the most insertional-oncogenesis-relevant)
+    # per-virus split (HTLV->ATL is the most insertional-oncogenesis-relevant)
     per_virus = {}
     for v, g in mapped.groupby("virus"):
         if g["tumor"].nunique() > 1:
@@ -180,7 +180,7 @@ def run_visdb(out_dir: str = "bf_locus_outcome", visdb_dir: str | None = None,
         "n_sites_total": int(len(sites)), "n_sites_mapped_to_gene": int(len(mapped)),
         "n_tumor_sites": int(mapped["tumor"].sum()),
         "overall": res, "per_virus": per_virus,
-        "honest_status": ("ASSOCIATIVE retrospective enrichment on open VISDB data — 'tumor sample-source' is not a "
+        "status_note": ("ASSOCIATIVE retrospective enrichment on open VISDB data - 'tumor sample-source' is not a "
                           "causal insertional-oncogenesis outcome and is confounded by virus biology. The CAUSAL / "
                           "prospective clonal-outcome validation (controlled-access dbGaP/EGA) is DEFERRED -> "
                           "'outcome-validation pending'. A passing gate here is a floor, not a validated risk model."),

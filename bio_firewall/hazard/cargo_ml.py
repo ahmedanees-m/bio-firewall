@@ -3,10 +3,10 @@
 embedding captures protein FUNCTION beyond sequence identity.
 
 OPTIONAL + graceful: it needs `fair-esm` + torch (the `ml` extra) for live embedding, and the vendored centroids
-(`vendored_data/cargo_centroids.npz`, derived from PUBLIC toxin/benign reference proteins — only the centroid
+(`vendored_data/cargo_centroids.npz`, derived from PUBLIC toxin/benign reference proteins - only the centroid
 VECTORS ship, never sequences). When ESM/centroids are unavailable the caller falls back to the Guardian screen.
 
-HONESTY: this is a probabilistic signal -> it routes to REVIEW (scope_flag), not an auto-block; the prereg gate is a
+NOTE: this is a probabilistic signal -> it routes to REVIEW (scope_flag), not an auto-block; the prereg gate is a
 homology-clustered <=40%-identity evaluation (TPR@1%FPR + shortcut probes), declared in prereg/ws_biofirewall.yaml."""
 from __future__ import annotations
 
@@ -53,7 +53,7 @@ def _embed(sequence: str):
 
 def score_embedding(emb) -> float | None:
     """Toxin-lean score from a precomputed embedding: cos(emb, toxin_centroid) - cos(emb, benign_centroid).
-    >0 = toxin-leaning. (Testable without running ESM — used with stored reference embeddings.)"""
+    >0 = toxin-leaning. (Testable without running ESM - used with stored reference embeddings.)"""
     c = _centroids()
     if c is None or emb is None:
         return None

@@ -1,4 +1,4 @@
-"""P7 — tamper-evident, hash-chained audit log. Each entry chains to the previous via SHA256(prev_hash + record),
+"""P7 - tamper-evident, hash-chained audit log. Each entry chains to the previous via SHA256(prev_hash + record),
 so any retroactive edit/deletion breaks the chain. Every screened plan + verdict is immutably logged + verifiable."""
 from __future__ import annotations
 

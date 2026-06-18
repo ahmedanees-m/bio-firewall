@@ -1,4 +1,4 @@
-"""CI license gate (carried from PEN-STACK v6.6) — the vendored data is open-only (CC0/CC-BY/public-domain).
+"""CI license gate (carried from PEN-STACK v6.6) - the vendored data is open-only (CC0/CC-BY/public-domain).
 Fails the build if a restricted source (COSMIC, OncoKB) is the source of any vendored artifact, or a raw
 restricted gene-list is committed. The legal crux: the oncogene/TSG *list* is from a CC0 compilation (CancerMine)."""
 from __future__ import annotations

@@ -1,5 +1,5 @@
 """Unit tests for the WS-CARGO-DECORR helpers (composition matching + bootstrap math). Synthetic data, no torch/
-esm/bf_b2 needed — the DANN head + the full run() execute on the VM with the frozen Benchmark-2 vectors. Here we
+esm/bf_b2 needed - the DANN head + the full run() execute on the VM with the frozen Benchmark-2 vectors. Here we
 just verify the matching and the permutation test are correct, so the headline 'composition-matched' claim is sound."""
 from __future__ import annotations
 
@@ -35,7 +35,7 @@ def test_energy_pvalue_separates_same_from_different():
 
 
 def test_matching_makes_negatives_indistinguishable_from_positives():
-    """Greedy composition matching should select a benign subset whose composition matches the positives — i.e.
+    """Greedy composition matching should select a benign subset whose composition matches the positives - i.e.
     the energy-distance p-value rises above 0.05 after matching (it was < 0.05 against the full off-distribution pool)."""
     rng = np.random.RandomState(1)
     pos = rng.normal(0.0, 1.0, (40, 20))

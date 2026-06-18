@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bio-firewall"
 version = "0.7.0"
-description = "BioFirewall — a rule-governed, genome-writing-native biosecurity middleware that supervises agentic design AI (allow / flag-for-review / refuse, with cited evidence)."
+description = "BioFirewall - a rule-governed, genome-writing-native biosecurity middleware that supervises agentic design AI (allow / flag-for-review / refuse, with cited evidence)."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "Apache-2.0" }

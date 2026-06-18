@@ -1,4 +1,4 @@
-"""P4 — the signed design passport. Aggregates the verdict + an inputs hash into a tamper-evident, NTI/IBBIS-
+"""P4 - the signed design passport. Aggregates the verdict + an inputs hash into a tamper-evident, NTI/IBBIS-
 aligned passport, HMAC-SHA256 signed with a deployment key (BIOFW_PASSPORT_KEY). A synthesis provider can verify
 the passport to confirm a sequence was screened and what it was screened as."""
 from __future__ import annotations

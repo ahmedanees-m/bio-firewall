@@ -1,4 +1,4 @@
-"""WS-LIVING-KB (v0.7.0) — the signed hazard KB verifies, every entry carries provenance, and the KB is a SUPERSET
+"""WS-LIVING-KB (v0.7.0) - the signed hazard KB verifies, every entry carries provenance, and the KB is a SUPERSET
 of the in-code signatures (it cannot silently drift from what the screen actually uses)."""
 from __future__ import annotations
 

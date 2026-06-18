@@ -1,4 +1,4 @@
-"""WS-COMBINE-MONO (v0.6.0) — the monotone, interaction-aware combiner: provably monotone, hard-rule-exact, and
+"""WS-COMBINE-MONO (v0.6.0) - the monotone, interaction-aware combiner: provably monotone, hard-rule-exact, and
 decision-equivalent to the v0.5 cascade. Pure logic, no torch/pen_stack."""
 from __future__ import annotations
 

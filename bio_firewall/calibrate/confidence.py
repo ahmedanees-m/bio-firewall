@@ -1,9 +1,9 @@
-"""P8 — bind conformal-style confidence + abstention to the hazard verdict (legality ≠ confidence).
+"""P8 - bind conformal-style confidence + abstention to the hazard verdict (legality != confidence).
 
-HONEST tiers (no fabricated probability): a DETERMINISTIC rule match (Select-Agent cargo, human-heritable-clinical,
+Confidence tiers (no fabricated probability): a DETERMINISTIC rule match (Select-Agent cargo, human-heritable-clinical,
 a known oncogenic fusion) is HIGH confidence; a data-grounded MECHANISM flag (oncogene/TSG/essential/dosage/genotox
-proximity — extrapolating, not outcome-validated) is MODERATE; a PROBABILISTIC/ML signal (function-aware ESM) is LOW.
-A low-confidence ALLOW is ESCALATED to flag_for_review — we do not confidently clear what we cannot confidently
+proximity - extrapolating, not outcome-validated) is MODERATE; a PROBABILISTIC/ML signal (function-aware ESM) is LOW.
+A low-confidence ALLOW is ESCALATED to flag_for_review - we do not confidently clear what we cannot confidently
 assess (lower the abstention threshold under uncertainty)."""
 from __future__ import annotations
 
@@ -31,5 +31,5 @@ def calibrate(verdict: dict) -> dict:
     verdict["abstain"] = abstain = (verdict["decision"] == "allow" and conf == "low")
     if abstain:
         verdict["decision"] = "flag_for_review"
-        verdict["reason"] = "low confidence on a clear verdict — escalated to review rather than confidently allowed"
+        verdict["reason"] = "low confidence on a clear verdict - escalated to review rather than confidently allowed"
     return verdict

@@ -1,4 +1,4 @@
-"""BioFirewall v0.1 demo — the five-axis screen on representative proxy plans (safe proxies only)."""
+"""BioFirewall v0.1 demo - the five-axis screen on representative proxy plans (safe proxies only)."""
 from bio_firewall import screen
 
 PLANS = [

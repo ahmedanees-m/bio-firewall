@@ -1,8 +1,8 @@
-"""Benchmark 9 (v0.6.0) — WS-LOCUS-POS coverage. On real VISDB integration sites, how many does the POSITIONAL
+"""Benchmark 9 (v0.6.0) - WS-LOCUS-POS coverage. On real VISDB integration sites, how many does the POSITIONAL
 screen flag (promoter/enhancer-proximal to an oncogene TSS) that the gene-BODY membership lookup misses (the
 insertion is not inside an oncogene's coding body)? That gap is the SCID-X1/LMO2 mechanism made concrete.
 
-The outcome-AUROC-improvement claim is DEFERRED (no validated integration-site outcome data — controlled-access,
+The outcome-AUROC-improvement claim is DEFERRED (no validated integration-site outcome data - controlled-access,
 deferred). This reports a COUNT, not a validated rate. Needs the local VISDB + gene coords + the vendored
 oncogene_tss reference (VM)."""
 from __future__ import annotations
@@ -71,9 +71,9 @@ def run_visdb(out_dir: str = "bf_locus_pos", visdb_dir: str | None = None,
         "pct_positional_adds_over_genebody": round(100 * len(missed) / max(1, n_pos), 1),
         "examples_genebody_missed": examples,
         "note": ("positional flags promoter/enhancer-proximal insertions a gene-BODY lookup misses (the LMO2 "
-                 "mechanism). COUNT only — the outcome-AUROC-improvement claim is DEFERRED (controlled-access "
+                 "mechanism). COUNT only - the outcome-AUROC-improvement claim is DEFERRED (controlled-access "
                  "integration-site outcome data deferred 2026-06-18; the open VISDB floor was the wrong virus biology)."),
-        "source": "VISDB (10.1093/nar/gkz867) × GENCODE TSS × CancerMine roles; all local-only",
+        "source": "VISDB (10.1093/nar/gkz867) x GENCODE TSS x CancerMine roles; all local-only",
     }
     (wd / "results.json").write_text(json.dumps(result, indent=2, default=str))
     return result

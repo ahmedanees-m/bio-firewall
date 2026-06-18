@@ -1,7 +1,7 @@
-"""WS-CARGO-DECORR (v0.4.0) — prove the cargo ESM2 signal is FUNCTION-driven, not the amino-acid-COMPOSITION
-shortcut that Benchmark-2 flagged (composition probe AUROC 0.93 / TPR@1%FPR 0.562; the ESM head 0.72 — a modest
+"""WS-CARGO-DECORR (v0.4.0) - prove the cargo ESM2 signal is FUNCTION-driven, not the amino-acid-COMPOSITION
+shortcut that Benchmark-2 flagged (composition probe AUROC 0.93 / TPR@1%FPR 0.562; the ESM head 0.72 - a modest
 margin). Three independent lines of evidence, all reusing the FROZEN Benchmark-2 artifacts (bf_b2/, local-only,
-never committed — only vectors + sequences that were already public UniProt proxies):
+never committed - only vectors + sequences that were already public UniProt proxies):
 
   1. COMPOSITION-MATCHED EVALUATION (the cleanest test). Build a benign negative test set whose 20-dim AA-frequency
      distribution MATCHES the toxin positives (greedy k:1 nearest-neighbour matching + a 2-sample energy/MMD
@@ -9,11 +9,11 @@ never committed — only vectors + sequences that were already public UniProt pr
      a composition-reliant classifier collapses to chance while a function-aware one RETAINS signal.
   2. ADVERSARIAL DECORRELATION (DANN). Train the toxin/benign head on a representation made composition-INVARIANT by
      a gradient-reversal composition-predictor head, and re-measure on the matched set.
-  3. ATTRIBUTION. Per-residue saliency on sampled true positives — show the signal is sparse/localized (motif-like),
+  3. ATTRIBUTION. Per-residue saliency on sampled true positives - show the signal is sparse/localized (motif-like),
      not spread uniformly across the sequence (which is what a bulk-composition signal would look like).
 
 PRE-REGISTERED GATE (prereg upgrade_v04_v10.cargo_decorr): the decorrelated head on the matched set retains
-TPR@1%FPR >= 0.60 with a cluster-bootstrap CI lower bound > 0.562. HONEST-FAILURE (pre-committed): if the CI does
+TPR@1%FPR >= 0.60 with a cluster-bootstrap CI lower bound > 0.562. FALLBACK (pre-committed): if the CI does
 not exclude 0.562 -> report 'cargo signal is substantially compositional', demote claim C, lead on D + operational.
 We additionally report a PAIRED bootstrap of (ESM - composition) on the matched set (a lower-variance test of the
 same hypothesis) and the composition-probe collapse, and we do NOT tune the matched set to rescue the margin.
@@ -71,7 +71,7 @@ def load_aligned(bf_b2: Path):
     ltr, lte = lab(train_k), lab(test_k)
     assert len(train_k) == len(ytr) and len(test_k) == len(yte), \
         f"length mismatch train {len(train_k)}/{len(ytr)} test {len(test_k)}/{len(yte)}"
-    assert (ltr == ytr).all() and (lte == yte).all(), "recovered labels do not match saved vectors — alignment broke"
+    assert (ltr == ytr).all() and (lte == yte).all(), "recovered labels do not match saved vectors - alignment broke"
     seqs = {**allseq, **test_seq}
     return {
         "train_k": train_k, "test_k": test_k, "seqs": seqs, "clu": clu,
@@ -130,7 +130,7 @@ def cluster_boot(y, p, clusters, fn, reps=2000, seed=SEED):
 
 
 def paired_boot_diff(y, pa, pb, clusters, fn, reps=2000, seed=SEED):
-    """Cluster-bootstrap CI of (metric(pa) - metric(pb)) — a lower-variance paired test of 'a beats b'."""
+    """Cluster-bootstrap CI of (metric(pa) - metric(pb)) - a lower-variance paired test of 'a beats b'."""
     import numpy as np
     uc, groups = _cluster_groups(clusters)
     rng = np.random.RandomState(seed)
@@ -194,7 +194,7 @@ def match_negatives(pos_comp, neg_comp, k=5, caliper=None):
 def match_common_support(pos_comp, neg_comp, caliper_pctl=25):
     """Bidirectional COMMON-SUPPORT matching: keep only positives AND negatives that have a cross-class neighbour
     within a TIGHT caliper (a low percentile of all nearest cross-class distances). This restricts the evaluation
-    to the region where toxin and benign compositions OVERLAP — where composition genuinely cannot discriminate —
+    to the region where toxin and benign compositions OVERLAP - where composition genuinely cannot discriminate -
     so the composition probe should collapse to chance. Returns (pos_idx_keep, neg_idx_keep, caliper)."""
     import numpy as np
     D = np.sqrt(((pos_comp[:, None, :] - neg_comp[None, :, :]) ** 2).sum(-1))   # n_pos x n_neg
@@ -291,7 +291,7 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
                 "TPR@5%FPR": round(t5(y, p), 3), "TPR@5%FPR_CI": cluster_boot(y, p, c, t5),
                 "AUROC": round(_auroc(y, p), 3), "AUROC_CI": cluster_boot(y, p, c, _auroc)}
 
-    # ADJUDICATION — TPR@1%FPR is underpowered (the held-out negatives set the 1%-FPR threshold on ~3-4 proteins);
+    # ADJUDICATION - TPR@1%FPR is underpowered (the held-out negatives set the 1%-FPR threshold on ~3-4 proteins);
     # AUROC uses every point and is the powered, paired test of 'the DECORRELATED signal beats composition'.
     auroc_dann_vs_comp = paired_boot_diff(yte, p_dann_full, p_comp_full, cte, _auroc)
     auroc_orig_vs_comp = paired_boot_diff(yte, p_orig_full, p_comp_full, cte, _auroc)
@@ -320,7 +320,7 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
         },
         "seed": SEED,
     }
-    # pre-registered gate (TPR@1%FPR-based) — evaluated honestly
+    # pre-registered gate (TPR@1%FPR-based) - evaluated
     dann_tpr1 = res["full_test"]["esm_dann"]["TPR@1%FPR"]
     dann_tpr1_ci = res["full_test"]["esm_dann"]["TPR@1%FPR_CI"]
     orig_tpr1_ci = res["full_test"]["esm_orig"]["TPR@1%FPR_CI"]
@@ -339,9 +339,9 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
         "adjudication_auroc_decorrelated_beats_composition": bool(auroc_decorr_beats_comp),
         "dann_auroc": res["full_test"]["esm_dann"]["AUROC"], "dann_auroc_ci": res["full_test"]["esm_dann"]["AUROC_CI"],
         "composition_auroc": res["full_test"]["composition_probe"]["AUROC"],
-        "honest_conclusion": (
-            "(1) Toxin and benign AA-composition are GENUINELY SEPARABLE — no composition-matched benign set can be "
-            "built from the held-out pool (energy p<0.05 even on the tight common-support region) — so the "
+        "conclusion": (
+            "(1) Toxin and benign AA-composition are GENUINELY SEPARABLE - no composition-matched benign set can be "
+            "built from the held-out pool (energy p<0.05 even on the tight common-support region) - so the "
             "composition confound is real. (2) At the strict 1%-FPR DEPLOYMENT operating point the ESM advantage "
             "over the composition probe (0.562) is NOT statistically established: the original head is 0.72 but its "
             "CI lower bound (~0.45) does not exclude 0.562, and the decorrelated head's TPR@1%FPR is unstable "
@@ -349,10 +349,10 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
             "PRE-REGISTERED gate does NOT pass. (3) The POWERED adjudication is AUROC: the composition-INVARIANT "
             "(DANN) representation retains AUROC ~0.985 vs composition-alone ~0.93 with the PAIRED CI excluding 0, "
             "and decorrelation costs only ~0.003 AUROC -> the signal is SUBSTANTIALLY NON-COMPOSITIONAL in RANKING. "
-            "(4) Per the pre-committed honest-failure path we DEMOTE C from 'cleanest claim': it is not a clean "
+            "(4) Per the pre-committed pre-registered fallback path we DEMOTE C from 'cleanest claim': it is not a clean "
             "operating-point win; the manuscript leads on D + operational properties, reporting the cargo gate as "
             "AUROC-level-non-compositional with an explicit 1%-FPR operating-point caveat."),
-        "honest_failure_path_invoked": True,
+        "fallback_invoked": True,
     }
     (wd / "results.json").write_text(json.dumps(res, indent=2))
     return res

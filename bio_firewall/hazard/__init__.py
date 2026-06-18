@@ -1,4 +1,4 @@
-"""The five-axis write-plan hazard screen (P2 — the differentiator)."""
+"""The five-axis write-plan hazard screen (P2 - the differentiator)."""
 from __future__ import annotations
 
 from bio_firewall.hazard.cargo import screen_cargo

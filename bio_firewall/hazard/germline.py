@@ -1,8 +1,8 @@
-"""Axis 4 — GERMLINE / HERITABLE  [genuinely NEW — no PEN-STACK coverage].
+"""Axis 4 - GERMLINE / HERITABLE  [genuinely NEW - no PEN-STACK coverage].
 
 Flags the heritability / germline-accessibility of a write plan. A regulatory/policy axis: it FLAGS and routes
-to human / IRB / ESCRO review — it does NOT adjudicate ethics. `hard_reject` only for the unambiguous (human
-heritable CLINICAL editing — the He Jiankui line, prohibited); embryo/germ-cell research is `scope_flag` to
+to human / IRB / ESCRO review - it does NOT adjudicate ethics. `hard_reject` only for the unambiguous (human
+heritable CLINICAL editing - the He Jiankui line, prohibited); embryo/germ-cell research is `scope_flag` to
 declared oversight; non-therapeutic enhancement on a heritable target is a `soft_penalty`.
 """
 from __future__ import annotations
@@ -40,9 +40,9 @@ def screen_germline(plan: dict) -> Finding:
                        provenance={"source": "WHO human-genome-editing framework; national prohibitions"})
     if is_human and (ct in _GERMLINE_CELLS or ct in _PLURIPOTENT):
         return finding("scope_flag", "germline.human_embryo_research", "germline",
-                       "human embryo / germ-cell / pluripotent target — route to declared IRB/ESCRO oversight",
+                       "human embryo / germ-cell / pluripotent target - route to declared IRB/ESCRO oversight",
                        provenance={"note": "research is permitted under oversight in many jurisdictions; not adjudicated here"})
     if heritable and _is_enhancement(plan):
         return finding("soft_penalty", "germline.enhancement_nontherapeutic", "germline",
                        "heritable target with a non-therapeutic enhancement intent")
-    return finding("clear", None, "germline", "somatic / non-heritable target — no germline-accessibility signal")
+    return finding("clear", None, "germline", "somatic / non-heritable target - no germline-accessibility signal")

@@ -1,17 +1,17 @@
-"""WS-COMBINE-MONO (v0.6.0) — a PROVABLY-MONOTONE, interaction-aware evidence combiner that replaces the
+"""WS-COMBINE-MONO (v0.6.0) - a PROVABLY-MONOTONE, interaction-aware evidence combiner that replaces the
 hand-tuned max-severity cascade.
 
 Two properties a cascade cannot give you together:
-  1. MONOTONICITY — adding a hazard finding, or strengthening one, NEVER lowers the combined severity (verified on
+  1. MONOTONICITY - adding a hazard finding, or strengthening one, NEVER lowers the combined severity (verified on
      a perturbation suite, `verify_monotone`). This is what makes a stricter screen provably stricter.
-  2. CROSS-AXIS INTERACTION — three co-occurring MODERATE signals are more concerning than one. A `max` cascade is
-     flat across them; a noisy-OR `1 - Π(1 - rᵢ)` rises with each signal (and is monotone by construction:
-     ∂/∂rᵢ = Π_{j≠i}(1 - rⱼ) ≥ 0).
+  2. CROSS-AXIS INTERACTION - three co-occurring MODERATE signals are more concerning than one. A `max` cascade is
+     flat across them; a noisy-OR `1 - prod(1 - r_i)` rises with each signal (and is monotone by construction:
+     d/dr_i = prod_{j!=i}(1 - r_j) >= 0).
 
-HARD-RULE EXACTNESS — any `hard_reject` pins severity to 1.0 → refuse, with NO de-escalation: the soft severity is
+HARD-RULE EXACTNESS - any `hard_reject` pins severity to 1.0 -> refuse, with NO de-escalation: the soft severity is
 capped strictly below the refuse threshold, so soft signals escalate WITHIN the flag tier (a more-urgent review)
 but can never auto-refuse legitimate research. Decisions are therefore IDENTICAL to the v0.5 cascade
-(hard→refuse, any-soft→flag, none→allow) — only a richer, monotone, auditable SEVERITY is added.
+(hard->refuse, any-soft->flag, none->allow) - only a richer, monotone, auditable SEVERITY is added.
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from bio_firewall.hazard.finding import SEVERITY
 
 # per-finding base risk (continuous). hard_reject is pinned; soft tiers ordered scope_flag > soft_penalty.
 _BASE = {"hard_reject": 1.0, "scope_flag": 0.60, "soft_penalty": 0.30, "clear": 0.0}
-# named-positive locus evidence is weightier than a dosage-only flag (still soft) — a small, documented bump.
+# named-positive locus evidence is weightier than a dosage-only flag (still soft) - a small, documented bump.
 _STRONG = {"locus.genotoxic_proximity", "locus.tumor_suppressor_disruption", "locus.oncogene_proximity",
            "edit.fusion_unknown_oncogenicity"}
 FLAG_THRESHOLD = 0.30        # severity >= this -> flag (a single soft_penalty reaches it -> decisions unchanged)

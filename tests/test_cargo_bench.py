@@ -1,4 +1,4 @@
-"""Unit tests for the Benchmark-2 (cargo ML gate) metric helpers — synthetic data, no mmseqs/esm/torch needed.
+"""Unit tests for the Benchmark-2 (cargo ML gate) metric helpers - synthetic data, no mmseqs/esm/torch needed.
 The full pipeline (UniProt + MMseqs2 + ESM2-650M) runs on a GPU/CPU box with those tools; here we just verify the
 deployment-operating-point metrics are correct so the headline TPR@1%FPR number is trustworthy."""
 from __future__ import annotations

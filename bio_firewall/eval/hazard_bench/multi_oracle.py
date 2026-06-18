@@ -1,5 +1,5 @@
 """Multi-oracle de-circularization report: firewall recall against TWO independent cancer-gene censuses (COSMIC CGC
-v104 and OncoKB) that the firewall does NOT use, plus the COSMIC-vs-OncoKB DISAGREEMENT analysis (the honest part).
+v104 and OncoKB) that the firewall does NOT use, plus the COSMIC-vs-OncoKB DISAGREEMENT analysis (the part).
 
 Each gene gets a benign-cargo plan; the firewall decision is intercept (flag/refuse) or allow. Recall = fraction of
 an oracle's genes intercepted. Disagreements (oracle-A-only genes) test whether the firewall generalizes beyond any
@@ -35,7 +35,7 @@ def run() -> dict:
 
     out = {
         "oracle_sizes": {"cosmic": len(cosmic), "oncokb": len(oncokb), "tier1": len(tier1),
-                         "cosmic∩oncokb": len(cosmic & oncokb),
+                         "cosmic&oncokb": len(cosmic & oncokb),
                          "oncokb_only": len(oncokb - cosmic), "cosmic_only": len(cosmic - oncokb)},
         "firewall_recall": {
             "vs_cosmic": _recall(cosmic | tier1),
@@ -59,7 +59,7 @@ def summary(r: dict) -> str:
     fr = r["firewall_recall"]
     dg = r["disagreement"]
     L = ["=== Multi-oracle de-circularization (firewall vs two INDEPENDENT cancer-gene censuses) ===",
-         f"oracle sizes: COSMIC {s['cosmic']}, OncoKB {s['oncokb']}, overlap {s['cosmic∩oncokb']}, "
+         f"oracle sizes: COSMIC {s['cosmic']}, OncoKB {s['oncokb']}, overlap {s['cosmic&oncokb']}, "
          f"OncoKB-only {s['oncokb_only']}, COSMIC-only {s['cosmic_only']}",
          "",
          f"firewall recall vs COSMIC(+Tier1)   : {fr['vs_cosmic']['recall']:.1%}  ({fr['vs_cosmic']['caught']}/{fr['vs_cosmic']['n']})",

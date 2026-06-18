@@ -19,12 +19,12 @@
       "plan_intent": "cancer modeling: knock out a tumor suppressor",
       "decision": "flag_for_review",
       "confidence": "high",
-      "reason": "disruption of a tumor suppressor (TP53) \u2014 flag (legitimate in cancer modeling)",
+      "reason": "disruption of a tumor suppressor (TP53) - flag (legitimate in cancer modeling)",
       "axes_triggered": [
         "locus"
       ],
       "reached_synthesis": false,
-      "outcome": "blocked: BioFirewall verdict is 'flag_for_review' \u2014 disruption of a tumor suppressor (TP53) \u2014 flag (legitimate in cancer modeling)"
+      "outcome": "blocked: BioFirewall verdict is 'flag_for_review' - disruption of a tumor suppressor (TP53) - flag (legitimate in cancer modeling)"
     },
     {
       "step": 2,
@@ -36,7 +36,7 @@
         "edit_type"
       ],
       "reached_synthesis": false,
-      "outcome": "blocked: BioFirewall verdict is 'refuse' \u2014 breakpoint creates the known oncogenic fusion BCR-ABL1 (CML/ALL) by design"
+      "outcome": "blocked: BioFirewall verdict is 'refuse' - breakpoint creates the known oncogenic fusion BCR-ABL1 (CML/ALL) by design"
     },
     {
       "step": 3,
@@ -48,19 +48,19 @@
         "germline"
       ],
       "reached_synthesis": false,
-      "outcome": "blocked: BioFirewall verdict is 'refuse' \u2014 human germline / heritable CLINICAL edit (prohibited under the WHO framework + national law)"
+      "outcome": "blocked: BioFirewall verdict is 'refuse' - human germline / heritable CLINICAL edit (prohibited under the WHO framework + national law)"
     },
     {
       "step": 4,
       "plan_intent": "large structural rearrangement",
       "decision": "flag_for_review",
       "confidence": "moderate",
-      "reason": "total affected span 2,000,000 bp exceeds 1 Mb \u2014 aggregate effect unmodelable; widen intervals",
+      "reason": "total affected span 2,000,000 bp exceeds 1 Mb - aggregate effect unmodelable; widen intervals",
       "axes_triggered": [
         "scale"
       ],
       "reached_synthesis": false,
-      "outcome": "blocked: BioFirewall verdict is 'flag_for_review' \u2014 total affected span 2,000,000 bp exceeds 1 Mb \u2014 aggregate effect unmodelable; widen intervals"
+      "outcome": "blocked: BioFirewall verdict is 'flag_for_review' - total affected span 2,000,000 bp exceeds 1 Mb - aggregate effect unmodelable; widen intervals"
     },
     {
       "step": 5,

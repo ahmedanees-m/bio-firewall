@@ -1,4 +1,4 @@
-"""WS-EDIT-MECH (v0.6.0) — de-novo oncogenic-fusion detection by mechanism generalizes beyond the curated
+"""WS-EDIT-MECH (v0.6.0) - de-novo oncogenic-fusion detection by mechanism generalizes beyond the curated
 gene-pair list, while leaving the curated hard_reject and the benign-fusion floor unchanged."""
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ def test_curated_fusion_still_hard_reject():
 
 
 def test_benign_unknown_fusion_still_generic_floor():
-    # AAVS1::CLYBL — safe-harbour pair, no kinase, no cancer role -> the generic 'unknown oncogenicity' floor, not denovo.
+    # AAVS1::CLYBL - safe-harbour pair, no kinase, no cancer role -> the generic 'unknown oncogenicity' floor, not denovo.
     v = screen({"intent": "engineer a fusion", "edit": {"fusion_genes": ["AAVS1", "CLYBL"]}})
     assert v["decision"] == "flag_for_review"
     assert v["axes"]["edit_type"]["rule_id"] == "edit.fusion_unknown_oncogenicity"

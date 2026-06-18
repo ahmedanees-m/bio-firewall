@@ -17,29 +17,29 @@ entries:
   type: genotoxic_cis_locus
   value: CCND1
   provenance:
-    source: "WAS / SCID \u2014 proto-oncogene activation precedent"
+    source: WAS / SCID - proto-oncogene activation precedent
     doi: 10.1126/scitranslmed.3007280
   added_in: 0.3.0
 - id: CIS-CCND2
   type: genotoxic_cis_locus
   value: CCND2
   provenance:
-    source: "SCID-X1 gammaretroviral \u2014 integration near CCND2 in leukemic clones\
-      \ (Howe 2008)"
+    source: SCID-X1 gammaretroviral - integration near CCND2 in leukemic clones (Howe
+      2008)
     doi: 10.1172/JCI35798
   added_in: 0.3.0
 - id: CIS-EVI1
   type: genotoxic_cis_locus
   value: EVI1
   provenance:
-    source: "CGD \u2014 EVI1 activation, clonal dominance"
+    source: CGD - EVI1 activation, clonal dominance
     doi: 10.1038/nm.2088
   added_in: 0.3.0
 - id: CIS-HMGA2
   type: genotoxic_cis_locus
   value: HMGA2
   provenance:
-    source: "beta-thalassemia lentiviral trial \u2014 clonal dominance"
+    source: beta-thalassemia lentiviral trial - clonal dominance
     doi: 10.1038/nature09328
   added_in: 0.3.0
 - id: CIS-LMO1
@@ -53,42 +53,42 @@ entries:
   type: genotoxic_cis_locus
   value: LMO2
   provenance:
-    source: "SCID-X1 gammaretroviral trials \u2014 T-ALL in 5 children"
+    source: SCID-X1 gammaretroviral trials - T-ALL in 5 children
     doi: 10.1126/science.1088547
   added_in: 0.3.0
 - id: CIS-MDS1
   type: genotoxic_cis_locus
   value: MDS1
   provenance:
-    source: "CGD \u2014 MDS1-EVI1 locus activation"
+    source: CGD - MDS1-EVI1 locus activation
     doi: 10.1038/nm.2088
   added_in: 0.3.0
 - id: CIS-MECOM
   type: genotoxic_cis_locus
   value: MECOM
   provenance:
-    source: "CGD & WAS \u2014 MDS1-EVI1 activation, clonal dominance/MDS"
+    source: CGD & WAS - MDS1-EVI1 activation, clonal dominance/MDS
     doi: 10.1038/nm.2088
   added_in: 0.3.0
 - id: CIS-MN1
   type: genotoxic_cis_locus
   value: MN1
   provenance:
-    source: "WAS gammaretroviral trial \u2014 clonal expansion"
+    source: WAS gammaretroviral trial - clonal expansion
     doi: 10.1126/scitranslmed.3007280
   added_in: 0.3.0
 - id: CIS-PRDM16
   type: genotoxic_cis_locus
   value: PRDM16
   provenance:
-    source: "CGD \u2014 clonal dominance"
+    source: CGD - clonal dominance
     doi: 10.1038/nm.2088
   added_in: 0.3.0
 - id: CIS-SETBP1
   type: genotoxic_cis_locus
   value: SETBP1
   provenance:
-    source: "CGD \u2014 clonal expansion"
+    source: CGD - clonal expansion
     doi: 10.1038/nm.2088
   added_in: 0.3.0
 - id: FUSION-ABL1-BCR
@@ -569,5 +569,5 @@ entries:
   provenance:
     source: immunoglobulin / T-cell-receptor super-enhancer locus
   added_in: 0.6.0
-content_sha256: 7897ca782d16358017e40ba8f0e21b6af2596ec6d9a86ef275956b48871868a2
-hmac_sha256: 927e6a2d11357427ced15b0ce37a797e4dc24845a25293bd0b70fb76ab0c70c7
+content_sha256: 7fdf9179912febc5a1cb2ce555a822d85f2048b3687bf195e81d22cbaf5c0624
+hmac_sha256: a77b2668de93161a16f28f918979ef09e0b32b8870653fd79729b82c6a66d303

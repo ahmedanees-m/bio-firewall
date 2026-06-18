@@ -1,6 +1,6 @@
-"""Benchmark 4b (v0.4.0) — WS-CONFORMAL evaluation. Builds the calibration corpus from the SAME independent
+"""Benchmark 4b (v0.4.0) - WS-CONFORMAL evaluation. Builds the calibration corpus from the SAME independent
 oracles as Benchmark 1 (Tier-1 clinical-CIS + COSMIC CGC + clean negatives + dosage-sensitive negatives) PLUS an
-EXPANDED legitimate-research set (hazard-adjacent plans that MUST flag, not refuse — the deployment moat), then:
+EXPANDED legitimate-research set (hazard-adjacent plans that MUST flag, not refuse - the deployment moat), then:
 
   1. certifies the Neyman-Pearson false-refuse ceiling P(refuse | legitimate research) <= alpha (Clopper-Pearson),
   2. reports the Mondrian per-decision-class reliability + the competence-conditioned confidence monotonicity

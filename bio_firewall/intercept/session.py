@@ -1,19 +1,19 @@
-"""WS-DECOMP (v0.5.0) — the session-level decomposition aggregator. The per-artifact screen (spine.screen) is
-blind to a hazard SPLIT across N individually-passing calls — the ABC-Bench fragment-design threat (arXiv:2606.11150):
+"""WS-DECOMP (v0.5.0) - the session-level decomposition aggregator. The per-artifact screen (spine.screen) is
+blind to a hazard SPLIT across N individually-passing calls - the ABC-Bench fragment-design threat (arXiv:2606.11150):
 an agent decomposes a flagged plan into sub-plans that each pass, then assembles the pieces downstream. This monitor
-holds per-call facets for a session/project (LOCAL-ONLY — no plan content leaves the boundary; the P7 hash-chained
+holds per-call facets for a session/project (LOCAL-ONLY - no plan content leaves the boundary; the P7 hash-chained
 audit log carries the tamper-evident decision record) and screens the AGGREGATE for what no single call reveals.
 
 Three aggregators:
-  1. ASSEMBLY/JUNCTION inference — cargo fragments across calls that reassemble (Gibson terminal homology or
+  1. ASSEMBLY/JUNCTION inference - cargo fragments across calls that reassemble (Gibson terminal homology or
      Golden-Gate Type-IIS overhangs) into ONE construct that per-fragment screening could never see.
-  2. CUMULATIVE SCALE — sum bp / edit-count / genome fraction across calls and trip the scale axis on the aggregate
+  2. CUMULATIVE SCALE - sum bp / edit-count / genome fraction across calls and trip the scale axis on the aggregate
      (e.g. 12 calls each deleting 150 kb are each < 1 Mb, but together restructure 1.8 Mb).
-  3. COORDINATED LOCI — a session that systematically targets many distinct genotoxic-CIS / oncogene loci is a
+  3. COORDINATED LOCI - a session that systematically targets many distinct genotoxic-CIS / oncogene loci is a
      coordinated insertional-oncogenesis program even if each call is individually defensible.
 
-HONESTY: this is a NECESSARY-not-sufficient defence. Assembly inference catches the overlap/Type-IIS decompositions
-it models; a novel obfuscation can still evade it (reported as residual in the red-team). It FLAGS for review — it
+NOTE: this is a NECESSARY-not-sufficient defence. Assembly inference catches the overlap/Type-IIS decompositions
+it models; a novel obfuscation can still evade it (reported as residual in the red-team). It FLAGS for review - it
 does not claim to reconstruct intent."""
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ def _facets(plan: dict) -> dict:
 # 1. assembly / junction inference
 # --------------------------------------------------------------------------------------------------------------
 def _overlap(a: str, b: str) -> int:
-    """Longest k where suffix(a,k) == prefix(b,k) (k <= 40), else 0 — a Gibson/SLIC homology junction."""
+    """Longest k where suffix(a,k) == prefix(b,k) (k <= 40), else 0 - a Gibson/SLIC homology junction."""
     m = min(len(a), len(b), 40)
     for k in range(m, MIN_GIBSON_OVERLAP - 1, -1):
         if a[-k:] == b[:k]:
@@ -58,7 +58,7 @@ def _overlap(a: str, b: str) -> int:
 
 def reassemble(fragments: list[str]) -> list[dict]:
     """Greedy junction-graph assembly over cargo fragments (forward + reverse-complement). Returns the maximal
-    multi-fragment chains (>=2 fragments) that reassemble via Gibson homology or a shared Type-IIS site — the
+    multi-fragment chains (>=2 fragments) that reassemble via Gibson homology or a shared Type-IIS site - the
     constructs per-fragment screening is blind to."""
     frags = [f for f in fragments if f and len(f) >= MIN_GIBSON_OVERLAP]
     oriented = frags + [_revcomp(f) for f in frags]
@@ -88,7 +88,7 @@ def reassemble(fragments: list[str]) -> list[dict]:
             chains.append({"n_fragments": len(members), "assembled_length": len(seq),
                            "junction": "gibson_homology", "assembled_sequence": seq})
     # Type-IIS (Golden-Gate): real parts carry the SAME enzyme's site near a TERMINUS (it cuts outside itself to
-    # leave the assembly overhang). Require terminal proximity + a MAJORITY of fragments — internal 6-bp matches in
+    # leave the assembly overhang). Require terminal proximity + a MAJORITY of fragments - internal 6-bp matches in
     # random DNA are coincidental and must NOT trip this (the red-team measures the false-positive rate).
     def _terminal_site(f: str, site: str, win: int = 30) -> bool:
         ends = (f[:win] + " " + f[-win:]).upper()
@@ -109,7 +109,7 @@ def assembly_finding(fragments: list[str]) -> Finding | None:
     biggest = max(chains, key=lambda c: c["n_fragments"])
     return finding("scope_flag", "session.covert_multifragment_assembly", "scale",
                    f"{biggest['n_fragments']} cargo fragments across separate calls reassemble into one construct "
-                   f"({biggest['junction']}) — per-fragment screening is blind to the assembled whole; screen it",
+                   f"({biggest['junction']}) - per-fragment screening is blind to the assembled whole; screen it",
                    provenance={"source": "session decomposition aggregator (Gibson/Type-IIS junction inference)"},
                    extrapolating=True)
 
@@ -124,7 +124,7 @@ def cumulative_scale_finding(facets: list[dict]) -> Finding | None:
     if agg.decision == "clear":
         return None
     return finding(agg.decision, "session." + (agg.rule_id or "cumulative_scale").split(".")[-1], "scale",
-                   f"cumulative across {len(facets)} calls: {bp:,} bp / {n_edits} edits — {agg.mechanism} "
+                   f"cumulative across {len(facets)} calls: {bp:,} bp / {n_edits} edits - {agg.mechanism} "
                    "(no single call crossed the threshold)", extrapolating=True)
 
 
@@ -138,7 +138,7 @@ def coordinated_loci_finding(facets: list[dict], threshold: int = 3) -> Finding 
         return None
     return finding("scope_flag", "session.coordinated_oncogenic_loci", "locus",
                    f"session targets {len(hot)} distinct genotoxic-CIS / oncogene loci ({', '.join(hot[:6])}"
-                   f"{'…' if len(hot) > 6 else ''}) — a coordinated insertional-oncogenesis pattern across calls",
+                   f"{'...' if len(hot) > 6 else ''}) - a coordinated insertional-oncogenesis pattern across calls",
                    provenance={"source": "session decomposition aggregator (coordinated-loci clustering)"},
                    extrapolating=True)
 
