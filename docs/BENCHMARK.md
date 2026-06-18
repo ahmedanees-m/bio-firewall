@@ -249,6 +249,68 @@ status the floor now **evidences** rather than asserts. No validated risk-model 
 
 ---
 
+# v0.6.0 — "The Generalized Screen" (move each axis from a lookup to a mechanism)
+
+## Benchmark 7 — monotone evidence combiner (WS-COMBINE-MONO)
+
+The max-severity cascade is replaced by a noisy-OR combiner `1 − Π(1−rᵢ)`
+([`hazard/combine_mono.py`](../bio_firewall/hazard/combine_mono.py)). On a 5,000-case perturbation suite it is
+**provably monotone** (adding/strengthening any finding never lowers severity) and **interaction-aware** (co-occurring
+moderate signals escalate severity — a `max` is flat), while **hard-rule-exact** (any `hard_reject` → refuse; soft
+severity capped below the refuse threshold so soft signals never auto-refuse). Decisions are **identical** to the
+v0.5 cascade (`decision_matches_cascade` + the spine/full/phase15 regression); a continuous auditable `severity` is
+added to the verdict. **Gate: PASS** (monotone + hard-rule-exact, verified).
+
+## Benchmark 8 — de-novo oncogenic-fusion detection (WS-EDIT-MECH)
+
+The edit axis flagged only a 14-pair curated list. [`hazard/edit_mech.py`](../bio_firewall/hazard/edit_mech.py) adds
+a de-novo **mechanism** screen (function-family, no sequences): constitutive kinase activation (a CC0 fusion-kinase
+family), oncogene/driver juxtaposition (CancerMine CC0), IG/TCR super-enhancer juxtaposition — generalizing beyond
+membership. Held-out label = **COSMIC TRANSLOCATION_PARTNER** pairs (local-only) absent from the curated list:
+
+| | value |
+|---|:--:|
+| generalization recall on 471 off-list COSMIC pairs | **0.909** (CI 0.881–0.934) |
+| recall on the 112 kinase-fusion pairs (clean signal) | **1.00** |
+| benign false-positive (400 non-cancer pairs) | **0.0** (CI 0.0–0.0) |
+
+**Gate: PASS.** Honest: recall is partly role-driven (COSMIC overlaps CancerMine); the kinase subset is the cleaner
+generalization signal; a research fusion of a real oncogene legitimately flags (the FP control is non-cancer pairs).
+
+## Benchmark 9 — positional locus resolution (WS-LOCUS-POS)
+
+A gene-membership lookup is blind to the SCID-X1/LMO2 mechanism (integration in the upstream promoter/enhancer,
+activating LMO2 in trans). [`hazard/locus_pos.py`](../bio_firewall/hazard/locus_pos.py) flags an insertion in the
+promoter (≤10 kb) / enhancer (≤50 kb) window of an oncogene TSS (a compact vendored `oncogene_tss.parquet` —
+2,183 oncogene TSS from GENCODE × CancerMine CC0). On **140,628** real VISDB integration sites: positional flags
+17,158, of which **10,834 (63%) are oncogene promoter/enhancer-proximal but NOT in an oncogene gene body** — exactly
+what a membership lookup misses. **The outcome-AUROC-improvement claim is DEFERRED** (controlled-access integration-
+site outcome data deferred; the open VISDB floor was the wrong virus biology) — this is a coverage count, not a
+calibrated rate.
+
+## Benchmark 10 — structural remote-homology channel (WS-STRUCT) — honest negative at 1% FPR
+
+[`hazard/struct_channel.py`](../bio_firewall/hazard/struct_channel.py) adds a composition-independent **fold** signal
++ a 3-signal ensemble (homology / ESM / structure) that abstains on disagreement, run via **AlphaFold-DB v6 + Foldseek
+(no GPU)** on the frozen Benchmark-2 holdout.
+
+| | TPR@1%FPR | AUROC |
+|---|:--:|:--:|
+| ESM-alone | 0.72 | 0.988 |
+| structure-alone | 0.118 | **0.882** |
+| ESM + structure (mean ensemble) | 0.197 | 0.983 |
+
+**Gate: FAIL (honest-failure path).** Incremental TPR@1%FPR (ensemble − ESM) median **−0.48**, CI [−0.76, 0.20] —
+the structural channel does **not** add at the strict 1%-FPR point: the same ≤40%-id cluster split that weakens
+sequence-homology (0.207) makes a held-out toxin **structurally distant** from the train-toxin reference, and
+short-peptide AlphaFold models are low-confidence, so a mean-ensemble dilutes ESM. **But** structure-alone AUROC
+**0.882** is a real fold signal, and being **composition-free by construction** it independently corroborates the
+v0.4 non-compositionality finding at the ranking level (a modest WS-CARGO-DECORR backstop — not at 1% FPR). The
+abstain-on-disagreement works (49% abstained on ESM/structure conflicts; the kept set's ESM TPR is unchanged). The
+channel + ensemble + abstention are shipped; the incremental-1%-FPR claim is reported as not met on this proxy set.
+
+---
+
 ## Reproduce
 
 ```bash
@@ -270,6 +332,15 @@ python -c "from bio_firewall.eval.hazard_bench import decomp_redteam as d; impor
 # v0.5.0 — Benchmark 6 (locus outcome floor); needs the local VISDB + GENCODE gene coords (VM only)
 BF_VISDB_DIR=/path/to/visdb BF_GENE_COORDS=/path/to/gene_coords.parquet \
   python -c "from bio_firewall.eval.hazard_bench import locus_outcome as lo; import json; print(json.dumps(lo.run_visdb()['overall'], indent=2))"
+
+# v0.6.0 — Benchmark 7 (monotone combiner proof)
+python -c "from bio_firewall.hazard.combine_mono import verify_monotone; import json; print(json.dumps(verify_monotone(), indent=2))"
+# v0.6.0 — Benchmark 8 (de-novo fusion generalization); needs COSMIC TRANSLOCATION_PARTNER (local)
+BF_BENCH_ORACLES=/path/to/bench_oracles python -c "from bio_firewall.eval.hazard_bench import edit_mech_bench as b; import json; print(json.dumps(b.run(), indent=2))"
+# v0.6.0 — Benchmark 9 (positional locus coverage); needs VISDB + gene coords (VM)
+BF_VISDB_DIR=... BF_GENE_COORDS=... python -c "from bio_firewall.eval.hazard_bench import locus_pos_bench as b; import json; print(json.dumps(b.run_visdb(), indent=2))"
+# v0.6.0 — Benchmark 10 (structural channel); needs AlphaFold-DB structures + Foldseek + the frozen B2 vectors (VM)
+# (see scratch/run_struct_vm.py — AF-DB v6 fetch + Foldseek easy-search -> struct_bench)
 ```
 
 Tier-1 is committed (public literature facts). COSMIC and the run artifacts are **local-only** — without them the

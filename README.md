@@ -8,8 +8,8 @@ final sequence — and returns **`allow` / `flag_for_review` / `refuse`**, alway
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-53%20passing-success.svg)
-![Version](https://img.shields.io/badge/version-0.5.0-blue.svg)
+![Tests](https://img.shields.io/badge/tests-69%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > ⚠️ **Defensive, early, computational.** BioFirewall is a reference implementation evaluated on **safe proxy
@@ -128,7 +128,9 @@ bio-firewall/
 │  │  ├─ edit_type.py                   axis 3 — oncogenic fusion / deletion / multiplex
 │  │  ├─ germline.py                    axis 4 — heritability / germline-accessibility
 │  │  ├─ scale.py                       axis 5 — megabase / high-multiplex amplifier
-│  │  ├─ combine.py · finding.py        stratified integration + the per-axis Finding contract
+│  │  ├─ combine.py · combine_mono.py   stratified integration; v0.6.0 provably-monotone, interaction-aware combiner
+│  │  ├─ edit_mech.py · locus_pos.py     v0.6.0 de-novo fusion-by-mechanism · positional (promoter/enhancer) locus
+│  │  ├─ struct_channel.py · finding.py  v0.6.0 structural (fold) channel + 3-signal ensemble · the Finding contract
 │  ├─ passport/ · audit/                P4 signed passport · P7 hash-chained audit
 │  ├─ calibrate/                    P8 confidence — confidence.py (tiers+abstention) · conformal.py (v0.4.0:
 │  │                                     competence-conditioned confidence + Neyman-Pearson false-refuse certificate)
@@ -151,7 +153,7 @@ bio-firewall/
 ├─ vendored_data/                  open (CC0/CC-BY) hazard data, as parquet/yaml (vectors only, never sequences)
 ├─ docs/                           THREAT_MODEL · HAZARD_TAXONOMY · BENCHMARK (results) · HEADTOHEAD (control-vs-advisor)
 ├─ prereg/ws_biofirewall.yaml      pre-registered criteria + benchmark protocol + frozen results + honest limits
-├─ tests/                          53 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
+├─ tests/                          69 tests (incl. the data-license CI gate + the Tier-1 100%-catch regression gate)
 └─ pyproject.toml / LICENSE / DATA_LICENSES.md
 ```
 
@@ -235,6 +237,24 @@ honest-failure path):
   open data is the **wrong biology** to validate a gammaretroviral insertional-oncogenesis model, so the locus axis
   ships unchanged and outcome-validation remains **pending** on the deferred controlled-access clonal-outcome data —
   a status the floor now *evidences* rather than asserts.
+
+### v0.6.0 — "The Generalized Screen" ([docs/BENCHMARK.md](docs/BENCHMARK.md))
+
+Move each novel axis from a *lookup* to a *mechanism*, so the screen catches what isn't catalogued:
+
+- **Monotone combiner (B7) — PASS.** The max-severity cascade is replaced by a noisy-OR combiner that is **provably
+  monotone** (5,000-case perturbation suite), **interaction-aware** (co-occurring moderate signals escalate; a `max`
+  is flat), and **hard-rule-exact** — with decisions identical to v0.5.
+- **De-novo fusion detection (B8) — PASS.** A mechanism screen (fusion-kinase family + oncogene roles + IG/TCR)
+  generalizes beyond the 14-pair lookup: **90.9% recall** on 471 off-list COSMIC fusion pairs (**100%** on the 112
+  kinase pairs) at **0% benign false-positive**.
+- **Positional locus (B9).** Flags promoter/enhancer-proximal insertions near an oncogene TSS — the SCID-X1/LMO2
+  mechanism a gene-body lookup misses (**10,834 of 17,158 positional flags** on real VISDB sites are not in an
+  oncogene body). The outcome-AUROC claim is **deferred** (access-gated).
+- **Structural channel (B10) — honest negative.** A composition-free fold signal (AlphaFold-DB + Foldseek, no GPU) +
+  a 3-signal ensemble with abstain-on-disagreement. At 1% FPR it does **not** add over ESM (the ≤40%-id holdout makes
+  toxins structurally distant) — but structure-alone AUROC **0.882**, composition-free, independently corroborates the
+  v0.4 non-compositionality finding at the ranking level. Shipped; the 1%-FPR claim reported as not met.
 
 ## Honest limitations
 

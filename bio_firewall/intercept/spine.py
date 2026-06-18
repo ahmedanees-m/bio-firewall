@@ -12,7 +12,7 @@ from bio_firewall.calibrate.conformal import calibrated_confidence, kb_coverage,
 from bio_firewall.hazard import five_axis_screen
 from bio_firewall.passport.sign import sign_passport
 
-RULESET_VERSION = "0.5.0"
+RULESET_VERSION = "0.6.0"
 
 
 def screen(artifact: dict, *, audit=None) -> dict:

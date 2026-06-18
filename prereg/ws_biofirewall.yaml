@@ -172,6 +172,27 @@ upgrade_v04_v10:
       RIGHT data is the deferred controlled-access gammaretroviral clonal-outcome set. The floor EVIDENCES the
       pending status rather than asserting it. No validated risk-model claim made."
 
+  tier3_results_2026_06_18:   # FROZEN v0.6.0 run (seed 1234)
+    combine_mono: "GATE PASS. Noisy-OR combiner `1-Π(1-rᵢ)` PROVABLY MONOTONE + hard-rule-exact on a 5000-case
+      perturbation suite; co-occurring moderate signals escalate severity (a max is flat); decisions IDENTICAL to the
+      v0.5 cascade (regression green); a continuous auditable `severity` added to the verdict."
+    edit_mech: "GATE PASS. De-novo oncogenic-fusion screen by mechanism (CC0 fusion-kinase family + CancerMine roles +
+      IG/TCR) vs held-out COSMIC TRANSLOCATION_PARTNER pairs (local-only): recall 0.909 [0.881,0.934] on 471 off-list
+      pairs, 1.00 on the 112 kinase pairs, benign FP 0.0 [0.0,0.0] on 400 non-cancer pairs. Honest: recall partly
+      role-driven (COSMIC↔CancerMine); kinase subset is the clean signal."
+    locus_pos: "DELIVERED (AUROC claim DEFERRED — access-gated). Positional promoter(<=10kb)/enhancer(<=50kb)
+      proximity to an oncogene TSS (vendored oncogene_tss.parquet, 2183 TSS, GENCODE×CancerMine CC0). On 140,628 VISDB
+      sites: 10,834 (63% of positional flags) are oncogene promoter/enhancer-proximal but NOT in an oncogene gene body
+      (the LMO2 mechanism a membership lookup misses). Coverage count, not a calibrated rate; outcome-AUROC-improvement
+      DEFERRED (controlled-access outcome data deferred; open VISDB floor was wrong biology)."
+    struct: "GATE FAIL (HONEST-FAILURE PATH, pre-committed). Structural channel + 3-signal ensemble + abstain shipped,
+      run via AlphaFold-DB v6 + Foldseek (no GPU). ESM-alone TPR@1%FPR 0.72/AUROC 0.988; structure-alone 0.118/0.882;
+      ensemble 0.197/0.983. Incremental TPR@1%FPR (ensemble-ESM) -0.48 CI[-0.76,0.20] -> does NOT add at 1%-FPR (the
+      <=40%-id split makes held-out toxins structurally distant; short-peptide AF models low-confidence; mean-ensemble
+      dilutes ESM). BUT structure-alone AUROC 0.882 is COMPOSITION-FREE -> independently corroborates v0.4
+      non-compositionality at the RANKING level (modest backstop, not at 1%-FPR). Abstain-on-disagreement works (49%
+      abstained on conflicts; kept-set ESM TPR unchanged). Reported, not hidden."
+
   residual_limits_even_at_v1:
     - "no wet-lab validation — even an outcome-validated locus axis is retrospective, not a prospective confirmation."
     - "safe proxies bound every cargo claim (TEVV necessity)."
