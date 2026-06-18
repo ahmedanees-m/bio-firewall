@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use BioFirewall, please cite it as below."
+title: "BioFirewall: a rule-governed, genome-writing-native biosecurity middleware that supervises agentic design AI"
+abstract: >-
+  BioFirewall is a defensive, design-stage screen for agentic genome-writing AI. It intercepts a genome-writing plan
+  in-workflow and returns allow / flag-for-review / refuse across five genome-writing-native axes (cargo, locus,
+  edit-type, germline, scale), with cited evidence, a calibrated false-refuse ceiling, a competence-conditioned
+  confidence, a signed design passport, and a tamper-evident audit log.
+type: software
+authors:
+  - family-names: "Mahaboob Ali"
+    given-names: "Anees Ahmed"
+    alias: "ahmedanees-m"
+license: Apache-2.0
+repository-code: "https://github.com/ahmedanees-m/bio-firewall"
+version: "0.6.0"
+keywords:
+  - biosecurity
+  - genome-writing
+  - ai-safety
+  - guardrails
+  - dual-use
+  - middleware
+references:
+  - type: article
+    title: "ABC-Bench: An Agentic Bio-Capabilities Benchmark for Biosecurity"
+    authors: [{family-names: "Liu", given-names: "et al."}]
+    year: 2026
+    notes: "arXiv:2606.11150 — the offense benchmark BioFirewall is the defensive mirror of."
+  - type: article
+    title: "Strengthening nucleic acid biosecurity screening against generative protein design tools"
+    authors: [{family-names: "Wittmann", given-names: "et al."}]
+    year: 2025
+    doi: "10.1126/science.adu8578"

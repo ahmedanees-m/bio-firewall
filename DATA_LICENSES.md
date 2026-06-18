@@ -35,3 +35,22 @@ A CI test (`tests/test_data_licenses.py`) fails if a non-permissive source appea
 restricted gene-list is committed.
 The legal crux: copyright protects the *compiled database*, not the *fact* that a gene is an oncogene — so the gene
 *list* is sourced from a **CC0 compilation (CancerMine)**.
+
+### Pinned data releases (for reproduction — `make reproduce-local`)
+
+Every benchmark number is regenerable from these exact releases; pinning them is what makes the artifact
+reproducible by a stranger (WS-REPRO).
+
+| Source | Pinned release | Used by |
+|---|---|---|
+| CancerMine | Zenodo record **7689627** (CC0), as built into PEN-STACK v6.6.0 | locus axis, edit-mech, locus-pos |
+| gnomAD constraint | **v2.1.1** LoF-metrics (pLI/LOEUF) | locus dosage axis |
+| GENCODE | **v46** (GRCh38) basic gene coords | locus-pos (oncogene TSS), VISDB site→gene mapping |
+| COSMIC Cancer Gene Census | **v104** (GRCh38) — *local-only*, never committed | benchmark labels (B1), edit-mech held-out (B8) |
+| OncoKB Cancer Gene List | retrieved release — *local-only*, never committed | benchmark second oracle (B1b) |
+| VISDB | **v1.0** per-virus hg38 catalogues — *local-only* | locus-outcome floor (B6), locus-pos coverage (B9) |
+| AlphaFold-DB | **v6** monomer models (`AF-{ACC}-F1-model_v6.cif`) | structural channel (B10) |
+| UniProt toxins/benign | KW-0800 reviewed vs reviewed non-toxin, length 50–500 (frozen FASTA, seed 1234) | cargo gate (B2), decorr (B2b), struct (B10) |
+| Foldseek / MMseqs2 | `ghcr.io/steineggerlab/foldseek:latest`; MMseqs2 easy-cluster `--min-seq-id 0.4` | B10 / B2 |
+
+Seeds are frozen (**1234**) throughout. The frozen result values are SHA-locked in `prereg/ws_biofirewall.yaml`.
