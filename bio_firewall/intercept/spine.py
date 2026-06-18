@@ -11,8 +11,9 @@ from bio_firewall.calibrate import calibrate
 from bio_firewall.calibrate.conformal import calibrated_confidence, kb_coverage, risk_score
 from bio_firewall.hazard import five_axis_screen
 from bio_firewall.passport.sign import sign_passport
+from bio_firewall.respond.graded import grade
 
-RULESET_VERSION = "0.7.0"
+RULESET_VERSION = "0.8.0"
 
 
 def screen(artifact: dict, *, audit=None) -> dict:
@@ -29,6 +30,7 @@ def screen(artifact: dict, *, audit=None) -> dict:
     verdict["kb_coverage"] = kb_coverage(_gene)
     verdict["calibrated_confidence"] = calibrated_confidence(verdict, _gene)
     verdict["risk_score"] = risk_score(verdict, _gene)
+    verdict["grade"] = grade(verdict)                # v0.8.0 WS-GRADED: allow/partial/flag_for_review/refuse
     verdict["ruleset_version"] = RULESET_VERSION
     verdict["passport"] = sign_passport(plan, verdict)
     if audit is not None:

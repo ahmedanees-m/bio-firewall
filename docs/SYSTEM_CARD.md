@@ -1,4 +1,4 @@
-# BioFirewall - System Card (v0.6.0)
+# BioFirewall - System Card (v0.8.0)
 
 A model-card-style statement of what BioFirewall **is**, what a verdict **does and does not guarantee**, its
 **scope boundaries**, its **enumerated failure modes**, and a **scope/limit statement for every headline claim**.
@@ -15,7 +15,11 @@ Written so a deploying lab, a synthesis provider, or a reviewer can judge what t
 BioFirewall intercepts a genome-writing **plan** (not just the final DNA sequence) in the design agent's loop and
 returns **`allow` / `flag_for_review` / `refuse`** across five genome-writing-native axes - cargo, locus, edit-type,
 germline, scale - with cited evidence, a continuous auditable severity, a competence-conditioned confidence, and a
-signed, tamper-evident passport + audit record. It governs design tools; it does not design.
+signed, tamper-evident passport + audit record. It governs design tools; it does not design. As of v0.8 it also
+formalizes the response into a graded taxonomy (allow / partial / flag_for_review / refuse) and adds a managed-access
+plane (P9) that gates how a verdict resolves by a verified user-legitimacy tier - so the artifact implements the
+complete set of design-stage guardrails the NTI framework recommends (built-in screening + signed metadata +
+managed access).
 
 ## 2. What a verdict does - and does NOT - guarantee
 
@@ -55,7 +59,7 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
 3. **Safe proxies bound every cargo claim.** The function-aware ML and its benchmarks use safe public proxies - a
    TEVV methodological necessity, not a claim about real agents-of-concern.
 4. **The cargo signal's operating-point margin over composition is modest.** At a strict 1% FPR the function-aware
-   advantage over a composition baseline is *not* statistically established (v0.4 fallbackure); the signal is
+   advantage over a composition baseline is *not* statistically established (v0.4 fallback invoked); the signal is
    substantially non-compositional in **ranking** (AUROC) but the paper does not lead on the cargo gate.
 5. **The structural channel does not add at 1% FPR** on the held-out proxy set (v0.6 negative-result); it is shipped
    with abstain-on-disagreement but is not relied on for the operating-point claim.
@@ -67,6 +71,14 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
    outcome-calibrated (the calibrating data is access-gated/deferred).
 9. **Single maintainer; pre-1.0 alpha.** Independent reproduction (v0.7) is the mitigation; it is not yet a deployed,
    externally-audited product.
+10. **Managed access (P9) is a mechanism, not an authority.** The plane enforces tiers and binds the legitimacy
+    evidence tamper-evidently, but it verifies legitimacy through a pluggable hook; the credentialing authority is an
+    integration point the deployment must supply. It is not a deployed access-control regime.
+11. **The two v0.8 strengtheners are documented nulls.** Neyman-Pearson conformal selection adds calibrated control
+    but not power at matched alpha (the v0.4 certified bound stands); confidence-gated structural fusion does not lift
+    the 1%-FPR operating point because the held-out structures are already high-confidence (the failure is
+    fold-distance, not low pLDDT). Neither is shipped as a claim. A full-trajectory monitor and a scaled red-team are
+    a post-v1.0 fast-follow.
 
 ## 5. Scope/limit statement for every headline claim
 
@@ -80,6 +92,10 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
 | **Decomposition 100% catch / 0% FP** | Two modeled evasion families | Necessary-not-sufficient; novel obfuscation can evade |
 | **Positional catches 10,834 gene-body misses** | VISDB coverage count | A count, not a calibrated/validated rate |
 | **Monotone combiner** | 5,000-case perturbation proof | A property of the combiner, not a guarantee about the world |
+| **Managed access (P9) completes the NTI guardrail set** | Deterministic (verdict x tier) matrix; tier bound into the passport + audit | A built mechanism, not a deployed credentialing authority (an integration point) |
+| **Graded taxonomy + partial content gate** | Deterministic map from axis verdicts; regex content gate with negative controls | A deterministic content tier, not a learned judgment; ambiguous axes collapse to review |
+| **NP conformal selection** | Controls false-escalation at alpha on the firewall corpus | Documented null: calibrated control, NOT higher power at matched alpha; v0.4 bound stands |
+| **Confidence-gated structural fusion** | pLDDT-gated re-run on the <=40%-id holdout | Documented null: no 1%-FPR lift (high-pLDDT structures; failure is fold-distance); AUROC corroborator only |
 
 ## 6. Responsible use
 

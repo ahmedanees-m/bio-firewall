@@ -9,8 +9,8 @@ signed design passport. It is the missing design-stage guardrail: a firewall for
 [![CI](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-79%20passing-success.svg)
-![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)
+![Tests](https://img.shields.io/badge/tests-109%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.8.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > **Scope and maturity.** BioFirewall is a defensive, early-stage, computational reference implementation evaluated on
@@ -31,8 +31,9 @@ two points, with a gap between them:
 | B. Design / planning | the agent's genome-writing workflow | (empty) | the layer BioFirewall fills |
 | C. Synthesis | the physical DNA order | IBBIS Common Mechanism, SecureDNA | homology-based, demonstrably evadable |
 
-A 2026 offense benchmark (ABC-Bench, ICML; arXiv:2606.11150) showed that frontier agents already produce assemblable
-DNA that evades the synthesis screen at Layer C. The design stage (Layer B) must therefore read the artifact
+A 2026 offense benchmark (ABC-Bench, NeurIPS 2025 BioSafe GenAI workshop; arXiv:2606.11150) showed that frontier
+agents already produce assemblable DNA that evades the synthesis screen at Layer C. The design stage (Layer B) must
+therefore read the artifact
 in-workflow, where the agent cannot route around it. BioFirewall is the first automated, in-workflow screen for the
 genome-writing-native hazards (where you edit, how, whether it is heritable, and at what scale), dimensions that a
 sequence or protein screener structurally cannot see.
@@ -107,18 +108,22 @@ governs any design tool through a tool-agnostic artifact contract. It vendors op
    |   |       cargo | locus | edit-type | germline | scale        |
    |   |       -> combine_mono (monotone, interaction-aware)       |
    |   +- P8  calibration   (conformal confidence + abstention)    |
+   |   +- graded taxonomy   (allow | partial | flag | refuse)      |
    |   +- P3  rule-governance (legality as cited data)             |
    |   +- P4  design passport (HMAC-signed, tamper-evident)        |
    |   +- P7  audit log       (hash-chained)                       |
+   |   +- P9  managed access  (tier by verdict x user legitimacy)  |
    +---------------------------------------------------------------+
-                        |   {decision, severity, axes, evidence, passport}
+                        |   {decision, grade, axes, evidence, passport, access}
                         v
    in-workflow gate:  allow -> synthesis   |   flag_for_review -> human   |   refuse -> stop
-   (synthesize() is hard-gated on a verifiable allow passport)
+   (synthesize() is hard-gated on a verifiable allow passport; P9 gates how a verdict RESOLVES per user legitimacy)
 ```
 
-**The eight planes.** P1 governance spine, P2 five-axis screen, P3 rule-governance, P4 design passport, P5 refusal
-and escalation, P6 red-team, P7 audit, P8 calibration.
+**The nine planes.** P1 governance spine, P2 five-axis screen, P3 rule-governance, P4 design passport, P5 refusal
+and escalation, P6 red-team, P7 audit, P8 calibration, and (v0.8) P9 managed access. With built-in screening (P2),
+signed metadata (P4), and managed access (P9), BioFirewall implements the complete set of design-stage guardrails the
+NTI biodesign-tool framework recommends.
 
 **Data sources, open only (a CI test fails the build if a restricted source appears).** CancerMine (CC0;
 oncogene / TSG / driver), DepMap (essential genes), gnomAD (pLI / LOEUF dosage), GENCODE (coordinates), Pfam, and
@@ -132,6 +137,9 @@ bio-firewall/
 |   |-- intercept/spine.py            P1 governance spine: the public screen() entry point
 |   |-- intercept/session.py          v0.5 WS-DECOMP: cross-call session aggregator (assembly / scale / coordinated-loci)
 |   |-- integrate/agent_gate.py       v0.7 WS-INTEGRATE: in-workflow gate; synthesize() hard-gated on an allow passport
+|   |-- access/managed.py             v0.8 P9 WS-MANAGED: tiered access by verdict x user legitimacy; screen_managed()
+|   |-- respond/graded.py             v0.8 WS-GRADED: allow/partial/flag/refuse taxonomy + partial content gate
+|   |-- standards/                    v0.8 WS-STANDARDS: nist_export.py (NIST-compatible benchmark) + ibbis.py (DSSC + OSTP)
 |   |-- hazard/                       P2 the five-axis screen
 |   |   |-- cargo.py, cargo_ml.py        axis 1: Guardian signatures + function-aware ESM2 classifier
 |   |   |-- locus.py, locus_pos.py       axis 2: oncogene / TSG / essential / dosage; v0.6 positional (promoter/enhancer)
@@ -143,6 +151,7 @@ bio-firewall/
 |   |   |-- finding.py                    the per-axis Finding contract
 |   |-- calibrate/                    P8 confidence: confidence.py (tiers + abstention);
 |   |   |                                 conformal.py (v0.4 competence-conditioned confidence + false-refuse certificate)
+|   |   |                                 conformal_np.py (v0.8 Neyman-Pearson likelihood-ratio conformal selection)
 |   |-- passport/, audit/             P4 signed design passport; P7 hash-chained audit log
 |   |-- kb/                           v0.7 WS-LIVING-KB: versioned, signed hazard knowledge base loader
 |   |-- adapters/                     tool-agnostic artifact contract + the PEN-STACK reference integration
@@ -156,15 +165,17 @@ bio-firewall/
 |       |   |-- locus_outcome.py              B6: locus outcome floor on VISDB (v0.5)
 |       |   |-- edit_mech_bench.py            B8: de-novo fusion generalization (v0.6)
 |       |   |-- locus_pos_bench.py            B9: positional locus coverage (v0.6)
+|       |   |-- conformal_np_bench.py         v0.8: NP-conformal vs v0.4 scalar head-to-head (documented null)
 |       |   |-- nvidia_headtohead.py          the control-vs-advisor panel (A/B/C/D via NVIDIA NIM)
-|       |-- cargo_bench/run.py, decorr.py, struct_bench.py   B2 cargo gate; B2b decorrelation; B10 structural
+|       |-- cargo_bench/run.py, decorr.py, struct_bench.py, struct_gated_bench.py   B2 gate; B2b; B10; v0.8 gated struct
 |       |-- headtohead/              the v1.1 control-vs-advisor experiments (fabrication / paraphrase / jailbreak)
 |-- vendored_data/                   open (CC0 / CC-BY) hazard data as parquet / yaml; hazard_kb/ signed KB releases
-|-- docs/                            THREAT_MODEL, HAZARD_TAXONOMY, BENCHMARK, HEADTOHEAD, SYSTEM_CARD, PANEL, HAZARD_KB
+|-- standards/nist_benchmark_export.json   v0.8 NIST-compatible benchmark export (blinded ids + answer key)
+|-- docs/                            THREAT_MODEL, HAZARD_TAXONOMY, BENCHMARK, HEADTOHEAD, SYSTEM_CARD, PANEL, HAZARD_KB, STANDARDS
 |-- examples/                        demo.py; agent_integration.py + agent_trace.json (the recorded in-workflow trace)
-|-- tools/build_hazard_kb.py         regenerate and re-sign the hazard KB from the in-code signatures
+|-- tools/build_hazard_kb.py, tools/export_nist_benchmark.py   regenerate the signed KB; regenerate the NIST export
 |-- prereg/ws_biofirewall.yaml       pre-registered criteria, benchmark protocol, frozen results, limitations
-|-- tests/                           79 tests (incl. the data-license CI gate and the Tier-1 100%-catch regression gate)
+|-- tests/                           109 tests (incl. the data-license CI gate and the Tier-1 100%-catch regression gate)
 |-- Makefile, REPRODUCTION.md        one-command reproduction + the clean-image protocol
 |-- CITATION.cff, .zenodo.json       citation and Zenodo deposit metadata
 |-- pyproject.toml, LICENSE, DATA_LICENSES.md
@@ -275,8 +286,8 @@ Each novel axis is moved from a lookup to a mechanism, so the screen can catch w
 
 - **System card** ([docs/SYSTEM_CARD.md](docs/SYSTEM_CARD.md)): what a green `allow` does and does not guarantee,
   nine enumerated failure modes, and a scope and limit statement for every headline claim.
-- **One-command reproduction.** `make reproduce` regenerates the committed-data headline numbers and runs the 79-test
-  suite that validates every metric path; `make reproduce-local` regenerates the data-dependent benchmarks; data
+- **One-command reproduction.** `make reproduce` regenerates the committed-data headline numbers and runs the
+  full test suite that validates every metric path; `make reproduce-local` regenerates the data-dependent benchmarks; data
   releases are pinned; `.zenodo.json` and `CITATION.cff` provide the deposit metadata; see
   [REPRODUCTION.md](REPRODUCTION.md).
 - **Living, signed hazard KB** ([docs/HAZARD_KB.md](docs/HAZARD_KB.md)): 80 versioned, provenanced, HMAC-signed
@@ -288,6 +299,45 @@ Each novel axis is moved from a lookup to a mechanism, so the screen can catch w
 - **Fair, pre-registered panel** ([docs/PANEL.md](docs/PANEL.md)): the control-versus-advisor comparison as a
   reusable artifact with a fixed prompt and rubric, the LLM given its best configuration, and an explicit
   on-prem-versus-API axis. The independent re-run and the Zenodo DOI mint are flagged as external and author actions.
+
+### v0.8.0 - The Completeness Cycle
+
+This cycle completes the artifact against the field. All references were independently re-verified before any code
+(see `DATA_ID_VERIFICATION_v0.8.md`); three corrections were carried in, including the ABC-Bench venue (NeurIPS 2025
+BioSafe GenAI workshop, not ICML). Per a pre-registered publication gate, three workstreams land and two are gated
+"iff they pass"; both gated experiments hit their pre-committed fallback and are reported as documented nulls.
+
+- **Managed access plane (P9), pass.** A tiered-access plane assigns an access tier from the verdict severity and a
+  verified user-legitimacy level, and gates how the verdict resolves: a `refuse` is never unlocked at any tier; a
+  `flag_for_review` releases under review for a verified user and is held for an unverified one; an out-of-knowledge
+  -base allow escalates one notch. The tier and the legitimacy-evidence hash are bound into the signed passport and
+  the hash-chained audit, so mutating the tier breaks the signature. The credentialing authority is a documented
+  integration point, not an operational claim. With P2 screening, P4 signed metadata, and P9 managed access, the
+  artifact now implements the complete set of design-stage guardrails the NTI framework recommends.
+- **Graded-refusal taxonomy, pass.** The stratified verdict is formalized into allow / partial / flag_for_review /
+  refuse, mapped deterministically and totally from the per-axis findings: a single low-severity research-context
+  mechanism flag becomes `partial` (general context, no actionable detail), while a scope-level flag, a sensitive
+  axis, or co-occurring flags route to full review. A deterministic content gate verifies a `partial` response carries
+  no sequences, coordinates, oligos, protocol steps, or restriction sites (negative controls confirm it has teeth);
+  a leaky partial collapses to review. Grounded in the partial-compliance finding (Zheng et al., EMNLP 2025).
+- **Standards alignment, pass.** The safe-proxy benchmark exports in a NIST-baseline-screening-compatible shape
+  (blinded record ids plus a separate answer key, a declared schema, a content checksum), validated by a CI test. The
+  living knowledge base documents its alignment to the IBBIS DNA Screening Standards Consortium with explicit hooks
+  where the standard is still forming and no conformance claim. An OSTP interagency-window note frames design-stage
+  governance as complementary to synthesis-stage screening. See [docs/STANDARDS.md](docs/STANDARDS.md).
+- **Neyman-Pearson conformal selection, documented null.** On the firewall corpus (COSMIC v104, gene-disjoint split,
+  201 test hazards) the NP likelihood-ratio selector controls the false-escalation rate at the target alpha
+  (0.05 -> 0.017, 0.10 -> 0.064), which the discrete v0.4 scalar threshold cannot do (it sits at a fixed
+  false-escalation of 0.18). But at matched alpha the NP power gap is negative and tightly estimated (for example,
+  -0.040, CI -0.067 to -0.015 at alpha 0.20), so the pre-registered gate (strictly higher catch at matched alpha) is
+  not met. NP's value is calibrated control, not more power; the v0.4 certified false-refuse bound stands as the
+  operational headline and NP is a documented fast-follow.
+- **Confidence-gated structural fusion, documented null with a sharper diagnosis.** Gating the fold channel on mean
+  pLDDT does not lift the 1%-FPR operating point (gated TPR@1%FPR 0.21 versus ESM-alone 0.72). The reason is now
+  identified: the cached structures are high-confidence (mean pLDDT 84.6; 706 of 706 test structures at or above 70),
+  so gating fuses almost everywhere and the v0.6 failure is fold-distance on the <=40%-identity split, not low
+  confidence, which gating cannot fix. The structure channel remains a ranking-level corroborator (composition-free
+  AUROC 0.882); no operating-point lift is claimed.
 
 ## Limitations
 
@@ -310,6 +360,14 @@ Each novel axis is moved from a lookup to a mechanism, so the screen can catch w
   necessary but not sufficient for real-world safety.
 - The decomposition aggregator is necessary, not sufficient. It catches the assembly, scale, and coordinated-loci
   decompositions it models; a novel cross-call obfuscation can still evade it, which is a named and reported residual.
+- Managed access (P9) is a mechanism, not a deployed authority. The plane enforces tiers and verifies through
+  pluggable hooks; the credentialing authority is an integration point the deployment supplies. Standards alignment
+  tracks a moving target (the IBBIS DSSC standards are still forming; the 2024 OSTP framework may be revised), so the
+  artifact ships alignment intent plus schema hooks and makes no conformance claim.
+- The two gated v0.8 strengtheners are documented nulls, not shipped claims. Neyman-Pearson conformal selection adds
+  calibrated control but not power at matched alpha, so the v0.4 certified bound stands; confidence-gated structural
+  fusion does not lift the 1%-FPR operating point, so the structure channel stays a ranking-level corroborator. A
+  full-trajectory monitor and a scaled, categorized red-team are an explicit post-v1.0 fast-follow.
 - The control-versus-advisor results are model- and date-specific (`claude-opus-4-8`, `deepseek-v4`,
   `llama-4-maverick`, `qwen3-next-80b`, June 2026). None of the tested LLMs can screen sequences and the open ones are
   jailbroken as judges, but a stronger or differently-tuned future model could shift the A, B, and D results.

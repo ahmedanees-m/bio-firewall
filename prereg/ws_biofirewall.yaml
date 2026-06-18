@@ -220,3 +220,149 @@ upgrade_v04_v10:
     - "the screen is a safeguard not a guarantee - the false-refuse ceiling bounds OVER-refusal, not hazard-catch."
     - "knowledge-base coverage is finite - the locus axis still misses genes absent from its data (the 20% COSMIC miss)."
     - "novelty = the integrated governed system + benchmark + red-team; the cargo ML component is conceded non-novel."
+
+# ==================================================================================================================
+# UPGRADE PRE-REGISTRATION v0.8.0 "The Completeness Cycle" (SHA-lock this block BEFORE running any v0.8.0 experiment).
+# Mirrors BIOFIREWALL_v0_8_COMPLETENESS_EXECUTION_PLAN.md. Every criterion is falsifiable + carries a pre-committed
+# fallback path. All references independently re-verified first (DATA_ID_VERIFICATION_v0.8.md); THREE corrections are
+# carried in here: (1) ABC-Bench is NeurIPS 2025 Workshop BioSafe GenAI / arXiv:2606.11150, NOT "ICML 2026";
+# (2) the NP-vs-certified-bound comparison is OUR pre-registered experiment - the NP paper (arXiv:2502.16513) neither
+# names Clopper-Pearson nor uses conformal p-values in its rule; (3) the IBBIS body is the DNA Screening Standards
+# Consortium (DSSC), "Technical Consortium" being IBBIS shorthand. Publication gate: MANAGED+GRADED+STANDARDS land
+# before v1.0.0; CONFORMAL-NP + STRUCT-GATED land iff they pass their "iff" gate, else fast-follow; TRAJECTORY is an
+# explicit post-v1.0 fast-follow (NOT in this cycle).
+# ==================================================================================================================
+upgrade_v08_completeness:
+  locked_before_results: true            # committed + tagged BEFORE the v0.8.0 experiments produce numbers
+  references_verified: "DATA_ID_VERIFICATION_v0.8.md (2026-06-18); 16/16 exist; 3 corrections applied."
+
+  pre_publication_set:                   # land before v1.0.0 (strengthen the central claim; bounded, low-risk)
+    managed_access_plane_P9:
+      grounding: "NTI 'A Framework for Managed Access to Biological AI Tools' (NTI|bio, 2026-01-28); NTI 'Developing
+        Guardrails for AI Biodesign Tools' (2024-11) - the two built-in guardrails BioFirewall implements (screening
+        + signed metadata); ABC-Bench (NeurIPS 2025 Workshop BioSafe GenAI, arXiv:2606.11150) tiered/KYC access."
+      criterion: "a P9 access plane assigns an access tier as a deterministic function of (screen-verdict severity,
+        verified user-legitimacy level); the tier GATES the RESOLUTION of the verdict; the same (verdict,tier) always
+        yields the same resolution; tier + legitimacy evidence are written into the signed passport AND the
+        hash-chained audit and are verdict-consistent; a pre-registered (verdict x tier) matrix resolves as specified;
+        tier-gating is tamper-evident (mutating the tier breaks the passport signature / audit chain)."
+      fallback: "managed access is a process layer - ship the enforcement mechanism + pluggable verification hooks;
+        the credentialing authority is a DOCUMENTED INTEGRATION POINT, not claimed operational. Do not overstate a
+        deployed access-control regime; the contribution is the built mechanism implementing NTI's second guardrail."
+    graded_refusal_taxonomy:
+      grounding: "'Let Them Down Easy! Contextual Effects of LLM Guardrails' (Zheng et al., Findings of EMNLP 2025,
+        arXiv:2506.00195): partial compliance (general info, no actionable detail) reduces negative user perception
+        by >50% vs flat refusal while preserving safety."
+      criterion: "an allow / partial / flag_for_review / refuse taxonomy mapped DETERMINISTICALLY and TOTALLY from the
+        existing per-axis stratified verdicts (no new judgment layer); 'partial' = general context without
+        actionable/operational detail; a deterministic content gate verifies 'partial' outputs emit no
+        actionable/operational detail on a pre-registered test set."
+      fallback: "if 'partial' cannot be cleanly separated from 'flag_for_review' for a given axis -> collapse to the
+        existing allow/flag/refuse for that axis and document; do not ship an ambiguous tier."
+    standards_alignment:
+      grounding: "NIST 'test dataset for assessing baseline nucleic acid sequence screening' (ark:/88434/mds2-3787,
+        2025-05-21); Laird et al. inter-tool analysis (bioRxiv 10.1101/2025.05.30.655379, 2025-06-01); IBBIS DNA
+        Screening Standards Consortium (DSSC, launched 2025-11-06); OSTP interagency state-of-the-art assessment of
+        nucleic-acid-synthesis screening due before 2026-10-13 (Framework for Nucleic Acid Synthesis Screening,
+        2024-04-29, Section 4.4(b)(i)); Wittmann et al., Science 2025 (10.1126/science.adu8578, synthesis-stage layer)."
+      criterion: "the safe-proxy benchmark EXPORTS in a NIST-screening-dataset-compatible shape (blinded record ids +
+        a schema doc) that validates against a declared schema; the living-KB documents its IBBIS-DSSC alignment (or
+        the explicit hooks where the standard is still forthcoming); a standards-alignment note + an OSTP-window
+        comment (framed as a COMPLEMENTARY design-stage layer, not a replacement for synthesis-stage screening) ship
+        in the repo."
+      fallback: "where a standard is not yet public -> document alignment INTENT + the schema hooks; do not claim
+        conformance. (The 2024 Framework may be revised/replaced per the 2025-05-05 EO; frame as alignment with a
+        moving target.)"
+
+  gated_strengtheners:                   # land before v1.0.0 IFF they pass cleanly, else fast-follow point release
+    conformal_np:
+      grounding: "'Revamping Conformal Selection With Optimal Power: A Neyman-Pearson Perspective' (Qin, Liu, Li,
+        Huang; arXiv:2502.16513, 2025) - a likelihood-ratio decision rule that REPLACES conformal p-values; builds on
+        Jin & Candes 'Selection by Prediction with Conformal p-values' (JMLR v24, 2023; arXiv:2210.01408). Conformal-
+        with-guarantees is established in biology: CPEC (Ding/Luo/Luo, PLOS Comput Biol 2024, 10.1371/journal.pcbi.1012135),
+        ALLCoP (Lysenkova Wiklander et al., JCO CCI 2025, 10.1200/CCI-24-00324)."
+      criterion: "implement an NP likelihood-ratio conformal selector on the SAME held-out calibration corpus as v0.4
+        (the Benchmark-1 independent-label universe + the n=288 legitimate-research set). OUR pre-registered head-to-
+        head (the comparison is ours, NOT a claim from the NP paper): the NP selector controls P(refuse|legit) <= alpha
+        finite-sample AND achieves STRICTLY HIGHER catch-rate (power) at matched alpha than the v0.4 Clopper-Pearson
+        threshold method, with a CI on the power gap excluding 0; coverage within tolerance."
+      fallback: "if NP does NOT beat the v0.4 method on power at matched alpha on the held-out set -> report the null
+        and KEEP the simpler certified bound (which already passes its gate). The upgrade is claimed only if it
+        demonstrably improves power. Fast-follow otherwise; not a v1.0 blocker."
+    struct_gated:
+      grounding: "v0.6 struct ensemble FAILED at 1%-FPR (incremental TPR -0.48) because a MEAN ensemble over a weak,
+        low-confidence fold channel dilutes ESM; confidence-gated fusion is the standard fix + the pre-registered next
+        step. 'Beyond sequence similarity: toward function-based screening of nucleic acid synthesis' (Abel et al.,
+        Frontiers Bioeng Biotechnol 2026, 10.3389/fbioe.2026.1832724)."
+      criterion: "gate the fold signal on STRUCTURE CONFIDENCE (mean pLDDT from the cached AlphaFold-DB v6 .cif): use
+        the structural channel only when pLDDT is high, else defer to ESM; preserve abstain-on-3-signal-disagreement.
+        Re-run on the SAME <=40%-id held-out split. PASS iff: non-negative incremental TPR@1%FPR over ESM-alone on the
+        full holdout AND strictly positive incremental TPR@1%FPR on the high-confidence-structure subset (CI reported)."
+      fallback: "if even gated fusion does not add at 1%-FPR -> report the structure channel as a RANKING-level (AUROC)
+        corroborator only (its already-documented value: composition-free AUROC ~0.88 backstopping the v0.4
+        non-compositionality finding); do not claim operating-point lift."
+
+  fast_follow_post_v1:
+    trajectory_safety:
+      grounding: "ATBench (arXiv:2604.02022): risks emerge gradually over interaction traces - compounding planning,
+        unsafe tool use, over-reliance on environmental feedback, delayed exploitation of previously acquired
+        permissions; Agent-SafetyBench (arXiv:2412.14470: 349 environments / 2,000 test cases / 8 risk categories /
+        10 failure modes) as the scale/structure model."
+      note: "NOT in v0.8.0. The existing decomposition defense (100% catch on the two genuine evasions at 0% FP,
+        necessary-not-sufficient) is already publishable; the full-trajectory monitor + scaled categorized red-team is
+        a post-v1.0 point release, explicitly sequenced so this cycle never blocks submission (risk R4)."
+
+  results_2026_06_18:   # FROZEN v0.8.0 run (seed 1234), evaluated against the pre-registered criteria above
+    managed_access_plane_P9: "GATE PASS. P9 access plane shipped (bio_firewall/access). resolve(decision, tier,
+      low_confidence) is a total, deterministic (verdict x tier) matrix: refuse->refused at every tier (never
+      unlocked); flag->released_with_review for verified+ else held_pending; out-of-KB (low-confidence) allow escalates
+      one notch; confident allow->released. Tier + legitimacy-evidence hash bound into a re-signed passport
+      (tamper-evident: mutating the tier/resolution breaks the HMAC) AND the hash-chained audit. screen_managed()
+      one-call entry. Credentialing authority = documented integration point (not operational). 10 tests."
+    graded_refusal_taxonomy: "GATE PASS. allow/partial/flag_for_review/refuse mapped deterministically + totally from
+      the per-axis verdicts (bio_firewall/respond): a single low-severity research-context mechanism flag (locus/scale
+      soft_penalty) -> partial; a scope_flag, a sensitive axis (cargo/germline), or co-occurring flags -> full review.
+      The `partial` content gate (deterministic regex over nucleotide runs / coordinates / oligos / protocol steps /
+      restriction sites) passes general mechanism prose and catches actionable detail (negative controls verify
+      teeth); leaky partial collapses to review. verdict['grade'] surfaced additively. 9 tests."
+    standards_alignment: "GATE PASS. NIST-compatible export (bio_firewall/standards, standards/nist_benchmark_export.json,
+      22 records: 12 Tier-1 hazard + 10 benign loci) - blinded ids BF-##### + separate answer key (NIST blinded-header
+      convention), declared schema, content checksum; validate_export() checks schema/bijection/label-vocab/no-sequence
+      -leak/checksum. living-KB IBBIS-DSSC alignment documented (kb_standards_alignment(): aligned fields present;
+      pending hooks declared; conformance_claim=False). OSTP note (deadline 2026-10-13, complementary design-stage
+      layer, moving-target caveat). docs/STANDARDS.md. 7 tests."
+    conformal_np: "GATE FAIL (PRE-REGISTERED FALLBACK, pre-committed). Powered head-to-head on the firewall corpus
+      (COSMIC v104 = 768 genes; gene-disjoint split train 748 / benign-null calib 184 / test 374 = 201 hazard + 173
+      benign). The NP likelihood-ratio conformal selector DOES control the false-escalation rate at the target alpha
+      (0.05->0.017, 0.10->0.064, 0.20->0.121, all <= alpha, finite-sample). The v0.4 SCALAR risk threshold CANNOT be
+      dialed - the discrete risk bands collapse to one operating point (false-escalation 0.179, catch 0.836) regardless
+      of alpha. At MATCHED alpha the NP power gap is NEGATIVE and tightly estimated (alpha=0.20: gap -0.040 CI
+      [-0.067,-0.015]; alpha=0.10: -0.099 CI[-0.140,-0.061]; alpha=0.05: -0.338 CI[-0.403,-0.275]) -> the gate
+      (strictly HIGHER catch at matched alpha, CI excludes 0) is NOT met. CONCLUSION: NP's value is CALIBRATED CONTROL
+      (you can choose alpha and the conformal selector honors it; the discrete scalar cannot), NOT more power; honoring
+      a small alpha costs catch. The v0.4 Clopper-Pearson certified false-refuse bound (already passing its gate) stays
+      the operational headline; NP ships as a documented fast-follow (control, not power). Not tuned to rescue."
+    struct_gated: "GATE FAIL (PRE-REGISTERED FALLBACK, pre-committed). Confidence-gated fusion shipped + re-run on the
+      same <=40%-id holdout (ESM vectors + Foldseek struct score + mean pLDDT parsed from the cached AF-DB v6 .cif).
+      KEY DIAGNOSIS: the cached structures are HIGH-confidence (mean pLDDT 84.6; 706/706 test >= 70), so pLDDT-gating
+      fuses essentially everywhere and the gated fusion ~ the v0.6 mean ensemble: gated TPR@1%FPR 0.210 vs ESM-alone
+      0.718 (incremental -0.517 CI[-0.745,-0.117]); high-confidence subset (n=706) incremental -0.459 CI[-0.774,0.184].
+      The v0.6 failure was therefore NOT low pLDDT - it is FOLD-DISTANCE on the <=40%-id split (held-out toxins are
+      structurally distant from the train-toxin fold reference), which confidence-gating cannot fix. -> pre-committed
+      fallback: the structure channel is a RANKING-level corroborator only (composition-free AUROC 0.882 backstopping
+      the v0.4 non-compositionality finding); NO 1%-FPR operating-point lift claimed. A stronger, better-explained
+      negative than v0.6 (it identifies the actual cause)."
+
+  publication_gate_outcome_2026_06_18: "Per the plan's publication gate: MANAGED + GRADED + STANDARDS LANDED before
+    v1.0.0 (they complete the NTI guardrail set + formalize governance + align to standards - the central-claim
+    upgrade). CONFORMAL-NP + STRUCT-GATED did NOT pass their 'iff' gates -> documented nulls, NOT shipped as claims:
+    the v0.4 certified bound + the AUROC corroborator stand; both upgrades are fast-follow. TRAJECTORY remains an
+    explicit post-v1.0 fast-follow (not attempted this cycle). v0.8.0 strengthens the paper without delaying it."
+
+  residual_limits_after_v08:
+    - "managed access is a MECHANISM, not a deployed authority - the plane enforces tiers + verifies via pluggable
+      hooks; the credentialing authority is an integration point."
+    - "graded 'partial' is a deterministic content-gated response tier, not a learned judgment; ambiguous axes collapse."
+    - "standards alignment tracks a MOVING target (the 2024 OSTP Framework may be revised per the 2025-05-05 EO; IBBIS
+      DSSC standards still forming) - intent + hooks where not yet public, no conformance claim."
+    - "all prior v1.0 residual limits stand (no wet-lab validation; safe proxies; finite KB coverage; non-novel cargo ML)."

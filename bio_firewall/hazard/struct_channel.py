@@ -31,6 +31,21 @@ def ensemble_score(esm, struct, homology=None):
     return np.mean(np.vstack(sigs), axis=0)
 
 
+def confidence_gated_score(esm, struct, plddt, plddt_min: float = 70.0):
+    """WS-STRUCT-GATED (v0.8.0): the v0.6 MEAN ensemble failed at 1%-FPR because a weak, low-confidence fold channel
+    diluted ESM. Gate the fold signal on STRUCTURE CONFIDENCE: fuse esm+struct ONLY where the predicted-structure
+    pLDDT >= plddt_min; everywhere else defer to ESM alone. By construction the gated score equals ESM wherever the
+    structure is not trusted, so it cannot dilute ESM at the operating point."""
+    import numpy as np
+    e = normalize01(esm)
+    s = normalize01(struct)
+    plddt = np.asarray(plddt, float)
+    hi = plddt >= plddt_min
+    out = e.copy()
+    out[hi] = 0.5 * (e[hi] + s[hi])                  # fuse only where the fold channel is confident
+    return out
+
+
 def abstain_mask(esm, struct, lo: float = 0.35, hi: float = 0.65):
     """Abstain (route to human) when the two channels STRONGLY DISAGREE: one calls toxin (>hi) while the other
     calls benign (<lo). Disagreement is exactly where a single-signal screen is least trustworthy."""
