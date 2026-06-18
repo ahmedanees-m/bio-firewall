@@ -25,7 +25,7 @@ from pathlib import Path
 # actual patients. Curated from the gene-therapy safety literature (public facts).
 TIER1_CLINICAL_CIS: dict[str, tuple[str, str]] = {
     "LMO2":   ("SCID-X1 gammaretroviral trials — T-ALL in 5 children", "10.1126/science.1088547"),
-    "CCND2":  ("SCID-X1 / WAS — clonal expansion", "10.1172/JCI35798"),
+    "CCND2":  ("SCID-X1 gammaretroviral — integration near CCND2 in leukemic clones (Howe 2008)", "10.1172/JCI35798"),
     "MECOM":  ("CGD & WAS — MDS1-EVI1 activation, clonal dominance/MDS", "10.1038/nm.2088"),
     "EVI1":   ("CGD — EVI1 activation, clonal dominance", "10.1038/nm.2088"),
     "MDS1":   ("CGD — MDS1-EVI1 locus activation", "10.1038/nm.2088"),

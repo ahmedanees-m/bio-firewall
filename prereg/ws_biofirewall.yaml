@@ -17,7 +17,7 @@ acceptance_criteria:
 honest_limits:
   - "safe proxies are not real hazards (TEVV methodological bound)."
   - "the locus axis flags on MECHANISM; the genotoxicity proxy is NOT outcome-validated (PEN-STACK v6.5/v6.6) -> a flag, not a cancer rate."
-  - "axis-1 function-aware ML is not novel at the component level (ToxDL/Omnyra); novelty = the five-axis governed integration + the benchmark + the red-team."
+  - "axis-1 function-aware ML is not novel at the component level (ToxDL [Pan 2020]; OmniTox / function-aware screening [Mathew 2025, PMC12699701]); novelty = the five-axis governed integration + the benchmark + the red-team."
   - "wet-lab validation is declared future work (the standing real-data bottleneck)."
 
 dual_use_plan:

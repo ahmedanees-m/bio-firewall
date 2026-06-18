@@ -1,4 +1,4 @@
-"""Function-aware cargo screen (the ToxDL/Omnyra direction): an ESM2 embedding scored by nearest-centroid
+"""Function-aware cargo screen (the ToxDL / OmniTox direction): an ESM2 embedding scored by nearest-centroid
 (toxin vs benign). It catches low-identity homologs that EVADE signature/homology screens, because the ESM
 embedding captures protein FUNCTION beyond sequence identity.
 

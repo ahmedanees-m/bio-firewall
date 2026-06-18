@@ -110,8 +110,9 @@ screening), and the embedding recovers most of the lost signal.
 toxins have distinctive composition (e.g. cysteine-rich), so composition is a **strong confound**. The ESM head still
 beats it (0.72 > 0.562 at the operating point; AUROC 0.988 > 0.93), so there is genuine signal **beyond** composition —
 but the margin over a trivial composition baseline is modest. The function-aware advantage is **real but partly
-compositional**; we do not claim a clean win. (Component-level novelty is not claimed either — cf. ToxDL/Omnyra; the
-contribution is the governed five-axis integration + this honest benchmark.) **→ v0.4.0 follows this confound to ground
+compositional**; we do not claim a clean win. (Component-level novelty is not claimed either — cf. ToxDL [Pan 2020]
+/ OmniTox [Mathew 2025, PMC12699701]; the contribution is the governed five-axis integration + this honest
+benchmark.) **→ v0.4.0 follows this confound to ground
 in Benchmark 2b below.**
 
 ---

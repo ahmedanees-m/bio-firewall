@@ -221,7 +221,8 @@ honest-failure path):
 
 - The **locus axis flags on mechanism**, not a validated prediction — its genotoxicity proxy is *not* outcome-
   validated, so it routes elevated risk to human review; it does **not** output a cancer probability.
-- The **function-aware cargo ML is not novel at the component level** (cf. ToxDL / Omnyra); the contribution is the
+- The **function-aware cargo ML is not novel at the component level** (cf. ToxDL, Pan et al. 2020; OmniTox /
+  function-aware screening, Mathew et al. 2025, PMC12699701); the contribution is the
   *integrated five-axis governed system + the benchmark + the red-team*, with the locus/edit/germline/scale axes as
   the new screening capability. **v0.4.0 honest finding:** the cargo signal is substantially non-compositional in
   *ranking* (AUROC/TPR@5%FPR), but its advantage over a composition baseline at the strict **1%-FPR operating point**
