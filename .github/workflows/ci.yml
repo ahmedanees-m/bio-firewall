@@ -26,4 +26,6 @@ jobs:
       - name: Lint
         run: ruff check bio_firewall tests
       - name: Test (incl. the license gate)
+        env:
+          PEN_STACK_SAFETY_AUDIT: /tmp/bf_safety_audit.log   # writable path for the PEN-STACK Guardian's audit log
         run: pytest -q
