@@ -9,8 +9,9 @@ signed design passport. It is the missing design-stage guardrail: a firewall for
 [![CI](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-113%20passing-success.svg)
-![Version](https://img.shields.io/badge/version-0.9.0-blue.svg)
+![Tests](https://img.shields.io/badge/tests-135%20passing-success.svg)
+![Version](https://img.shields.io/badge/version-0.9.1-blue.svg)
+![pen-stack](https://img.shields.io/badge/pen--stack-6.6--7.x-blue.svg)
 ![Status](https://img.shields.io/badge/status-alpha%20reference-orange.svg)
 
 > **Scope and maturity.** BioFirewall is a defensive, early-stage, computational reference implementation evaluated on
@@ -140,6 +141,9 @@ bio-firewall/
 |   |-- access/managed.py             v0.8 P9 WS-MANAGED: tiered access by verdict x user legitimacy; screen_managed()
 |   |-- respond/graded.py             v0.8 WS-GRADED: allow/partial/flag/refuse taxonomy + partial content gate
 |   |-- standards/                    v0.8 WS-STANDARDS: nist_export.py (NIST-compatible benchmark) + ibbis.py (DSSC + OSTP)
+|   |-- adapters/cloudlab_gate.py     v0.9.1 gate the PEN-STACK 7.0 Stage J cloud-lab bridge on a verified allow passport
+|   |-- adapters/writespec.py         v0.9.1 screen the typed PEN-STACK 7.0 Stage A WriteRequest (SBOL3) directly
+|   |-- adapters/reconcile.py         v0.9.1 conservative-meet reconcile with pen-stack's in-design safety_gate verdict
 |   |-- hazard/                       P2 the five-axis screen
 |   |   |-- cargo.py, cargo_ml.py        axis 1: Guardian signatures + function-aware ESM2 classifier
 |   |   |-- locus.py, locus_pos.py       axis 2: oncogene / TSG / essential / dosage; v0.6 positional (promoter/enhancer)
@@ -174,11 +178,11 @@ bio-firewall/
 |-- data/locus_outcome_inputs/       v0.9 CCGD-derived human-ortholog driver lists (ccgd_recurrent/all.txt) + SOURCE
 |-- results/locus_mouse_outcome*.json   v0.9 frozen CCGD outcome-validation results (held-out AUROC 0.605, OR 3.34)
 |-- standards/nist_benchmark_export.json   v0.8 NIST-compatible benchmark export (blinded ids + answer key)
-|-- docs/                            THREAT_MODEL, HAZARD_TAXONOMY, BENCHMARK, HEADTOHEAD, SYSTEM_CARD, PANEL, HAZARD_KB, STANDARDS
+|-- docs/                            THREAT_MODEL, HAZARD_TAXONOMY, BENCHMARK, HEADTOHEAD, SYSTEM_CARD, PANEL, HAZARD_KB, STANDARDS, integration_cloudlab
 |-- examples/                        demo.py; agent_integration.py + agent_trace.json (the recorded in-workflow trace)
 |-- tools/build_hazard_kb.py, tools/export_nist_benchmark.py   regenerate the signed KB; regenerate the NIST export
-|-- prereg/                          ws_biofirewall.yaml (criteria + frozen results); ws_locus_mouse_outcome.yaml (v0.9)
-|-- tests/                           113 tests (incl. the data-license CI gate and the Tier-1 100%-catch regression gate)
+|-- prereg/                          ws_biofirewall.yaml + ws_locus_mouse_outcome.yaml (v0.9) + ws_pin/cloudlab_gate/writespec/verify_reconcile.yaml (v0.9.1)
+|-- tests/                           135 tests (incl. the data-license CI gate and the Tier-1 100%-catch regression gate)
 |-- Makefile, REPRODUCTION.md        one-command reproduction + the clean-image protocol
 |-- CITATION.cff, .zenodo.json       citation and Zenodo deposit metadata
 |-- pyproject.toml, LICENSE, DATA_LICENSES.md
@@ -370,6 +374,30 @@ The validation is pre-registered ([prereg/ws_locus_mouse_outcome.yaml](prereg/ws
 CCGD-derived positive sets and the frozen result are committed
 ([data/locus_outcome_inputs/](data/locus_outcome_inputs), [results/locus_mouse_outcome.json](results/locus_mouse_outcome.json)),
 and it reproduces deterministically with `python locus_mouse_outcome_validation.py --positives data/locus_outcome_inputs/ccgd_recurrent.txt`.
+
+### v0.9.1 - PEN-STACK 7.0 integration (Stage K)
+
+PEN-STACK reached 7.0.0, completing its A->J genome-writing pipeline and adding a design-to-physical-execution bridge
+(Stage J, a cloud-lab connector) and a typed, ontology-backed intent layer (Stage A, the SBOL3 WriteRequest).
+PEN-STACK's architecture designates BioFirewall as **Stage K, the comprehensive downstream screen**. The screening
+core is unchanged; this cycle makes the dependency safe across the major boundary and realizes that role. All surfaces
+were verified against the installed 7.0.0 before any adapter was written (one plan correction: pen-stack 7.0 has no
+top-level `verify()`; the in-design verdict is `safety.safety_gate() -> SafetyVerdict`).
+
+- **Bounded dependency + CI matrix (WS-PIN).** The pin is now `pen-stack>=6.6.0,<8.0.0`, capped at the next major; CI
+  runs the suite against both the floor (6.6.0) and the current (7.0.0). Verified green on both: 135 passed / 1 skipped
+  on 7.0.0, 133 passed / 3 skipped on 6.6.0 (the extra skips are the 7.0-only surfaces, which correctly skip).
+- **Cloud-lab execution gate (WS-CLOUDLAB-GATE).** `adapters/cloudlab_gate.py` intercepts the Stage J submission
+  in-workflow: it runs the screen and submits to pen-stack only on a verified `allow` passport that matches the design;
+  `flag_for_review` is held, `refuse` is blocked, and a tampered or reused passport is rejected - even if pen-stack's
+  own gate would have allowed it. The decision is hash-chain-audited. See [docs/integration_cloudlab.md](docs/integration_cloudlab.md).
+- **Typed WriteRequest screening (WS-WRITESPEC).** `adapters/writespec.py` screens the typed Stage A WriteRequest
+  directly (resolved gene, coordinates, and SO cargo roles), concordant with the dict path; a hazard-relevant
+  unresolved field raises a scope flag rather than silently allowing.
+- **Reconciliation with the in-design gate (WS-VERIFY-RECONCILE).** `adapters/reconcile.py` takes the conservative
+  meet of the BioFirewall verdict and pen-stack's `safety_gate` SafetyVerdict (a refuse on either refuses; allow only
+  if both clear), logs both, and characterizes every disagreement - expected where BioFirewall covers axes pen-stack's
+  in-design gate does not (locus-outcome, germline, scale, decomposition).
 
 ## Limitations
 

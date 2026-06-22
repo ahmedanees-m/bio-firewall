@@ -9,19 +9,24 @@ what needs the **local-only** data (COSMIC/OncoKB/VISDB/controlled-access - neve
 ```bash
 git clone https://github.com/ahmedanees-m/bio-firewall && cd bio-firewall
 python -m venv .venv && . .venv/bin/activate     # Python 3.11 or 3.12
-make install                                      # pip install -e ".[dev]"  (pulls pen-stack>=6.6.0)
+make install                                      # pip install -e ".[dev]"  (pulls pen-stack>=6.6.0,<8.0.0)
 ```
 > If your machine only has `python3` (no `python`), pass `PY=python3` to every `make` target.
+
+**pen-stack compatibility (WS-PIN).** The dependency is bounded `>=6.6.0,<8.0.0`; the suite is verified green across
+the 6->7 major boundary and CI runs a matrix of both floors. Verified on a clean image: pen-stack **7.0.0** -> 135
+passed / 1 skipped; pen-stack **6.6.0** -> 133 passed / 3 skipped (the 2 extra skips are the pen-stack-7.0-only
+WriteRequest/cloud-lab surfaces, which correctly skip on the older floor).
 
 ## 1. Reproduce from the committed repo (open data only)
 
 ```bash
 make lint        # ruff - clean
-make test        # the full suite (69 tests) - validates every committed metric/logic path
+make test        # the full suite (135 tests) - validates every committed metric/logic path
 make reproduce   # the WS-COMBINE-MONO monotonicity proof (B7 PASS) + the suite above
 make prereg-sha  # SHA-256 of the SHA-locked pre-registration (must match the value in the release notes)
 ```
-Expected: lint clean; **69 passed**; `B7 monotone combiner: PASS (reps=5000)`. The test suite *is* the proof that
+Expected: lint clean; **135 passed** (1 skipped); `B7 monotone combiner: PASS (reps=5000)`. The test suite *is* the proof that
 the cargo/conformal/decomposition/edit-mech/locus-pos/struct **math** matches the frozen results.
 
 ## 2. Reproduce the data-dependent benchmarks (local-only data)

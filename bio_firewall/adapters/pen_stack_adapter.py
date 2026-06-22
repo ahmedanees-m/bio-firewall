@@ -1,12 +1,15 @@
 """Reference integration: govern a PEN-STACK design plan. PEN-STACK is the design tool; BioFirewall supervises it.
-Maps a PEN-STACK design dict onto the generic artifact, screens it, and (Phase-1) cross-checks via PEN-STACK's
-verify()/Verdict over the MCP/REST surface."""
+Maps a PEN-STACK design dict onto the generic artifact and screens it; the cross-check against PEN-STACK's own
+in-design verdict is realized in `reconcile.py` (v0.9.1). NOTE: pen-stack 7.0.0 has no top-level `verify()`/`Verdict`
+(the earlier docstring's assumption); the in-design verdict is `pen_stack.safety.safety_gate(design) -> SafetyVerdict`,
+which `reconcile()` consumes."""
 from __future__ import annotations
 
 
-def govern_pen_stack_design(design: dict) -> dict:
+def govern_pen_stack_design(design: dict, *, reconcile_penstack: bool = False) -> dict:
     """Screen a PEN-STACK design (gene/chrom/edit_intent/delivery_vehicle/cargo_function) via the five-axis firewall.
-    Phase-1 will also call pen_stack.verify() and reconcile legality + the firewall verdict."""
+    With `reconcile_penstack=True`, also take the conservative meet with pen-stack's own in-design SafetyVerdict
+    (`reconcile.py`) and attach it under `verdict['reconcile']`."""
     artifact = {
         "intent": design.get("cargo_function") or design.get("edit_intent") or "",
         "cargo_function": design.get("cargo_function"),
@@ -17,4 +20,8 @@ def govern_pen_stack_design(design: dict) -> dict:
         "edit": {"concurrent_dsb": len(design.get("edits", [])) or None} if design.get("edits") else {},
     }
     from bio_firewall.intercept.spine import screen          # lazy import: avoid the adapters<->spine cycle
-    return screen(artifact)
+    verdict = screen(artifact)
+    if reconcile_penstack:
+        from bio_firewall.adapters.reconcile import reconcile
+        verdict["reconcile"] = reconcile(artifact)
+    return verdict

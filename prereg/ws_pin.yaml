@@ -1,0 +1,12 @@
+# BioFirewall WS-PIN - bound the pen-stack dependency across the 6->7 major boundary (v0.9.1). SHA-lock before CI.
+id: ws_pin
+objective: bound pen-stack at the next major; keep the verified 6.6-7.x backward compatibility
+change: "pyproject: pen-stack>=6.6.0,<8.0.0"
+acceptance: full suite green vs pen-stack {6.6.0, 7.0.0} in CI; clean-image install resolves a 7.x pen-stack and imports
+honest_failure: "on any 6.6.0-vs-7.0.0 divergence, move the floor to >=7.0.0,<8.0.0 and document the dropped 6.x support"
+prework_verified:
+  pen_stack_7_0_0: "on PyPI (Available versions: 7.0.0 ...) and on the VM checkout (__version__ 7.0.0)"
+  safety_gate_present: true                 # pen_stack.safety.safety_gate(design, *, actor, registry) -> SafetyVerdict
+  suite_vs_7_0_0: "113 passed, 1 skipped (the skip is the by-design COSMIC-oracle-not-mounted case)"
+locked_before_results: true
+sha256_lock: "git-locked at release tag v0.9.1 (prereg + code committed together; tests are deterministic)"

@@ -1,0 +1,19 @@
+# BioFirewall WS-WRITESPEC - screen the typed SBOL3 WriteRequest (PEN-STACK 7.0 Stage A) directly (v0.9.1). SHA-lock first.
+id: ws_writespec
+objective: consume the typed WriteRequest for higher-precision screening (resolved HGNC gene, GRCh38 coords, SO cargo roles)
+penstack_surface_verified:
+  model: "pen_stack.spec.WriteRequest (pydantic): write_type, cargo[CargoComponent{name, role:Resolved, sequence, length_bp}], target(Target{kind, gene:Resolved, locus:Resolved, att_site, phenotype}), cell_type:Resolved, constraints, unresolved[], free_text_note"
+  resolved: "Resolved{text, id, label, ontology, confidence, candidates, note}"
+  helpers: "WriteRequest.to_legacy_design() -> dict; WriteRequest.is_grounded (PROPERTY, not a method); .unresolved (list)"
+method: >-
+  WriteRequest -> firewall-plan: start from to_legacy_design(); overlay hazard-relevant fields from the structured
+  Resolved objects (target.gene.label/text -> locus.gene; target.locus -> locus.chrom/pos; cargo[].role/name ->
+  cargo; write_type -> edit-type). A hazard-relevant field that is null/unresolved -> SCOPE FLAG, never a silent allow.
+  The dict path remains the default; the WriteRequest path is additive and does not depend on Stage A being present.
+acceptance:
+  - the verdict matches the dict-input verdict on the same underlying design (concordance >= a pre-set threshold)
+  - unresolved/null hazard-relevant fields NEVER silently pass - each yields a scope flag
+  - on a positional test set the resolved-coordinate path is no worse than the free-text path (else report + keep dict default)
+scope: "additive; the dict path remains default; no dependence on Stage A presence"
+locked_before_results: true
+sha256_lock: "git-locked at release tag v0.9.1 (prereg + code committed together; tests are deterministic)"
