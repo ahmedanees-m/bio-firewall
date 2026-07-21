@@ -1,0 +1,34 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+licensed_data/
+# license-restricted benchmark oracles (COSMIC/OncoKB), run artifacts, frontier verdicts, Guardian configs:
+# NEVER committed; live outside the repo (BF_BENCH_ORACLES / PEN_STACK_HOME) per the benchmark protocol.
+bench_oracles/
+bench_run/
+pen_stack_home/
+*cosmic*.tsv
+*cancerGeneList*
+*oncokb*
+b1_verdicts.json
+# head-to-head: safe-proxy sequence file + open-model run outputs (only public data sent to NVIDIA; never committed)
+cargo_proxies*.jsonl
+# local run artifacts are ignored, but the open CCGD outcome-validation results ARE committed (reproducible).
+# Use results/* (ignore CONTENTS, not the dir) so the explicit re-includes below take effect.
+results/*
+!results/locus_mouse_outcome.json
+!results/locus_mouse_outcome_all.json
+!results/locus_outcome_visdb.json
+# the frozen control-vs-advisor panel results (docs/PANEL.md); parsed verdicts + rates, no raw responses
+!results/nvidia_headtohead/
+!results/nvidia_headtohead/*
+headtohead/
+.pytest_cache/
+.ruff_cache/
+# conformal-bench run outputs (default out_dir=bf_conformal / bf_conformal_np in conformal_bench.py)
+bf_conformal/
+bf_conformal_np/

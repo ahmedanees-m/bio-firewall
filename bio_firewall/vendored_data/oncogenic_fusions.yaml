@@ -1,0 +1,21 @@
+# Known oncogenic gene fusions - open / literature-curated (well-established cancer facts, not a restricted DB
+# like Mitelman/COSMIC-fusion). Each is a canonical driver fusion. Used by Axis 3 (edit-type): a plan whose
+# breakpoint creates one of these by design is hard_reject; a declared fusion not on this list is flag-for-review.
+# Keys are unordered gene pairs (sorted, '::').
+version: "1.0"
+license: "open (literature-curated; canonical oncogenic fusions)"
+fusions:
+  ABL1::BCR: {name: "BCR-ABL1", cancer: "CML/ALL", citation: "10.1038/nrc2147"}
+  ALK::EML4: {name: "EML4-ALK", cancer: "NSCLC", citation: "10.1038/nature05945"}
+  ERG::TMPRSS2: {name: "TMPRSS2-ERG", cancer: "prostate", citation: "10.1126/science.1117679"}
+  PML::RARA: {name: "PML-RARA", cancer: "APL", citation: "10.1182/blood.V66.6.1408"}
+  EWSR1::FLI1: {name: "EWSR1-FLI1", cancer: "Ewing sarcoma", citation: "10.1038/359162a0"}
+  ETV6::RUNX1: {name: "ETV6-RUNX1", cancer: "B-ALL", citation: "10.1073/pnas.92.11.4917"}
+  ALK::NPM1: {name: "NPM1-ALK", cancer: "ALCL", citation: "10.1126/science.7824938"}
+  ROS1::CD74: {name: "CD74-ROS1", cancer: "NSCLC", citation: "10.1016/j.cell.2007.11.025"}
+  FGFR3::TACC3: {name: "FGFR3-TACC3", cancer: "glioblastoma/bladder", citation: "10.1126/science.1220834"}
+  KMT2A::MLLT3: {name: "MLL-AF9 (KMT2A-MLLT3)", cancer: "AML", citation: "10.1182/blood-2009-03-209957"}
+  BRAF::KIAA1549: {name: "KIAA1549-BRAF", cancer: "pilocytic astrocytoma", citation: "10.1172/JCI34334"}
+  RET::CCDC6: {name: "CCDC6-RET", cancer: "thyroid/NSCLC", citation: "10.1016/0092-8674(90)90659-3"}
+  NTRK1::TPM3: {name: "TPM3-NTRK1", cancer: "various", citation: "10.1038/319743a0"}
+  DNAJB1::PRKACA: {name: "DNAJB1-PRKACA", cancer: "fibrolamellar HCC", citation: "10.1126/science.1249484"}

@@ -1,0 +1,9 @@
+CCGD - Candidate Cancer Gene Database (Abbott et al. 2015, Nucleic Acids Research 43(D1):D844-D848,
+doi:10.1093/nar/gku770, PMID 25190456). Source: http://ccgd-starrlab.oit.umn.edu/table_app/ccgd_export.csv
+Accessed 2026-06-19 (live DB; rebuilt periodically). Transposon forward-genetic mouse screens.
+
+Derived from 27960 CIS rows: 70 distinct screens (Study), 52 PubMed IDs, 13 cancer labels.
+ccgd_all.txt       = 9219 distinct human-ortholog drivers (NA + 18 Excel-corrupted removed)
+ccgd_recurrent.txt = 4689 drivers in >=2 distinct screens (PRIMARY positive set)
+Excel-corrupted symbols removed (18): 1-MAR, 11-SEP, 15-SEP, 2-MAR, 2-SEP, 3-MAR, 3-SEP, 4-MAR, 4-SEP, 5-MAR, 6-MAR, 6-SEP, 7-MAR, 7-SEP, 8-MAR, 8-SEP, 9-MAR, 9-SEP
+Only these DERIVED gene-symbol lists are redistributed; CCGD is cited as the source.

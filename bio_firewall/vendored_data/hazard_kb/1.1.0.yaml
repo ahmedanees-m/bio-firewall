@@ -1,0 +1,811 @@
+kb_version: 1.1.0
+released: '2026-07-21'
+schema_version: '1.0'
+source_repo: https://github.com/ahmedanees-m/bio-firewall
+note: Signed, versioned hazard signatures (function/family/taxon-level; no hazard
+  sequences). Contribute via docs/HAZARD_KB.md; regenerate with tools/build_hazard_kb.py.
+n_entries: 114
+entries:
+- id: CIS-BMI1
+  type: genotoxic_cis_locus
+  value: BMI1
+  provenance:
+    source: integration-site clonal expansion (CGD/WAS analyses)
+    doi: 10.1126/scitranslmed.3007280
+  added_in: 0.3.0
+- id: CIS-CCND1
+  type: genotoxic_cis_locus
+  value: CCND1
+  provenance:
+    source: WAS / SCID - proto-oncogene activation precedent
+    doi: 10.1126/scitranslmed.3007280
+  added_in: 0.3.0
+- id: CIS-CCND2
+  type: genotoxic_cis_locus
+  value: CCND2
+  provenance:
+    source: SCID-X1 gammaretroviral - integration near CCND2 in leukemic clones (Howe
+      2008)
+    doi: 10.1172/JCI35798
+  added_in: 0.3.0
+- id: CIS-EVI1
+  type: genotoxic_cis_locus
+  value: EVI1
+  provenance:
+    source: CGD - EVI1 activation, clonal dominance
+    doi: 10.1038/nm.2088
+  added_in: 0.3.0
+- id: CIS-HMGA2
+  type: genotoxic_cis_locus
+  value: HMGA2
+  provenance:
+    source: beta-thalassemia lentiviral trial - clonal dominance
+    doi: 10.1038/nature09328
+  added_in: 0.3.0
+- id: CIS-LMO1
+  type: genotoxic_cis_locus
+  value: LMO1
+  provenance:
+    source: LMO-family activation precedent (paralog of LMO2)
+    doi: 10.1126/science.1088547
+  added_in: 0.3.0
+- id: CIS-LMO2
+  type: genotoxic_cis_locus
+  value: LMO2
+  provenance:
+    source: SCID-X1 gammaretroviral trials - T-ALL in 5 children
+    doi: 10.1126/science.1088547
+  added_in: 0.3.0
+- id: CIS-MDS1
+  type: genotoxic_cis_locus
+  value: MDS1
+  provenance:
+    source: CGD - MDS1-EVI1 locus activation
+    doi: 10.1038/nm.2088
+  added_in: 0.3.0
+- id: CIS-MECOM
+  type: genotoxic_cis_locus
+  value: MECOM
+  provenance:
+    source: CGD & WAS - MDS1-EVI1 activation, clonal dominance/MDS
+    doi: 10.1038/nm.2088
+  added_in: 0.3.0
+- id: CIS-MN1
+  type: genotoxic_cis_locus
+  value: MN1
+  provenance:
+    source: WAS gammaretroviral trial - clonal expansion
+    doi: 10.1126/scitranslmed.3007280
+  added_in: 0.3.0
+- id: CIS-PRDM16
+  type: genotoxic_cis_locus
+  value: PRDM16
+  provenance:
+    source: CGD - clonal dominance
+    doi: 10.1038/nm.2088
+  added_in: 0.3.0
+- id: CIS-SETBP1
+  type: genotoxic_cis_locus
+  value: SETBP1
+  provenance:
+    source: CGD - clonal expansion
+    doi: 10.1038/nm.2088
+  added_in: 0.3.0
+- id: FUSION-ABL1-BCR
+  type: oncogenic_fusion_pair
+  value:
+  - ABL1
+  - BCR
+  provenance:
+    name: BCR-ABL1
+    cancer: CML/ALL
+    citation: 10.1038/nrc2147
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-ALK-EML4
+  type: oncogenic_fusion_pair
+  value:
+  - ALK
+  - EML4
+  provenance:
+    name: EML4-ALK
+    cancer: NSCLC
+    citation: 10.1038/nature05945
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-ALK-NPM1
+  type: oncogenic_fusion_pair
+  value:
+  - ALK
+  - NPM1
+  provenance:
+    name: NPM1-ALK
+    cancer: ALCL
+    citation: 10.1126/science.7824938
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-BRAF-KIAA1549
+  type: oncogenic_fusion_pair
+  value:
+  - BRAF
+  - KIAA1549
+  provenance:
+    name: KIAA1549-BRAF
+    cancer: pilocytic astrocytoma
+    citation: 10.1172/JCI34334
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-DNAJB1-PRKACA
+  type: oncogenic_fusion_pair
+  value:
+  - DNAJB1
+  - PRKACA
+  provenance:
+    name: DNAJB1-PRKACA
+    cancer: fibrolamellar HCC
+    citation: 10.1126/science.1249484
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-ERG-TMPRSS2
+  type: oncogenic_fusion_pair
+  value:
+  - ERG
+  - TMPRSS2
+  provenance:
+    name: TMPRSS2-ERG
+    cancer: prostate
+    citation: 10.1126/science.1117679
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-ETV6-RUNX1
+  type: oncogenic_fusion_pair
+  value:
+  - ETV6
+  - RUNX1
+  provenance:
+    name: ETV6-RUNX1
+    cancer: B-ALL
+    citation: 10.1073/pnas.92.11.4917
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-EWSR1-FLI1
+  type: oncogenic_fusion_pair
+  value:
+  - EWSR1
+  - FLI1
+  provenance:
+    name: EWSR1-FLI1
+    cancer: Ewing sarcoma
+    citation: 10.1038/359162a0
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-FGFR3-TACC3
+  type: oncogenic_fusion_pair
+  value:
+  - FGFR3
+  - TACC3
+  provenance:
+    name: FGFR3-TACC3
+    cancer: glioblastoma/bladder
+    citation: 10.1126/science.1220834
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-KMT2A-MLLT3
+  type: oncogenic_fusion_pair
+  value:
+  - KMT2A
+  - MLLT3
+  provenance:
+    name: MLL-AF9 (KMT2A-MLLT3)
+    cancer: AML
+    citation: 10.1182/blood-2009-03-209957
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-NTRK1-TPM3
+  type: oncogenic_fusion_pair
+  value:
+  - NTRK1
+  - TPM3
+  provenance:
+    name: TPM3-NTRK1
+    cancer: various
+    citation: 10.1038/319743a0
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-PML-RARA
+  type: oncogenic_fusion_pair
+  value:
+  - PML
+  - RARA
+  provenance:
+    name: PML-RARA
+    cancer: APL
+    citation: 10.1182/blood.V66.6.1408
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-RET-CCDC6
+  type: oncogenic_fusion_pair
+  value:
+  - CCDC6
+  - RET
+  provenance:
+    name: CCDC6-RET
+    cancer: thyroid/NSCLC
+    citation: 10.1016/0092-8674(90)90659-3
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: FUSION-ROS1-CD74
+  type: oncogenic_fusion_pair
+  value:
+  - CD74
+  - ROS1
+  provenance:
+    name: CD74-ROS1
+    cancer: NSCLC
+    citation: 10.1016/j.cell.2007.11.025
+    source: literature-curated canonical fusion
+  added_in: 0.3.0
+- id: KINASE-ABL1
+  type: fusion_kinase
+  value: ABL1
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-ABL2
+  type: fusion_kinase
+  value: ABL2
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-AKT3
+  type: fusion_kinase
+  value: AKT3
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-ALK
+  type: fusion_kinase
+  value: ALK
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-BRAF
+  type: fusion_kinase
+  value: BRAF
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-CSF1R
+  type: fusion_kinase
+  value: CSF1R
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-EGFR
+  type: fusion_kinase
+  value: EGFR
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-ERBB2
+  type: fusion_kinase
+  value: ERBB2
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FES
+  type: fusion_kinase
+  value: FES
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FGFR1
+  type: fusion_kinase
+  value: FGFR1
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FGFR2
+  type: fusion_kinase
+  value: FGFR2
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FGFR3
+  type: fusion_kinase
+  value: FGFR3
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FGFR4
+  type: fusion_kinase
+  value: FGFR4
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FGR
+  type: fusion_kinase
+  value: FGR
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-FLT3
+  type: fusion_kinase
+  value: FLT3
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-JAK1
+  type: fusion_kinase
+  value: JAK1
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-JAK2
+  type: fusion_kinase
+  value: JAK2
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-JAK3
+  type: fusion_kinase
+  value: JAK3
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-KIT
+  type: fusion_kinase
+  value: KIT
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-LTK
+  type: fusion_kinase
+  value: LTK
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-MAP3K8
+  type: fusion_kinase
+  value: MAP3K8
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-MERTK
+  type: fusion_kinase
+  value: MERTK
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-MET
+  type: fusion_kinase
+  value: MET
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-NTRK
+  type: fusion_kinase
+  value: NTRK
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-NTRK1
+  type: fusion_kinase
+  value: NTRK1
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-NTRK2
+  type: fusion_kinase
+  value: NTRK2
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-NTRK3
+  type: fusion_kinase
+  value: NTRK3
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-PDGFB
+  type: fusion_kinase
+  value: PDGFB
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-PDGFRA
+  type: fusion_kinase
+  value: PDGFRA
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-PDGFRB
+  type: fusion_kinase
+  value: PDGFRB
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-PRKACA
+  type: fusion_kinase
+  value: PRKACA
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-PRKCA
+  type: fusion_kinase
+  value: PRKCA
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-RAF1
+  type: fusion_kinase
+  value: RAF1
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-RET
+  type: fusion_kinase
+  value: RET
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-ROS1
+  type: fusion_kinase
+  value: ROS1
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-SYK
+  type: fusion_kinase
+  value: SYK
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: KINASE-TYK2
+  type: fusion_kinase
+  value: TYK2
+  provenance:
+    source: recurrent fusion-kinase (function-family; public cancer-fusion biology)
+  added_in: 0.6.0
+- id: IGTCR-IGH
+  type: ig_tcr_locus
+  value: IGH
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGH
+  type: ig_tcr_locus
+  value: IGH@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGHV
+  type: ig_tcr_locus
+  value: IGHV
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGK
+  type: ig_tcr_locus
+  value: IGK
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGK
+  type: ig_tcr_locus
+  value: IGK@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGKV
+  type: ig_tcr_locus
+  value: IGKV
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGL
+  type: ig_tcr_locus
+  value: IGL
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGL
+  type: ig_tcr_locus
+  value: IGL@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-IGLV
+  type: ig_tcr_locus
+  value: IGLV
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRA
+  type: ig_tcr_locus
+  value: TRA
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRA
+  type: ig_tcr_locus
+  value: TRA@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRB
+  type: ig_tcr_locus
+  value: TRB
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRB
+  type: ig_tcr_locus
+  value: TRB@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRD
+  type: ig_tcr_locus
+  value: TRD
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRD
+  type: ig_tcr_locus
+  value: TRD@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRG
+  type: ig_tcr_locus
+  value: TRG
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: IGTCR-TRG
+  type: ig_tcr_locus
+  value: TRG@
+  provenance:
+    source: immunoglobulin / T-cell-receptor super-enhancer locus
+  added_in: 0.6.0
+- id: SATOXIN-abrin
+  type: select_agent_toxin
+  value: abrin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-anthrax-lethal-toxin
+  type: select_agent_toxin
+  value: anthrax lethal toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-botulinum-neurotoxin
+  type: select_agent_toxin
+  value: botulinum neurotoxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-botulinum-toxin
+  type: select_agent_toxin
+  value: botulinum toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-conotoxin
+  type: select_agent_toxin
+  value: conotoxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-diphtheria-toxin
+  type: select_agent_toxin
+  value: diphtheria toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-epsilon-toxin
+  type: select_agent_toxin
+  value: epsilon toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-ricin
+  type: select_agent_toxin
+  value: ricin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-saxitoxin
+  type: select_agent_toxin
+  value: saxitoxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-sea
+  type: select_agent_toxin
+  value: sea
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-seb
+  type: select_agent_toxin
+  value: seb
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-sec
+  type: select_agent_toxin
+  value: sec
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-sed
+  type: select_agent_toxin
+  value: sed
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-see
+  type: select_agent_toxin
+  value: see
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-shiga-toxin
+  type: select_agent_toxin
+  value: shiga toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-shiga-like-toxin
+  type: select_agent_toxin
+  value: shiga-like toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-staphylococcal-enterotoxin
+  type: select_agent_toxin
+  value: staphylococcal enterotoxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-stx1
+  type: select_agent_toxin
+  value: stx1
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-stx2
+  type: select_agent_toxin
+  value: stx2
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-stxa
+  type: select_agent_toxin
+  value: stxa
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-stxb
+  type: select_agent_toxin
+  value: stxb
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-t-2-toxin
+  type: select_agent_toxin
+  value: t-2 toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-t2-toxin
+  type: select_agent_toxin
+  value: t2 toxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SATOXIN-tetrodotoxin
+  type: select_agent_toxin
+  value: tetrodotoxin
+  provenance:
+    source: select-agent / Australia-Group listed toxin (42 CFR 73, 7 CFR 331, 9 CFR
+      121; Australia Group control list)
+  added_in: 0.1.0
+- id: SAORG-abrus
+  type: select_agent_toxin_organism
+  value: abrus
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-abrus-precatorius
+  type: select_agent_toxin_organism
+  value: abrus precatorius
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-bacillus-anthracis
+  type: select_agent_toxin_organism
+  value: bacillus anthracis
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-clostridium-botulinum
+  type: select_agent_toxin_organism
+  value: clostridium botulinum
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-clostridium-perfringens
+  type: select_agent_toxin_organism
+  value: clostridium perfringens
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-corynebacterium-diphtheriae
+  type: select_agent_toxin_organism
+  value: corynebacterium diphtheriae
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-ricinus
+  type: select_agent_toxin_organism
+  value: ricinus
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-ricinus-communis
+  type: select_agent_toxin_organism
+  value: ricinus communis
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-shigella-dysenteriae
+  type: select_agent_toxin_organism
+  value: shigella dysenteriae
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+- id: SAORG-staphylococcus-aureus
+  type: select_agent_toxin_organism
+  value: staphylococcus aureus
+  provenance:
+    source: source organism of a listed select-agent toxin; screened only together
+      with a toxin descriptor, which is how a listed toxin is named indirectly
+  added_in: 0.1.0
+content_sha256: 18cadfb449803303b557b11ca462ed8983ba6953e17923b4635ab49e9a8825c7
+hmac_sha256: 163a6009f173e767002aa5c3770568846278fc12637a51a80bd4e8f72716d3e6

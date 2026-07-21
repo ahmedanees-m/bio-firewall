@@ -1,0 +1,389 @@
+{
+  "answer_key": {
+    "BF-00000": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "integration-site clonal expansion (CGD/WAS analyses)",
+        "doi": "10.1126/scitranslmed.3007280"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00001": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "WAS / SCID - proto-oncogene activation precedent",
+        "doi": "10.1126/scitranslmed.3007280"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00002": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "SCID-X1 gammaretroviral - integration near CCND2 in leukemic clones (Howe 2008)",
+        "doi": "10.1172/JCI35798"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00003": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "CGD - EVI1 activation, clonal dominance",
+        "doi": "10.1038/nm.2088"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00004": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "beta-thalassemia lentiviral trial - clonal dominance",
+        "doi": "10.1038/nature09328"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00005": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "LMO-family activation precedent (paralog of LMO2)",
+        "doi": "10.1126/science.1088547"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00006": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "SCID-X1 gammaretroviral trials - T-ALL in 5 children",
+        "doi": "10.1126/science.1088547"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00007": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "CGD - MDS1-EVI1 locus activation",
+        "doi": "10.1038/nm.2088"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00008": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "CGD & WAS - MDS1-EVI1 activation, clonal dominance/MDS",
+        "doi": "10.1038/nm.2088"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00009": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "WAS gammaretroviral trial - clonal expansion",
+        "doi": "10.1126/scitranslmed.3007280"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00010": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "CGD - clonal dominance",
+        "doi": "10.1038/nm.2088"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00011": {
+      "independent_label": "hazard",
+      "provenance": {
+        "context": "CGD - clonal expansion",
+        "doi": "10.1038/nm.2088"
+      },
+      "stratum": "tier1_clinical_cis"
+    },
+    "BF-00012": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00013": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00014": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00015": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00016": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00017": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00018": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00019": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00020": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    },
+    "BF-00021": {
+      "independent_label": "benign",
+      "provenance": {
+        "context": "non-insertional-oncogenesis therapeutic/safe-harbour locus"
+      },
+      "stratum": "benign_therapeutic_or_safe_harbour"
+    }
+  },
+  "based_on": [
+    "NIST test dataset for assessing baseline nucleic acid sequence screening (ark:/88434/mds2-3787, 2025-05-21)",
+    "Laird et al., inter-tool analysis (bioRxiv 10.1101/2025.05.30.655379, 2025)"
+  ],
+  "content_sha256": "3ac2cfbb1bb91afd2aae3b0ffb0d7d40645e42d18938ab343150bfe2f1f6064d",
+  "design_stage_note": "design-stage analog: blinded record ids + a SEPARATE answer key (mirrors the NIST blinded-header convention). Records are PUBLIC gene-symbol proxies, NO sequences and NO hazards. BioFirewall screens design-stage plans; it is complementary to, not a replacement for, synthesis-stage sequence screening.",
+  "fields": {
+    "answer_key[record_id]": "{independent_label in {hazard,benign}, stratum, provenance}",
+    "axis": "the screening axis (locus)",
+    "plan": "a design-stage plan {intent, gene, cell_type} - a public proxy, never a sequence",
+    "record_id": "opaque blinded id, ^BF-\\d{5}$"
+  },
+  "label_vocabulary": [
+    "hazard",
+    "benign"
+  ],
+  "n_records": 22,
+  "records": [
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "BMI1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00000"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "CCND1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00001"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "CCND2",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00002"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "EVI1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00003"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "HMGA2",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00004"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "LMO1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00005"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "LMO2",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00006"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "MDS1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00007"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "MECOM",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00008"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "MN1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00009"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "PRDM16",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00010"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "SETBP1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00011"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "AAVS1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00012"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "CCR5",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00013"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "HBB",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00014"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "F9",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00015"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "CFTR",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00016"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "DMD",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00017"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "HEXA",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00018"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "PAH",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00019"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "G6PC",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00020"
+    },
+    {
+      "axis": "locus",
+      "plan": {
+        "cell_type": "hspc",
+        "gene": "SERPINA1",
+        "intent": "locus screening proxy"
+      },
+      "record_id": "BF-00021"
+    }
+  ],
+  "schema": "nist-screening-compatible/design-stage@1",
+  "title": "BioFirewall safe-proxy locus benchmark (NIST-baseline-screening-compatible shape)"
+}

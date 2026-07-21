@@ -1,0 +1,23 @@
+{
+  "title": "BioFirewall: a rule-governed, genome-writing-native biosecurity middleware that supervises agentic design AI",
+  "description": "<p>A defensive, design-stage screen for agentic genome-writing AI. BioFirewall intercepts a genome-writing plan in-workflow and returns <em>allow / flag-for-review / refuse</em> across five genome-writing-native axes (cargo, locus, edit-type, germline, scale), with cited evidence, a calibrated false-refuse ceiling, a competence-conditioned confidence, a signed design passport, and a tamper-evident audit log. Open-data-only; safe proxies; no hazard sequences; artifact-decides-not-framing.</p>",
+  "upload_type": "software",
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "creators": [
+    {"name": "Mahaboob Ali, Anees Ahmed"}
+  ],
+  "keywords": ["biosecurity", "genome-writing", "ai-safety", "guardrails", "dual-use", "middleware", "design-stage screening"],
+  "related_identifiers": [
+    {"relation": "isSupplementTo", "identifier": "https://github.com/ahmedanees-m/bio-firewall", "scheme": "url"},
+    {"relation": "references", "identifier": "arXiv:2606.11150", "scheme": "arxiv"},
+    {"relation": "references", "identifier": "10.1126/science.adu8578", "scheme": "doi"},
+    {"relation": "references", "identifier": "arXiv:2210.01408", "scheme": "arxiv"},
+    {"relation": "references", "identifier": "arXiv:2502.16513", "scheme": "arxiv"},
+    {"relation": "references", "identifier": "10.3389/fbioe.2026.1832724", "scheme": "doi"},
+    {"relation": "references", "identifier": "arXiv:2506.00195", "scheme": "arxiv"},
+    {"relation": "references", "identifier": "10.1101/2025.05.30.655379", "scheme": "doi"},
+    {"relation": "references", "identifier": "10.1093/nar/gku770", "scheme": "doi"}
+  ],
+  "notes": "Zenodo DOI to be minted by the author by connecting this GitHub repository to Zenodo and publishing a release. The restricted/local-only data (COSMIC, OncoKB, VISDB, controlled-access integration-site data) is NOT part of the deposit; only the open code + open vendored data + frozen pre-registration."
+}

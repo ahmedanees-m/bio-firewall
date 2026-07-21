@@ -1,0 +1,25 @@
+# BioFirewall WS-VERIFY-RECONCILE - reconcile PEN-STACK's in-design verdict with the five-axis firewall verdict.
+# SHA-lock first. CORRECTION (verified against pen-stack): the plan assumed pen_stack.verify()/Verdict, which DO
+# NOT EXIST. The in-design verdict is pen_stack.safety.safety_gate(design) -> SafetyVerdict.
+id: ws_verify_reconcile
+objective: reconcile PEN-STACK's in-design SafetyVerdict with the five-axis firewall verdict; surface disagreements honestly
+penstack_surface_verified:
+  in_design_verdict: "pen_stack.safety.safety_gate(design, *, actor='anonymous', registry=None) -> SafetyVerdict"
+  SafetyVerdict: "pydantic; .decision in {clear, flag, refuse, escalate}; .hits (list[ScreenHit]); .reason; .refused; .summary"
+  note: "NO top-level pen_stack.verify()/Verdict (walked all submodules + checked importlib.metadata)"
+method: >-
+  call safety_gate(design) and screen(design); map the SafetyVerdict decision (clear->allow, flag/escalate->flag,
+  refuse->refuse) and take the CONSERVATIVE MEET with the firewall decision (a refuse on either refuses; a flag on
+  either flags; allow only if both clear/allow). Log both verdicts plus, on each side, the named pen-stack ScreenHit(s)
+  and the BioFirewall axis. Characterize every disagreement (the two gates cover different scopes).
+acceptance:
+  - the combined decision is the conservative meet of the two (verified deterministically over the verdict cross-product)
+  - on a labelled set, report concordance and account for EVERY disagreement (none unexplained)
+  - the reconciliation is logged and tamper-evident
+honest_framing: >-
+  the gates cover different scopes, so disagreement is EXPECTED where BioFirewall covers axes pen-stack's in-design gate
+  does not (locus-outcome / germline / scale / decomposition). The reconciliation characterizes this; it does not force
+  false agreement, and neither gate is presented as redundant.
+scope: "realizes the adapter's stated Phase-1 (against the real safety_gate API); governs pen-stack, does not re-implement it"
+locked_before_results: true
+sha256_lock: "git-locked at the release tag (prereg + code committed together; tests are deterministic)"

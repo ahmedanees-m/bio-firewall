@@ -1,0 +1,66 @@
+{
+  "source": "VISDB (Tang et al. 2020, NAR 10.1093/nar/gkz867); local-only, never committed",
+  "window_bp": 50000,
+  "viruses": [
+    "HIV",
+    "HTLV"
+  ],
+  "n_sites_total": 140628,
+  "n_sites_mapped_to_gene": 127234,
+  "n_tumor_sites": 42778,
+  "overall": {
+    "n_sites": 127234,
+    "n_outcome_pos": 42778,
+    "n_genes": 35047,
+    "AUROC": 0.4491,
+    "AUROC_CI": [
+      0.4426,
+      0.4562
+    ],
+    "odds_ratio": 0.577,
+    "odds_ratio_CI": [
+      0.5358,
+      0.6279
+    ],
+    "gate_pass": false,
+    "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)"
+  },
+  "per_virus": {
+    "HIV": {
+      "n_sites": 82995,
+      "n_outcome_pos": 1607,
+      "n_genes": 25777,
+      "AUROC": 0.4938,
+      "AUROC_CI": [
+        0.4819,
+        0.506
+      ],
+      "odds_ratio": 0.9254,
+      "odds_ratio_CI": [
+        0.8178,
+        1.0435
+      ],
+      "gate_pass": false,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)"
+    },
+    "HTLV": {
+      "n_sites": 44239,
+      "n_outcome_pos": 41171,
+      "n_genes": 22685,
+      "AUROC": 0.4554,
+      "AUROC_CI": [
+        0.4426,
+        0.4679
+      ],
+      "odds_ratio": 0.6066,
+      "odds_ratio_CI": [
+        0.53,
+        0.6955
+      ],
+      "gate_pass": false,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)"
+    }
+  },
+  "honest_status": "ASSOCIATIVE retrospective enrichment on open VISDB data - 'tumor sample-source' is not a causal insertional-oncogenesis outcome and is confounded by virus biology. The CAUSAL / prospective clonal-outcome validation (controlled-access dbGaP/EGA) is DEFERRED -> 'outcome-validation pending'. A passing gate here is a floor, not a validated risk model.",
+  "seed": 1234
+}
