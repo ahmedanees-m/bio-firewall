@@ -24,7 +24,7 @@ dependencies = ["pen-stack>=0.1.0,<0.2.0", "pyyaml>=6.0"]
 [project.optional-dependencies]
 # function-aware cargo ML (Phase 1) + synthesis-screen clients; kept optional so the core spine installs light.
 ml = ["pyhmmer", "fair-esm"]
-dev = ["pytest>=8", "ruff>=0.6", "pytest-randomly>=3"]
+dev = ["pytest>=8", "ruff>=0.6,<0.16", "pytest-randomly>=3"]
 
 [tool.setuptools.packages.find]
 include = ["bio_firewall*"]
