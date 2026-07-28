@@ -48,7 +48,7 @@ a blind safety reviewer with a neutral pinned prompt (no firewall axes leaked) -
 genes **6.8%**; dosage-sensitive negatives 120/120 flagged correctly, 0 wrongly refused.
 
 **Failure analysis :** the firewall **misses 151 COSMIC genes** (20%) that are absent from its CancerMine
-data and not caught via the essential/dosage axes - the real generalization limit, reported rather than hidden.
+data and not caught via the essential/dosage axes - the real generalization limit.
 
 ## Benchmark 1b - two independent censuses (COSMIC + OncoKB)
 
@@ -146,8 +146,8 @@ evidence. Code: [`bio_firewall/eval/cargo_bench/decorr.py`](../bio_firewall/eval
 
 **Verdict (pre-registered fallback path, pre-committed):** the function-aware signal is real and substantially
 non-compositional (AUROC + TPR@5%FPR), but the strict **1%-FPR operating-point** advantage over a composition
-baseline is **not** statistically established on this held-out set. Per the pre-registration we therefore **demote
-C** from "cleanest claim": the manuscript leads on **D + the operational properties**, reporting the cargo gate as
+baseline is **not** statistically established on this held-out set. Under the pre-registered fallback path, **C is demoted**
+from "cleanest claim": the manuscript leads on **D + the operational properties**, reporting the cargo gate as
 *AUROC-level non-compositional with an explicit 1%-FPR operating-point caveat*. We did **not** tune the matched set to
 rescue the margin. (Per-residue attribution is declared supporting future detail; the powered AUROC/TPR@5%FPR
 decorrelation is the primary evidence.)
@@ -215,13 +215,13 @@ per-artifact screen (`attacks that evade per-call = 1.00`) and the session aggre
 false-positive**. `coordinated_loci` is reported in full as **defense-in-depth, not an evasion** - those loci are
 individually flagged anyway (`evade per-call = 0.00`). **Limitation:** this is *necessary, not sufficient* -
 assembly inference catches the Gibson/Type-IIS junctions it models; a novel obfuscation can still evade it (a named
-residual). The false-positive control matters: an earlier internal Type-IIS detector fired on chance 6-bp motifs in
-random DNA (21.7% FP) and was tightened to require terminal-proximity + a fragment majority -> 0% FP.
+residual). The false-positive control matters: a Type-IIS detector that accepts chance 6-bp motifs fires on
+random DNA at 21.7% FP; requiring terminal-proximity + a fragment majority takes this to 0% FP.
 
 ## Benchmark 6 - locus outcome-validation, the open-data floor, seed 1234
 
-Section 6 limit #2: the locus axis flags on *mechanism* and is **not** outcome-validated; the two gene-census benchmarks
-are recall-against-curation, not validation-against-outcomes. We built the enrichment harness
+This benchmark targets a declared limit of the locus axis: it flags on *mechanism* and is **not** outcome-validated,
+and the two gene-census benchmarks are recall-against-curation, not validation-against-outcomes. The enrichment harness
 ([`bio_firewall/eval/hazard_bench/locus_outcome.py`](../bio_firewall/eval/hazard_bench/locus_outcome.py)) - OR/AUROC
 with a gene-clustered bootstrap - and ran it on the **open-data floor: VISDB** (Viral Integration Site DataBase,
 Tang et al. 2020, [10.1093/nar/gkz867](https://doi.org/10.1093/nar/gkz867); local-only, the same catalogue PEN-STACK's

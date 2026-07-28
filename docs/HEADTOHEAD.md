@@ -103,7 +103,7 @@ otherwise it is a bonus result. Left open.
 
 ## Open-model generalization (NVIDIA NIM) - the firewall's case gets *stronger*
 
-The Opus run used one safety-trained model. We re-ran A/B/C/D against two **open** models via NVIDIA's free endpoint
+The Opus run used one safety-trained model. A/B/C/D were also run against two **open** models via NVIDIA's free endpoint
 (`nvidia_headtohead.py`, 2026-06-17) - the models people actually self-host, and lighter-tuned than Opus. This also
 **unlocked experiment C**, which Anthropic's filter had blocked on Opus. (gpt-oss-120b was dropped: >90 s/call on the
 free tier - a reasoning model emitting long traces, impractical for ~80 calls.)
