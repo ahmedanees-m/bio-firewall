@@ -8,7 +8,7 @@ install:                       ## editable install + dev deps (pulls pen-stack>=
 	$(PY) -m pip install -e ".[dev]"
 
 lint:                          ## ruff (the CI lint gate)
-	ruff check bio_firewall tests
+	$(PY) -m ruff check bio_firewall tests
 
 test:                          ## the full unit suite (validates every committed metric/logic path)
 	pytest -q
