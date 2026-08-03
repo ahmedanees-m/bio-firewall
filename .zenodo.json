@@ -5,11 +5,15 @@
   "license": "Apache-2.0",
   "access_right": "open",
   "creators": [
-    {"name": "Mahaboob Ali, Anees Ahmed"}
+    {"name": "Mahaboob Ali, Anees Ahmed", "orcid": "0000-0002-2135-0865", "affiliation": "Gene Therapy Laboratory, School of Bio Sciences and Technology, Vellore Institute of Technology, Vellore, India"},
+    {"name": "Delhibabu, Radhakrishnan", "orcid": "0000-0001-6591-184X", "affiliation": "School of Computer Science and Engineering, Vellore Institute of Technology, Vellore, India"},
+    {"name": "Nelson, Everette Jacob Remington", "orcid": "0000-0002-9781-526X", "affiliation": "Gene Therapy Laboratory, School of Bio Sciences and Technology, Vellore Institute of Technology, Vellore, India"}
   ],
   "keywords": ["biosecurity", "genome-writing", "ai-safety", "guardrails", "dual-use", "middleware", "design-stage screening"],
   "related_identifiers": [
     {"relation": "isSupplementTo", "identifier": "https://github.com/ahmedanees-m/bio-firewall", "scheme": "url"},
+    {"relation": "isAlternateIdentifier", "identifier": "https://scicrunch.org/resolver/RRID:SCR_028785", "scheme": "url"},
+    {"relation": "isAlternateIdentifier", "identifier": "https://bio.tools/bio-firewall", "scheme": "url"},
     {"relation": "references", "identifier": "arXiv:2606.11150", "scheme": "arxiv"},
     {"relation": "references", "identifier": "10.1126/science.adu8578", "scheme": "doi"},
     {"relation": "references", "identifier": "arXiv:2210.01408", "scheme": "arxiv"},
