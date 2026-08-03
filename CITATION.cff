@@ -7,6 +7,13 @@ abstract: >-
   edit-type, germline, scale), with cited evidence, a calibrated false-refuse ceiling, a competence-conditioned
   confidence, a signed design passport, and a tamper-evident audit log.
 type: software
+identifiers:
+  - type: other
+    value: "RRID:SCR_028785"
+    description: Research Resource Identifier (SciCrunch)
+  - type: url
+    value: "https://bio.tools/bio-firewall"
+    description: bio.tools registry entry (biotools:bio-firewall)
 authors:
   - family-names: "Mahaboob Ali"
     given-names: "Anees Ahmed"

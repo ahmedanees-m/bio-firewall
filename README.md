@@ -13,6 +13,8 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 ![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
 [![Container](https://img.shields.io/badge/ghcr.io-bio--firewall%3A0.1.0-blue.svg)](https://github.com/ahmedanees-m/bio-firewall/pkgs/container/bio-firewall)
 ![pen-stack](https://img.shields.io/badge/pen--stack-0.1.0-blue.svg)
+[![RRID](https://img.shields.io/badge/RRID-SCR__028785-8A2BE2.svg)](https://scicrunch.org/resolver/RRID:SCR_028785)
+[![bio.tools](https://img.shields.io/badge/bio.tools-bio--firewall-00A0B0.svg)](https://bio.tools/bio-firewall)
 ![Status](https://img.shields.io/badge/status-reference%20implementation-blue.svg)
 
 > **Scope and maturity.** BioFirewall is a defensive, computational reference implementation evaluated on safe
