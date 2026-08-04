@@ -8,6 +8,12 @@ abstract: >-
   confidence, a signed design passport, and a tamper-evident audit log.
 type: software
 identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21788886
+    description: Concept DOI (resolves to the newest version)
+  - type: doi
+    value: 10.5281/zenodo.21788887
+    description: Version DOI (pins v0.1.0)
   - type: other
     value: "RRID:SCR_028785"
     description: Research Resource Identifier (SciCrunch)

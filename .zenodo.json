@@ -23,5 +23,5 @@
     {"relation": "references", "identifier": "10.1101/2025.05.30.655379", "scheme": "doi"},
     {"relation": "references", "identifier": "10.1093/nar/gku770", "scheme": "doi"}
   ],
-  "notes": "Zenodo DOI to be minted by the author by connecting this GitHub repository to Zenodo and publishing a release. The restricted/local-only data (COSMIC, OncoKB, VISDB, controlled-access integration-site data) is NOT part of the deposit; only the open code + open vendored data + frozen pre-registration."
+  "notes": "Published on Zenodo: concept DOI 10.5281/zenodo.21788886 (resolves to the newest version), version DOI 10.5281/zenodo.21788887 (pins v0.1.0). The restricted/local-only data (COSMIC, OncoKB, VISDB, controlled-access integration-site data) is NOT part of the deposit; only the open code + open vendored data + frozen pre-registration."
 }

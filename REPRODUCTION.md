@@ -85,6 +85,8 @@ python -c "from bio_firewall.kb import load_kb, verify_kb; print(verify_kb(load_
   licensed data) on a clean image and confirm the numbers within tolerance; record the confirmation + any deltas
   here. *This is the step that converts "the author says it reproduces" into "it reproduces."* - **pending an
   external runner.**
-- **Zenodo DOI.** Mint by connecting this GitHub repo to Zenodo and publishing a tagged release; the
-  deposit metadata is in `.zenodo.json` and `CITATION.cff`. The restricted/local-only data is **not** part of the
-  deposit. - **pending the author's Zenodo account.**
+- **Zenodo DOI.** The archived deposit is published: concept DOI
+  [10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886) (resolves to the newest version), version
+  DOI [10.5281/zenodo.21788887](https://doi.org/10.5281/zenodo.21788887) (pins v0.1.0). It carries the source
+  snapshot at the `v0.1.0` tag, the open hazard data, the frozen benchmark, red-team and panel results, the
+  pre-registrations and the verification logs. The restricted/local-only data is **not** part of the deposit.
