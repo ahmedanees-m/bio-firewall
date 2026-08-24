@@ -12,6 +12,7 @@
   "keywords": ["biosecurity", "genome-writing", "ai-safety", "guardrails", "dual-use", "middleware", "design-stage screening"],
   "related_identifiers": [
     {"relation": "isSupplementTo", "identifier": "https://github.com/ahmedanees-m/bio-firewall", "scheme": "url"},
+    {"relation": "isDocumentedBy", "identifier": "arXiv:2608.20413", "scheme": "arxiv"},
     {"relation": "isAlternateIdentifier", "identifier": "https://scicrunch.org/resolver/RRID:SCR_028785", "scheme": "url"},
     {"relation": "isAlternateIdentifier", "identifier": "https://bio.tools/bio-firewall", "scheme": "url"},
     {"relation": "references", "identifier": "arXiv:2606.11150", "scheme": "arxiv"},

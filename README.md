@@ -16,6 +16,7 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 [![RRID](https://img.shields.io/badge/RRID-SCR__028785-8A2BE2.svg)](https://scicrunch.org/resolver/RRID:SCR_028785)
 [![bio.tools](https://img.shields.io/badge/bio.tools-bio--firewall-00A0B0.svg)](https://bio.tools/bio-firewall)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21788886.svg)](https://doi.org/10.5281/zenodo.21788886)
+[![arXiv](https://img.shields.io/badge/arXiv-2608.20413-b31b1b.svg)](https://arxiv.org/abs/2608.20413)
 ![Status](https://img.shields.io/badge/status-reference%20implementation-blue.svg)
 
 > **Scope and maturity.** BioFirewall is a defensive, computational reference implementation evaluated on safe
@@ -462,6 +463,28 @@ Signatures are at the function, family and taxon level (public Pfam and control-
 sequences are shipped or required. BioFirewall is not a substitute for institutional biosafety review, IBC
 approval, or synthesis-stage screening. It is an additional, auditable layer that makes a capable design AI
 safer to operate.
+
+## Citation
+
+If you use BioFirewall, please cite the preprint:
+
+> Mahaboob Ali AA, Delhibabu R, Nelson EJR. BioFirewall: A genome-writing-native governance layer for design-stage biosecurity screening of agentic AI. arXiv:2608.20413 [q-bio.GN]. 2026.
+> <https://arxiv.org/abs/2608.20413>
+
+```bibtex
+@article{mahaboobali2026biofirewall,
+  title   = {BioFirewall: A genome-writing-native governance layer for design-stage biosecurity screening of agentic AI},
+  author  = {Mahaboob Ali, Anees Ahmed and Delhibabu, Radhakrishnan and Nelson, Everette Jacob Remington},
+  journal = {arXiv preprint arXiv:2608.20413},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2608.20413}
+}
+```
+
+To cite this software release specifically, use the version DOI
+[10.5281/zenodo.21788887](https://doi.org/10.5281/zenodo.21788887), which pins v0.1.0, or the concept DOI
+[10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886), which always resolves to the newest version.
+Author and ORCID metadata is in [CITATION.cff](CITATION.cff).
 
 ## License and attribution
 
