@@ -17,7 +17,6 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 [![bio.tools](https://img.shields.io/badge/bio.tools-bio--firewall-00A0B0.svg)](https://bio.tools/bio-firewall)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21788886.svg)](https://doi.org/10.5281/zenodo.21788886)
 [![arXiv](https://img.shields.io/badge/arXiv-2608.20413-b31b1b.svg)](https://arxiv.org/abs/2608.20413)
-![Status](https://img.shields.io/badge/status-reference%20implementation-blue.svg)
 
 > **Scope and maturity.** BioFirewall is a defensive, computational reference implementation evaluated on safe
 > proxy molecules only. It contains no hazard sequences and no evasion instructions. It is a safeguard, not a
