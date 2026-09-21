@@ -1,0 +1,190 @@
+{
+  "design": "held-out CCGD drivers, non-CancerMine subset; each channel disabled where the locus rules read it; gene-clustered bootstrap as in the frozen run",
+  "positives_file": "data/locus_outcome_inputs/ccgd_recurrent.txt",
+  "n_universe": 19378,
+  "conditions": {
+    "all_channels": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.6048,
+      "AUROC_CI": [
+        0.5962,
+        0.614
+      ],
+      "odds_ratio": 3.343,
+      "odds_ratio_CI": [
+        3.0701,
+        3.6462
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 3191,
+      "n_flagged_positives": 1321
+    },
+    "minus_cis_list": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.6049,
+      "AUROC_CI": [
+        0.5963,
+        0.6141
+      ],
+      "odds_ratio": 3.3472,
+      "odds_ratio_CI": [
+        3.0728,
+        3.6508
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 3189,
+      "n_flagged_positives": 1321
+    },
+    "minus_depmap_essential": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.6041,
+      "AUROC_CI": [
+        0.5964,
+        0.6131
+      ],
+      "odds_ratio": 4.4145,
+      "odds_ratio_CI": [
+        3.9847,
+        4.8896
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 2172,
+      "n_flagged_positives": 1068
+    },
+    "minus_gnomad_dosage": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.5255,
+      "AUROC_CI": [
+        0.5195,
+        0.5312
+      ],
+      "odds_ratio": 1.7975,
+      "odds_ratio_CI": [
+        1.5783,
+        2.0194
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 1384,
+      "n_flagged_positives": 450
+    },
+    "only_cis_list": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.4999,
+      "AUROC_CI": [
+        0.4998,
+        0.5
+      ],
+      "odds_ratio": 0.7046,
+      "odds_ratio_CI": [
+        0.2796,
+        3.5933
+      ],
+      "gate_pass": false,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 2,
+      "n_flagged_positives": 0
+    },
+    "only_depmap_essential": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.5256,
+      "AUROC_CI": [
+        0.5196,
+        0.5313
+      ],
+      "odds_ratio": 1.8017,
+      "odds_ratio_CI": [
+        1.582,
+        2.0232
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 1382,
+      "n_flagged_positives": 450
+    },
+    "only_gnomad_dosage": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.6042,
+      "AUROC_CI": [
+        0.5965,
+        0.6131
+      ],
+      "odds_ratio": 4.4233,
+      "odds_ratio_CI": [
+        3.993,
+        4.896
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 2170,
+      "n_flagged_positives": 1068
+    },
+    "no_channels": {
+      "n_sites": 16399,
+      "n_outcome_pos": 3625,
+      "n_genes": 16399,
+      "AUROC": 0.5,
+      "AUROC_CI": [
+        0.5,
+        0.5
+      ],
+      "odds_ratio": 3.5235,
+      "odds_ratio_CI": [
+        3.3844,
+        3.6638
+      ],
+      "gate_pass": true,
+      "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)",
+      "n_positives": 3625,
+      "n_flagged": 0,
+      "n_flagged_positives": 0
+    }
+  },
+  "marginal_contribution": {
+    "cis_list": {
+      "delta_AUROC_when_removed": 0.0001,
+      "delta_odds_ratio_when_removed": 0.0042,
+      "AUROC_alone": 0.4999,
+      "odds_ratio_alone": 0.7046,
+      "flagged_positives_alone": 0
+    },
+    "depmap_essential": {
+      "delta_AUROC_when_removed": -0.0007,
+      "delta_odds_ratio_when_removed": 1.0715,
+      "AUROC_alone": 0.5256,
+      "odds_ratio_alone": 1.8017,
+      "flagged_positives_alone": 450
+    },
+    "gnomad_dosage": {
+      "delta_AUROC_when_removed": -0.0793,
+      "delta_odds_ratio_when_removed": -1.5455,
+      "AUROC_alone": 0.6042,
+      "odds_ratio_alone": 4.4233,
+      "flagged_positives_alone": 1068
+    }
+  }
+}

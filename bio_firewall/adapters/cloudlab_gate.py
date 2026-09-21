@@ -22,6 +22,7 @@ from __future__ import annotations
 import hashlib
 import json
 
+from bio_firewall.access.managed import access_resolution, resolution_permits_execution
 from bio_firewall.adapters.generic_artifact import normalize
 from bio_firewall.passport.sign import verify_passport
 
@@ -32,10 +33,25 @@ def _inputs_hash(design: dict) -> str:
     return hashlib.sha256(json.dumps(plan, sort_keys=True, separators=(",", ":"), default=str).encode()).hexdigest()
 
 
+def _artifact_hash(design: dict) -> str:
+    """sha256 over the submitted artifact as given, not the normalized projection (mirrors passport/sign.py)."""
+    return hashlib.sha256(json.dumps(design, sort_keys=True, separators=(",", ":"), default=str).encode()).hexdigest()
+
+
 def passport_matches_design(passport: dict, design: dict) -> bool:
-    """True iff the passport is HMAC-intact AND its inputs_hash matches THIS design (defeats passport reuse on a
-    mutated/substituted design)."""
-    return bool(passport) and verify_passport(passport) and passport.get("inputs_hash") == _inputs_hash(design)
+    """True iff the passport is HMAC-intact AND binds THIS design (defeats passport reuse on a mutated or
+    substituted design).
+
+    inputs_hash covers only the normalized five-axis plan, so on its own it leaves every unmapped field free to
+    change under a valid passport. When the passport also carries artifact_hash, the submitted artifact must match
+    too. Passports minted without artifact_hash are still accepted on inputs_hash alone; the field lives inside the
+    signed body, so it cannot be stripped from a passport that carried it."""
+    if not (isinstance(passport, dict) and passport and verify_passport(passport)):
+        return False
+    if passport.get("inputs_hash") != _inputs_hash(design):
+        return False
+    bound_artifact = passport.get("artifact_hash")
+    return bound_artifact is None or bound_artifact == _artifact_hash(design)
 
 
 def _default_submit_fn(design: dict, experiment: dict, **kw):
@@ -69,6 +85,16 @@ def gated_cloudlab_submit(design: dict, experiment: dict | None = None, *, passp
             _audit(audit, design, result)
             return result
         decision = passport.get("decision", "refuse")
+
+    # The access plane can withhold release on a verdict whose decision is still "allow" (an out-of-KB allow
+    # held for an unverified requester), so the resolution is checked alongside the decision.
+    resolution = access_resolution(passport) if isinstance(passport, dict) else None
+    if decision == "allow" and not resolution_permits_execution(resolution):
+        result = {"submitted": False, "blocked": resolution == "refused", "held": resolution == "held_pending",
+                  "decision": decision, "passport": passport, "gate": "bio-firewall stage-K",
+                  "reason": f"managed-access resolution '{resolution}' withholds release"}
+        _audit(audit, design, result)
+        return result
 
     if decision != "allow":
         result = {"submitted": False, "blocked": decision == "refuse", "held": decision == "flag_for_review",

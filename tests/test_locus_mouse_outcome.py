@@ -44,3 +44,39 @@ def test_committed_result_passes_gate_and_is_consistent():
     assert d["via_CIS_list"] == 0                                          # held-out -> never via the curated CIS list
     assert max(d["via_depmap_essential"], d["via_gnomad_dosage"]) <= d["flagged_any"] <= \
         d["via_depmap_essential"] + d["via_gnomad_dosage"]                 # overlap allowed (essential AND dosage)
+
+
+def test_channel_ablation_baseline_reproduces_the_frozen_result():
+    """The ablation harness disables one annotation channel at a time. Its all-channels row must
+    reproduce the committed held-out result exactly, otherwise the ablation is measuring the
+    harness rather than the channels."""
+    abl = json.loads((_ROOT / "results" / "locus_channel_ablation.json").read_text())
+    frozen = json.loads((_ROOT / "results" / "locus_mouse_outcome.json").read_text())
+    base = abl["conditions"]["all_channels"]
+    b = frozen["B_heldout_non_cancermine"]
+    assert base["AUROC"] == b["AUROC"]
+    assert base["AUROC_CI"] == b["AUROC_CI"]
+    assert base["odds_ratio"] == b["odds_ratio"]
+    assert base["odds_ratio_CI"] == b["odds_ratio_CI"]
+    assert base["n_positives"] == b["n_positives"]
+
+
+def test_channel_ablation_isolates_the_curated_list():
+    """The held-out subset excludes genes whose cancer role came from the curated list, so the
+    clinical common-insertion-site list should carry no held-out signal. The decomposition in the
+    frozen result says it flags zero held-out positives; the ablation must agree."""
+    abl = json.loads((_ROOT / "results" / "locus_channel_ablation.json").read_text())
+    frozen = json.loads((_ROOT / "results" / "locus_mouse_outcome.json").read_text())
+    assert frozen["held_out_feature_decomposition"]["via_CIS_list"] == 0
+    assert abl["conditions"]["only_cis_list"]["n_flagged_positives"] == 0
+    # removing it must leave the result materially unchanged
+    assert abs(abl["marginal_contribution"]["cis_list"]["delta_AUROC_when_removed"]) < 0.005
+
+
+def test_channel_ablation_degenerate_row_is_not_read_as_a_result():
+    """With no channel enabled nothing is flagged, so the odds ratio is produced entirely by the
+    Haldane-Anscombe correction and is not interpretable. AUROC is the meaningful value there."""
+    abl = json.loads((_ROOT / "results" / "locus_channel_ablation.json").read_text())
+    none = abl["conditions"]["no_channels"]
+    assert none["n_flagged"] == 0
+    assert none["AUROC"] == 0.5

@@ -3,6 +3,22 @@
 from __future__ import annotations
 
 
+# Keys the contract maps. Anything else is dropped before screening, which is what makes the
+# contract tool-agnostic and is also how a hazard-bearing field submitted under an unexpected name
+# escapes every rule. `unmapped_keys` makes that visible rather than silent.
+_MAPPED = frozenset({
+    "intent", "purpose", "cargo", "cargo_function", "locus", "gene", "chrom", "pos", "cell_type",
+    "edit", "germline", "scale", "delivery_vehicle",
+})
+
+
+def unmapped_keys(artifact: dict) -> list[str]:
+    """Top-level keys the five-axis contract does not read, and so does not screen."""
+    if not isinstance(artifact, dict):
+        return []
+    return sorted(k for k in artifact if k not in _MAPPED)
+
+
 def normalize(artifact: dict) -> dict:
     """Permissively map an artifact onto the five-axis plan contract. Missing axes default to empty (-> clear)."""
     if not isinstance(artifact, dict):

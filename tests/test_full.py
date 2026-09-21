@@ -58,3 +58,100 @@ def test_reframing_does_not_flip_refuse_to_allow():
 
 def test_legitimate_research_is_flagged_not_blocked():
     assert legitimate_research_not_blocked()["none_blocked"] is True
+
+
+# --- audit chain: what it detects, and what needs an out-of-band anchor ---------------------------
+def test_keyed_chain_resists_recomputation():
+    """Unkeyed, anyone who can write the store can recompute a self-consistent chain. Under a key,
+    recomputation requires the key, which is what makes tampering detectable against an adversary
+    rather than only against accident."""
+    from bio_firewall.audit.log import AuditLog, _hash
+    for key, recompute_should_pass in ((None, True), (b"deployment-secret", False)):
+        log = AuditLog(key=key)
+        for i in range(4):
+            log.append({"event": "screen", "i": i})
+        log.entries[1]["record"]["i"] = 99                       # tamper
+        prev = log.entries[0]["hash"]                            # then recompute downstream
+        for e in log.entries[1:]:
+            e["prev"] = prev
+            e["hash"] = _hash(prev, e["record"], None)           # attacker has no key
+            prev = e["hash"]
+        assert log.verify() is recompute_should_pass
+
+
+def test_tail_truncation_needs_an_out_of_band_anchor():
+    """Every prefix of a valid chain is itself valid, so truncation cannot be detected from the log
+    alone. It is detected against a retained head digest or entry count."""
+    from bio_firewall.audit.log import AuditLog
+    log = AuditLog()
+    for i in range(5):
+        log.append({"event": "screen", "i": i})
+    head, n = log.head, len(log.entries)
+    del log.entries[3:]                                          # drop the tail
+    assert log.verify() is True                                  # undetectable on its own
+    assert log.verify(expected_head=head) is False               # detected against the anchor
+    assert log.verify(expected_len=n) is False
+
+
+def test_verify_returns_false_on_a_malformed_entry():
+    from bio_firewall.audit.log import AuditLog
+    log = AuditLog()
+    log.append({"event": "screen"})
+    log.entries.append({"prev": log.head})                       # no 'record' key
+    assert log.verify() is False
+
+
+def test_tampered_file_is_flagged_on_load(tmp_path):
+    """A log was previously extended without checking what it was being extended onto."""
+    import json
+    from bio_firewall.audit.log import AuditLog
+    p = tmp_path / "audit.jsonl"
+    log = AuditLog(p)
+    log.append({"event": "screen", "i": 0})
+    log.append({"event": "screen", "i": 1})
+    lines = p.read_text(encoding="utf-8").splitlines()
+    e = json.loads(lines[0])
+    e["record"]["i"] = 99
+    p.write_text(json.dumps(e) + "\n" + lines[1] + "\n", encoding="utf-8")
+    assert AuditLog(p).loaded_intact is False
+
+
+# --- a development-key passport says so, inside the signature ------------------------------------
+def test_dev_key_passport_is_self_identifying(monkeypatch):
+    from bio_firewall.passport.sign import sign_passport, verify_passport
+    v = {"decision": "allow", "ruleset_version": "1", "evidence": []}
+    monkeypatch.delenv("BIOFW_PASSPORT_KEY", raising=False)
+    dev = sign_passport({"intent": "x"}, v)
+    assert dev.get("dev_key") is True
+    assert verify_passport(dev)
+    assert verify_passport({k: val for k, val in dev.items() if k != "dev_key"}) is False  # signed
+    monkeypatch.setenv("BIOFW_PASSPORT_KEY", "a-real-deployment-key")
+    prod = sign_passport({"intent": "x"}, v)
+    assert "dev_key" not in prod
+    assert verify_passport(prod)
+
+
+# --- a missing vendored table is recorded, not silently absorbed ---------------------------------
+def test_missing_vendored_resource_is_visible(monkeypatch):
+    import bio_firewall.data as D
+    assert D.missing_vendored() == []                            # a complete install
+    monkeypatch.setattr(D, "_VD", D._VD / "does-not-exist")
+    assert "locus_genes.parquet" in D.missing_vendored()
+    monkeypatch.setenv("BIOFW_REQUIRE_VENDORED_DATA", "1")
+    import pytest
+    with pytest.raises(RuntimeError, match="vendored hazard data missing"):
+        D.require_vendored_data()
+
+
+def test_unmapped_fields_are_recorded_on_the_verdict():
+    """The five-axis contract drops keys it does not map, which is what makes it tool-agnostic and
+    is also how content submitted under an unexpected name avoids every rule. The verdict records
+    which keys were dropped, so a clear result on a partially read artefact is distinguishable."""
+    from bio_firewall import screen
+    from bio_firewall.adapters.generic_artifact import unmapped_keys
+    plain = {"intent": "insert a Factor IX cassette", "gene": "AAVS1"}
+    assert unmapped_keys(plain) == []
+    assert "unmapped_keys" not in screen(plain)
+    carrying = {**plain, "payload_notes": "ricin A chain", "vector": "AAV9"}
+    assert unmapped_keys(carrying) == ["payload_notes", "vector"]
+    assert screen(carrying)["unmapped_keys"] == ["payload_notes", "vector"]

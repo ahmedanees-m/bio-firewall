@@ -23,6 +23,7 @@ results/*
 !results/locus_mouse_outcome.json
 !results/locus_mouse_outcome_all.json
 !results/locus_outcome_visdb.json
+!results/locus_channel_ablation.json
 # the frozen control-vs-advisor panel results (docs/PANEL.md); parsed verdicts + rates, no raw responses
 !results/nvidia_headtohead/
 !results/nvidia_headtohead/*

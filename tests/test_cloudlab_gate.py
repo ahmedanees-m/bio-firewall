@@ -81,3 +81,31 @@ def test_audit_records_gate_and_chain_holds():
     assert log.verify()
     ev = [e["record"] for e in log.entries if e["record"].get("event") == "cloudlab_gate"]
     assert len(ev) == 2 and ev[0]["decision"] == "refuse" and ev[1]["decision"] == "allow"
+
+
+def test_passport_does_not_carry_across_designs_that_differ_outside_the_screened_axes():
+    """The normalized plan covers the five screened axes, so two designs can share an inputs_hash while differing
+    in vector, host or delivery detail. The passport binds the submitted artifact as well, so it must not carry."""
+    from bio_firewall.adapters.cloudlab_gate import passport_matches_design
+    approved = {**_ALLOW, "vector": "AAV9", "titre": "1e13"}
+    swapped = {**_ALLOW, "vector": "lentivirus", "titre": "1e13"}
+    verdict = screen(approved)
+    assert verdict["decision"] == "allow"
+    assert passport_matches_design(verdict["passport"], approved) is True
+    assert passport_matches_design(verdict["passport"], swapped) is False
+    stub = MockSubmit()
+    result = gated_cloudlab_submit(swapped, {}, passport=verdict["passport"], submit_fn=stub)
+    assert result["submitted"] is False
+    assert result["decision"] == "rejected"
+
+
+def test_a_malformed_passport_is_rejected_rather_than_raising():
+    """gated_cloudlab_submit contracts that it never raises on a block, so a malformed signature must be a
+    structured rejection."""
+    verdict = screen(_ALLOW)
+    for bad in (None, 123, ["sig"], {"sig": 1}):
+        stub = MockSubmit()
+        result = gated_cloudlab_submit(_ALLOW, {}, passport={**verdict["passport"], "signature": bad},
+                                       submit_fn=stub)
+        assert result["submitted"] is False
+        assert result["decision"] == "rejected"

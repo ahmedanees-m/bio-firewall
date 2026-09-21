@@ -30,6 +30,35 @@ _VERIFIED = LEGITIMACY["verified"]
 # managed access gates how a clear/flag verdict is RELEASED, and escalates a low-confidence (out-of-KB) allow.
 RESOLUTIONS = ("released", "released_with_review", "held_pending", "refused")
 
+# The resolutions under which a downstream action may actually run. `held_pending` and `refused`
+# withhold release, so a gate must consult this and not the screen decision alone: an out-of-KB allow
+# held for an unverified requester still carries decision "allow", and gating on the decision alone
+# lets it through.
+EXECUTABLE_RESOLUTIONS = ("released", "released_with_review")
+
+
+def access_resolution(obj) -> str | None:
+    """The managed-access resolution carried by a verdict or by a signed passport, if any.
+
+    Returns None when no access plane was applied, which leaves the screen decision to stand alone."""
+    if not isinstance(obj, dict):
+        return None
+    acc = obj.get("access")
+    if isinstance(acc, dict) and acc.get("resolution"):
+        return acc["resolution"]
+    passport = obj.get("passport")
+    if isinstance(passport, dict):
+        pacc = passport.get("access")
+        if isinstance(pacc, dict):
+            return pacc.get("resolution")
+    return None
+
+
+def resolution_permits_execution(resolution) -> bool:
+    """Whether a managed-access resolution permits a downstream action. None means no access plane
+    was applied and the screen decision governs on its own."""
+    return resolution is None or resolution in EXECUTABLE_RESOLUTIONS
+
 
 def _canonical(body: dict) -> bytes:
     return json.dumps(body, sort_keys=True, separators=(",", ":"), default=str).encode()
@@ -65,7 +94,7 @@ def resolve(decision: str, legitimacy_rank: int, *, low_confidence: bool = False
 
 
 def apply_access(verdict: dict, plan: dict, *, legitimacy: str = "unverified", evidence: dict | None = None,
-                 verification_hook: str = "none", audit=None) -> dict:
+                 verification_hook: str = "none", audit=None, artifact: dict | None = None) -> dict:
     """Resolve a screened verdict under a user-legitimacy level, bind the tier + legitimacy evidence into a re-signed
     passport (tamper-evident) and, optionally, the hash-chained audit. Returns the access record (with its passport).
 
@@ -92,7 +121,7 @@ def apply_access(verdict: dict, plan: dict, *, legitimacy: str = "unverified", e
         "credentialing_authority": "integration_point",          # documented, NOT claimed operational
     }
     # bind the access tier into a re-signed passport: mutating the tier/resolution breaks this signature.
-    record["passport"] = sign_passport(plan, verdict, access=record)
+    record["passport"] = sign_passport(plan, verdict, access=record, artifact=artifact)
     if audit is not None:
         audit.append({"event": "access_resolution", "inputs_hash": record["passport"]["inputs_hash"],
                       "decision": decision, "legitimacy_level": legitimacy,
@@ -117,5 +146,5 @@ def screen_managed(artifact: dict, *, legitimacy: str = "unverified", evidence: 
     plan = normalize(artifact)
     verdict = screen(artifact, audit=audit)
     verdict["access"] = apply_access(verdict, plan, legitimacy=legitimacy, evidence=evidence,
-                                     verification_hook=verification_hook, audit=audit)
+                                     verification_hook=verification_hook, audit=audit, artifact=artifact)
     return verdict

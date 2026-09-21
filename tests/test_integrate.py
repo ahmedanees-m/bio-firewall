@@ -54,3 +54,20 @@ def test_gated_loop_intercepts_dangerous_mid_workflow():
     trace = run_gated_loop(plans)
     assert trace[0]["reached_synthesis"] and trace[2]["reached_synthesis"]
     assert not trace[1]["reached_synthesis"] and trace[1]["decision"] == "refuse"
+
+
+def test_gated_loop_blocks_rather_than_aborting_when_a_gate_errors():
+    """A gate that raises something other than GateBlocked must still block that plan and let the loop continue,
+    rather than propagating and abandoning every remaining plan unscreened."""
+    import bio_firewall.integrate.agent_gate as ag
+
+    original = ag.verify_passport
+    ag.verify_passport = lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError("verifier exploded"))
+    try:
+        trace = run_gated_loop([{"intent": "insert a Factor IX cassette", "gene": "AAVS1"},
+                                {"intent": "knock-in study", "gene": "LMO2"}])
+    finally:
+        ag.verify_passport = original
+    assert len(trace) == 2                              # the loop completed
+    assert all(step["reached_synthesis"] is False for step in trace)
+    assert any("gate error" in str(step["outcome"]) or "blocked" in str(step["outcome"]) for step in trace)

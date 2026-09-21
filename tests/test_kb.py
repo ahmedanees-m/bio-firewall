@@ -49,3 +49,12 @@ def test_kb_is_superset_of_in_code_signatures():
     assert IG_TCR_LOCI <= ig
     assert SELECT_AGENT_TOXINS <= tox
     assert SELECT_AGENT_TOXIN_ORGANISMS <= org
+
+
+def test_verify_kb_returns_false_on_a_malformed_entry():
+    """verify_kb gates whether a knowledge base is trusted, so a malformed entry must be a False verdict rather
+    than an exception that escapes the check."""
+    from bio_firewall.kb.registry import verify_kb
+    for bad in (None, [], "kb", {}, {"content_sha256": 1, "hmac_sha256": "x"},
+                {"content_sha256": "x", "hmac_sha256": None}):
+        assert verify_kb(bad) is False

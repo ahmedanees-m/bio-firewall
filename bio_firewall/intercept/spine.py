@@ -6,8 +6,9 @@ The gate: no downstream action (synthesis order, build) should execute without a
 `flag_for_review` short-circuit the build; `allow` emits a SIGNED passport (P4) a synthesis provider can verify."""
 from __future__ import annotations
 
-from bio_firewall.adapters.generic_artifact import normalize
+from bio_firewall.adapters.generic_artifact import normalize, unmapped_keys
 from bio_firewall.calibrate import calibrate
+from bio_firewall.data import missing_vendored
 from bio_firewall.calibrate.conformal import calibrated_confidence, kb_coverage, risk_score
 from bio_firewall.hazard import five_axis_screen
 from bio_firewall.passport.sign import sign_passport
@@ -32,7 +33,18 @@ def screen(artifact: dict, *, audit=None) -> dict:
     verdict["risk_score"] = risk_score(verdict, _gene)
     verdict["grade"] = grade(verdict)                # graded taxonomy: allow/partial/flag_for_review/refuse
     verdict["ruleset_version"] = RULESET_VERSION
-    verdict["passport"] = sign_passport(plan, verdict)
+    # A hazard rule whose vendored table is absent stops matching. Record that on the verdict so a
+    # clear result from a partial install is distinguishable from a clear result from a full one.
+    _missing = missing_vendored()
+    if _missing:
+        verdict["degraded_resources"] = _missing
+    # A field the contract does not map is dropped before any rule runs, so a hazard submitted under
+    # an unexpected name is not screened. Record the dropped keys so a clear verdict on an artifact
+    # carrying unscreened content is distinguishable from a clear verdict on a fully mapped one.
+    _unmapped = unmapped_keys(artifact)
+    if _unmapped:
+        verdict["unmapped_keys"] = _unmapped
+    verdict["passport"] = sign_passport(plan, verdict, artifact=artifact)
     if audit is not None:
         audit.append({"inputs_hash": verdict["passport"]["inputs_hash"], "decision": verdict["decision"],
                       "axes_triggered": verdict["passport"]["axes_triggered"], "ruleset_version": RULESET_VERSION})

@@ -34,9 +34,18 @@ def sign_kb(kb: dict, key: bytes = DEFAULT_KEY) -> str:
 
 
 def verify_kb(kb: dict, key: bytes = DEFAULT_KEY) -> bool:
-    """True iff the content digest AND the HMAC signature both match - a single edited entry breaks both."""
-    ok_digest = hmac.compare_digest(kb.get("content_sha256", ""), content_digest(kb))
-    ok_sig = hmac.compare_digest(kb.get("hmac_sha256", ""), sign_kb(kb, key))
+    """True iff the content digest AND the HMAC signature both match - a single edited entry breaks both.
+
+    Returns False for a malformed entry and never raises, for the same reason as `verify_passport`:
+    a caller treats False as "do not trust this knowledge base", and an exception would escape that check.
+    """
+    if not isinstance(kb, dict):
+        return False
+    got_digest, got_sig = kb.get("content_sha256"), kb.get("hmac_sha256")
+    if not isinstance(got_digest, str) or not isinstance(got_sig, str):
+        return False
+    ok_digest = hmac.compare_digest(got_digest.encode("utf-8"), content_digest(kb).encode("utf-8"))
+    ok_sig = hmac.compare_digest(got_sig.encode("utf-8"), sign_kb(kb, key).encode("utf-8"))
     return ok_digest and ok_sig
 
 

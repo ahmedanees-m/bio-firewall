@@ -8,12 +8,16 @@ The credentialing AUTHORITY is a documented integration point - the deployment s
 hook. This plane provides the enforcement MECHANISM; it does not claim to BE a credentialing authority.
 """
 from bio_firewall.access.managed import (  # noqa: F401
+    EXECUTABLE_RESOLUTIONS,
     LEGITIMACY,
     RESOLUTIONS,
+    access_resolution,
     apply_access,
+    resolution_permits_execution,
     resolve,
     screen_managed,
     verify_access,
 )
 
-__all__ = ["LEGITIMACY", "RESOLUTIONS", "apply_access", "resolve", "screen_managed", "verify_access"]
+__all__ = ["EXECUTABLE_RESOLUTIONS", "LEGITIMACY", "RESOLUTIONS", "access_resolution", "apply_access",
+           "resolution_permits_execution", "resolve", "screen_managed", "verify_access"]

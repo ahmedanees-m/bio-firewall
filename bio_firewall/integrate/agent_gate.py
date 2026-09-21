@@ -3,6 +3,7 @@
 downstream action, and `synthesize()` REFUSES to run unless handed an `allow` verdict whose passport verifies."""
 from __future__ import annotations
 
+from bio_firewall.access.managed import access_resolution, resolution_permits_execution
 from bio_firewall.intercept.spine import screen
 from bio_firewall.passport import verify_passport
 
@@ -19,11 +20,17 @@ def pre_action_gate(artifact: dict, audit=None) -> dict:
 
 def synthesize(verdict: dict) -> str:
     """A guarded downstream action (stand-in for a synthesis order / protocol export). It runs ONLY on an ALLOW
-    verdict with a verifiable passport - so a flagged/refused plan, or a forged passport, cannot reach synthesis."""
+    verdict with a verifiable passport whose managed-access resolution releases it - so a flagged/refused plan, a
+    forged passport, or a plan held by the access plane cannot reach synthesis."""
     if verdict.get("decision") != "allow":
         raise GateBlocked(f"blocked: BioFirewall verdict is '{verdict.get('decision')}' - {verdict.get('reason')}")
     if not verify_passport(verdict.get("passport") or {}):
         raise GateBlocked("blocked: design passport does not verify (tampered or missing)")
+    # An out-of-KB allow held for an unverified requester still carries decision "allow", so the decision
+    # alone does not settle whether the action may run; the access resolution does.
+    resolution = access_resolution(verdict)
+    if not resolution_permits_execution(resolution):
+        raise GateBlocked(f"blocked: managed-access resolution is '{resolution}', which withholds release")
     return "SYNTHESIS ORDER SUBMITTED"
 
 
@@ -39,6 +46,8 @@ def run_gated_loop(plans, audit=None) -> list[dict]:
             executed = True
         except GateBlocked as e:
             outcome = str(e)
+        except Exception as e:                      # a gate that errors must block, never let a plan through
+            outcome = f"blocked: gate error - {type(e).__name__}: {e}"
         trace.append({
             "step": i, "plan_intent": plan.get("intent", ""),
             "decision": verdict["decision"], "confidence": verdict.get("calibrated_confidence"),

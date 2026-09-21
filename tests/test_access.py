@@ -93,3 +93,53 @@ def test_unknown_legitimacy_rejected():
 def test_screen_only_passport_is_backward_compatible():
     v = screen(_ALLOW)
     assert "access" not in v["passport"]                                          # no access block without P9
+
+
+# --- a withheld resolution must actually withhold --------------------------------------------------------------
+# resolve() can return held_pending on a verdict whose decision is still "allow" (an out-of-KB allow for an
+# unverified requester). A gate that keys on the decision alone lets that through, which makes the hold advisory.
+def test_held_pending_blocks_synthesis():
+    from bio_firewall.integrate import GateBlocked, synthesize
+    verdict = screen_managed({"intent": "benign study", "sequence": "ATGGCC"}, legitimacy="unverified")
+    assert verdict["access"]["resolution"] == "held_pending"
+    assert verdict["decision"] == "allow"                      # the decision alone would have released it
+    with pytest.raises(GateBlocked, match="held_pending"):
+        synthesize(verdict)
+
+
+def test_held_pending_blocks_cloudlab_submission():
+    from bio_firewall.adapters.cloudlab_gate import gated_cloudlab_submit
+    design = {"intent": "benign study", "sequence": "ATGGCC"}
+    verdict = screen_managed(design, legitimacy="unverified")
+    assert verdict["access"]["resolution"] == "held_pending"
+    calls = []
+    result = gated_cloudlab_submit(design, {}, passport=verdict["access"]["passport"],
+                                   submit_fn=lambda *a, **k: calls.append(1))
+    assert result["submitted"] is False
+    assert result["held"] is True
+    assert calls == []                                         # nothing reached the downstream submitter
+
+
+def test_released_resolution_still_proceeds():
+    """The hold must not become a blanket block: a released verdict still reaches the downstream action."""
+    from bio_firewall.adapters.cloudlab_gate import gated_cloudlab_submit
+    design = {"intent": "insert a Factor IX cassette", "gene": "AAVS1", "cell_type": "hepatocyte"}
+    verdict = screen_managed(design, legitimacy="credentialed")
+    if verdict["decision"] != "allow" or verdict["access"]["resolution"] not in ("released", "released_with_review"):
+        pytest.skip("this design does not resolve to a release in the current ruleset")
+    calls = []
+    result = gated_cloudlab_submit(design, {}, passport=verdict["access"]["passport"],
+                                   submit_fn=lambda *a, **k: (calls.append(1), {"ok": True})[1])
+    assert result["submitted"] is True
+    assert len(calls) == 1
+
+
+def test_screen_only_verdict_is_unaffected_by_the_access_check():
+    """A verdict with no access plane applied carries no resolution and must behave exactly as before."""
+    from bio_firewall.access.managed import access_resolution, resolution_permits_execution
+    from bio_firewall.integrate import synthesize
+    verdict = screen({"intent": "insert a Factor IX cassette", "gene": "AAVS1", "cell_type": "hepatocyte"})
+    assert access_resolution(verdict) is None
+    assert resolution_permits_execution(None) is True
+    if verdict["decision"] == "allow":
+        assert synthesize(verdict) == "SYNTHESIS ORDER SUBMITTED"

@@ -97,3 +97,42 @@ def is_oncogenic_fusion(gene_a: str, gene_b: str) -> dict | None:
 def genotox_oracle() -> dict:
     p = _VD / "genotoxicity_oracle.yaml"
     return yaml.safe_load(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+# ---------------------------------------------------------------------------------------------
+# Vendored-resource status
+# ---------------------------------------------------------------------------------------------
+# Each loader above returns an empty mapping when its file is absent, so a rule that depends on it
+# stops matching rather than failing. That keeps the package importable in a partial install, but
+# on its own it disables a hazard rule without saying so. These helpers make the absence visible,
+# and BIOFW_REQUIRE_VENDORED_DATA makes it fatal for deployments that want to fail closed.
+_REQUIRED = {
+    "locus_genes.parquet": "gene roles (oncogene / TSG / driver / essential)",
+    "gnomad_constraint.parquet": "dosage sensitivity",
+    "oncogene_tss.parquet": "positional locus screen",
+    "oncogenic_fusions.yaml": "oncogenic fusion rule",
+    "genotoxicity_oracle.yaml": "genotoxicity rule",
+}
+
+
+def vendored_status() -> dict[str, bool]:
+    """Which vendored hazard resources are present. False means the rule it powers is inactive."""
+    return {name: (_VD / name).exists() for name in _REQUIRED}
+
+
+def missing_vendored() -> list[str]:
+    """Vendored hazard resources that are absent, and so silently disable a rule."""
+    return sorted(n for n, ok in vendored_status().items() if not ok)
+
+
+def require_vendored_data() -> None:
+    """Raise when a hazard resource is missing and the deployment asked to fail closed."""
+    import os
+    if not os.getenv("BIOFW_REQUIRE_VENDORED_DATA"):
+        return
+    missing = missing_vendored()
+    if missing:
+        detail = ", ".join(f"{m} ({_REQUIRED[m]})" for m in missing)
+        raise RuntimeError(
+            f"vendored hazard data missing, so the corresponding rules are inactive: {detail}. "
+            "Unset BIOFW_REQUIRE_VENDORED_DATA to run in a degraded configuration.")

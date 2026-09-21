@@ -18,10 +18,32 @@ def test_clopper_pearson_zero_events_tightens_with_n():
 
 def test_false_refuse_certificate_passes_when_zero_of_many():
     cert = false_refuse_certificate(n_legit=288, n_refused=0)
-    assert cert["all_pass"] is True
+    assert cert["all_meet_tolerated"] is True
+    assert cert["all_pass"] is True                      # backward-compatible alias
     assert cert["certified_upper_bound"] < 0.03
     for c in cert["coverage_curve"]:
-        assert c["certified_upper_bound"] <= c["alpha"] + 0.02 + 1e-9
+        assert c["certified_upper_bound"] <= c["alpha_tolerated"] + 1e-9
+
+
+def test_certificate_separates_nominal_from_tolerated():
+    """0/288 gives an upper bound of ~0.0103: it clears the tolerated 0.03 at alpha=0.01 but NOT
+    the nominal 1% ceiling. The two must be reported distinctly."""
+    cert = false_refuse_certificate(n_legit=288, n_refused=0)
+    a01 = next(c for c in cert["coverage_curve"] if c["alpha_nominal"] == 0.01)
+    assert a01["meets_tolerated"] is True
+    assert a01["meets_nominal"] is False                 # 0.0103 > 0.01
+    assert cert["all_meet_nominal"] is False
+    assert cert["all_meet_tolerated"] is True
+
+
+def test_all_correct_subgroup_does_not_claim_zero_error():
+    """An all-correct tier must not report a [1, 1] interval; that is a bootstrap artefact."""
+    rows = [{"conf": "high", "correct": True} for _ in range(248)]
+    rows += [{"conf": "low", "correct": False} for _ in range(10)]
+    out = confidence_monotonicity(rows)
+    lo, hi = out["tier_accuracy"]["high"]["ci95"]
+    assert hi == 1.0 and lo < 1.0, (lo, hi)
+    assert lo > 0.95
 
 
 def test_false_refuse_certificate_fails_with_high_refusal():
