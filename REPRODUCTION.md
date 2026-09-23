@@ -18,7 +18,7 @@ committed-data numbers with one command. Pull the published image for the exact 
 in, or build it yourself from the same Dockerfile:
 
 ```bash
-docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.1.0 make reproduce   # published image, nothing to build
+docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.2.0 make reproduce   # published image, nothing to build
 
 make docker-build        # docker build -t biofirewall .   (base image: python:3.11-slim)
 make docker-reproduce    # runs `make reproduce` inside the image you just built
@@ -86,7 +86,7 @@ python -c "from bio_firewall.kb import load_kb, verify_kb; print(verify_kb(load_
   here. *This is the step that converts "the author says it reproduces" into "it reproduces."* - **pending an
   external runner.**
 - **Zenodo DOI.** The archived deposit is published: concept DOI
-  [10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886) (resolves to the newest version), version
-  DOI [10.5281/zenodo.21788887](https://doi.org/10.5281/zenodo.21788887) (pins v0.1.0). It carries the source
-  snapshot at the `v0.1.0` tag, the open hazard data, the frozen benchmark, red-team and panel results, the
-  pre-registrations and the verification logs. The restricted/local-only data is **not** part of the deposit.
+  [10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886) (resolves to the newest version), and a version
+  DOI per release, listed in `CITATION.cff`. Each deposit carries the source snapshot at its tag, the open
+  hazard data, the frozen benchmark, red-team and panel results, the analysis specifications and the
+  cargo bundle. The restricted/local-only data is **not** part of the deposit.

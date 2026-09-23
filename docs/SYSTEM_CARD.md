@@ -1,4 +1,4 @@
-# BioFirewall - System Card (v0.1.0)
+# BioFirewall - System Card (v0.2.0)
 
 A model-card-style statement of what BioFirewall **is**, what a verdict **does and does not guarantee**, its
 **scope boundaries**, its **enumerated failure modes**, and a **scope/limit statement for every headline claim**.

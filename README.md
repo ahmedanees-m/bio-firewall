@@ -10,8 +10,8 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 ![Tests](https://img.shields.io/badge/tests-165%20passing%2C%202%20skipped-success.svg)
-![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
-[![Container](https://img.shields.io/badge/ghcr.io-bio--firewall%3A0.1.0-blue.svg)](https://github.com/ahmedanees-m/bio-firewall/pkgs/container/bio-firewall)
+![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)
+[![Container](https://img.shields.io/badge/ghcr.io-bio--firewall%3A0.2.0-blue.svg)](https://github.com/ahmedanees-m/bio-firewall/pkgs/container/bio-firewall)
 ![pen-stack](https://img.shields.io/badge/pen--stack-0.1.0-blue.svg)
 [![RRID](https://img.shields.io/badge/RRID-SCR__028785-8A2BE2.svg)](https://scicrunch.org/resolver/RRID:SCR_028785)
 [![bio.tools](https://img.shields.io/badge/bio.tools-bio--firewall-00A0B0.svg)](https://bio.tools/bio-firewall)
@@ -74,9 +74,9 @@ the vendored open data all ship inside it, so the demo and the committed-data re
 external data and no network.
 
 ```bash
-docker pull ghcr.io/ahmedanees-m/bio-firewall:0.1.0
-docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.1.0                # runs examples/demo.py
-docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.1.0 make reproduce # headline numbers + full test suite
+docker pull ghcr.io/ahmedanees-m/bio-firewall:0.2.0
+docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.2.0                # runs examples/demo.py
+docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.2.0 make reproduce # headline numbers + full test suite
 ```
 
 To build it yourself instead:
@@ -480,9 +480,9 @@ If you use BioFirewall, please cite the preprint:
 }
 ```
 
-To cite this software release specifically, use the version DOI
-[10.5281/zenodo.21788887](https://doi.org/10.5281/zenodo.21788887), which pins v0.1.0, or the concept DOI
-[10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886), which always resolves to the newest version.
+Cite the concept DOI [10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886), which always
+resolves to the newest version, or the version DOI of the release you used; each release carries its own.
+The version DOIs are listed in [CITATION.cff](CITATION.cff).
 Author and ORCID metadata is in [CITATION.cff](CITATION.cff).
 
 ## License and attribution
