@@ -401,7 +401,7 @@ bio-firewall/
 |                                     export_nist_benchmark.py (regenerate the NIST export)
 |-- prereg/                           ws_biofirewall.yaml, ws_locus_mouse_outcome.yaml, ws_cloudlab_gate.yaml,
 |                                     ws_writespec.yaml, ws_verify_reconcile.yaml
-|-- tests/                            167 tests, including the data-license gate, the Tier-1 100%-catch
+|-- tests/                            203 tests, including the data-license gate, the Tier-1 100%-catch
 |                                     regression gate, and 22 adversarial cargo-screen regression tests
 |                                     (2 are environment-gated skips: the local-only oracle and a
 |                                     pen-stack-checkout end-to-end test)
