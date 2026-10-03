@@ -9,7 +9,7 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 [![CI](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-165%20passing%2C%202%20skipped-success.svg)
+![Tests](https://img.shields.io/badge/tests-201%20passing%2C%202%20skipped-success.svg)
 ![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)
 [![Container](https://img.shields.io/badge/ghcr.io-bio--firewall%3A0.2.0-blue.svg)](https://github.com/ahmedanees-m/bio-firewall/pkgs/container/bio-firewall)
 ![pen-stack](https://img.shields.io/badge/pen--stack-0.1.0-blue.svg)
