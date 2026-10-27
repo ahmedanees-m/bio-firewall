@@ -66,7 +66,7 @@ reframing because it judges the artifact rather than the accompanying prose.
 ## Quickstart
 
 ```bash
-pip install -e .          # requires pen-stack>=0.1.0,<0.2.0 (resolved from PyPI)
+pip install -e .          # requires pen-stack>=0.2.0,<0.3.0 (resolved from PyPI)
 ```
 
 Or run the published container. The image is self-contained: the screen, the signed hazard knowledge base and

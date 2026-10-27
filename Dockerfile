@@ -1,6 +1,6 @@
 # BioFirewall - reproducible container image.
 #
-# Pins Python 3.11 and installs the package (which pulls pen-stack>=0.1.0,<0.2.0 from PyPI, resolving the current
+# Pins Python 3.11 and installs the package (which pulls pen-stack>=0.2.0,<0.3.0 from PyPI, resolving the current
 # in-range release). The image is self-contained: the five-axis screen, the signed hazard KB, and the vendored
 # open data all ship inside the wheel, so `screen()`, the demo, and the committed-data reproduction run with no
 # external data or network.

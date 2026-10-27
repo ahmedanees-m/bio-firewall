@@ -4,7 +4,7 @@
 PY ?= python
 IMAGE ?= biofirewall
 
-install:                       ## editable install + dev deps (pulls pen-stack>=0.1.0,<0.2.0)
+install:                       ## editable install + dev deps (pulls pen-stack>=0.2.0,<0.3.0)
 	$(PY) -m pip install -e ".[dev]"
 
 lint:                          ## ruff (the CI lint gate)

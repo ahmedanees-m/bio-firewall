@@ -9,7 +9,7 @@ what needs the **local-only** data (COSMIC/OncoKB/VISDB/controlled-access - neve
 ```bash
 git clone https://github.com/ahmedanees-m/bio-firewall && cd bio-firewall
 python -m venv .venv && . .venv/bin/activate     # Python 3.11 or 3.12
-make install                                      # pip install -e ".[dev]"  (pulls pen-stack>=0.1.0,<0.2.0)
+make install                                      # pip install -e ".[dev]"  (pulls pen-stack>=0.2.0,<0.3.0)
 ```
 > If your machine only has `python3` (no `python`), pass `PY=python3` to every `make` target.
 
@@ -26,7 +26,7 @@ make docker-reproduce    # runs `make reproduce` inside the image you just built
 The published image is built from the tagged tree by `.github/workflows/release-image.yml`, which smoke-tests
 `screen()` and the signed hazard KB at build time and re-verifies the pushed image before the job succeeds.
 
-**pen-stack compatibility.** The dependency is bounded `>=0.1.0,<0.2.0`; the suite is verified green against the pinned pen-stack release.
+**pen-stack compatibility.** The dependency is bounded `>=0.2.0,<0.3.0`, capped below the next minor; the suite is verified green against the pinned pen-stack release.
 Verified on a clean `pip install`: 201 passed / 2 skipped. The 2 skips are the local-only COSMIC oracle and the reconcile end-to-end test: the latter
 drives pen-stack's real `safety_gate`, which needs a pen-stack source **checkout** (`export PEN_STACK_HOME=/path/to/pen-stack`)
 because the pip wheel ships the library, not `configs/safety/policy.yaml`. With that checkout the reconcile test runs

@@ -14,8 +14,8 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11", "3.12"]
-        # the supported pen-stack release (the declared pin is >=0.1.0,<0.2.0)
-        pen-stack-version: ["0.1.0"]
+        # the supported pen-stack release (the declared pin is >=0.2.0,<0.3.0)
+        pen-stack-version: ["0.2.0"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

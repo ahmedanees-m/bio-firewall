@@ -311,7 +311,7 @@ channel + ensemble + abstention are shipped; the incremental-1%-FPR claim is rep
 ## Reproduce
 
 ```bash
-pip install -e .                                  # + pen-stack>=0.1.0,<0.2.0
+pip install -e .                                  # + pen-stack>=0.2.0,<0.3.0
 export PEN_STACK_HOME=/path/to/pen-stack          # Guardian configs (for B0 / cargo axis)
 export BF_BENCH_ORACLES=/path/to/bench_oracles    # local-only COSMIC etc. (NOT in this repo)
 export BF_B1_VERDICTS=/path/to/b1_verdicts.json   # optional frontier-reviewer verdicts
