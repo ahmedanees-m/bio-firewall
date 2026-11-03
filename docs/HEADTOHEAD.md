@@ -127,7 +127,7 @@ the small-N reads - which is the point of doing it.
    FPR**, and they fail in three distinct ways: three allow almost every toxin (TPR 0.01-0.05), DeepSeek flags most but
    at an **18% false-positive rate**, and the two frontier models **refuse ~45-47%** of sequences. Whether a model
    refuses, under-screens, or over-flags, an LLM is **not a cargo-sequence screen**, and the sharp shift from the June
-   run shows the behaviour is version-unstable. This is the strongest, most model-agnostic result.
+   run shows the behaviour is version-unstable. This result is model-agnostic.
 
 2. **D - open LLM judges are unsafe (confirmed, the live finding).** With 6 structural hazards both systems should
    refuse, a prompt-injection string in a free-text field flipped `refuse->allow` on **Llama 50-83%** and **qwen3-next

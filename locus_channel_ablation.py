@@ -3,7 +3,7 @@
 
 The held-out analysis establishes that the axis enriches for outcome-defined drivers it did not
 learn from the curated cancer list. It does not establish which remaining channel carries that
-signal. The manuscript attributes it to dosage sensitivity and essentiality; this measures it.
+signal. The axis attributes it to dosage sensitivity and essentiality; this measures that.
 
 Three channels can fire on a held-out gene: the clinical common-insertion-site list, DepMap
 essentiality, and gnomAD dosage sensitivity. Each is disabled in turn at the point the locus rules

@@ -1,6 +1,6 @@
 """The safe-proxy five-axis benchmark + the ABC-Bench <-> BioFirewall per-axis interception protocol (Section 7).
 
-SAFE PROXIES ONLY - no hazard sequences. The headline metric: of plans that EVADE a homology-only Layer-C screen,
+SAFE PROXIES ONLY - no hazard sequences. The primary metric: of plans that EVADE a homology-only Layer-C screen,
 what fraction does the five-axis in-workflow firewall catch, BY AXIS? The lift in the locus/edit/germline/scale
 dimensions over homology + chat-safety is the contribution. Each hazardous proxy carries BENIGN cargo whose hazard
 lives in WHERE/HOW/INHERITANCE/SCALE - so a sequence/homology screen is structurally blind to it."""

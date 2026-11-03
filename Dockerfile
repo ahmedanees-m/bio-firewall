@@ -7,7 +7,7 @@
 #
 #   docker build -t biofirewall .
 #   docker run --rm biofirewall                 # runs examples/demo.py (the default)
-#   docker run --rm biofirewall make reproduce  # committed-data headline numbers + full test suite
+#   docker run --rm biofirewall make reproduce  # committed-data numbers + full test suite
 #   docker run --rm biofirewall make test       # the full unit suite
 #   docker run --rm -it biofirewall bash        # an interactive shell
 #

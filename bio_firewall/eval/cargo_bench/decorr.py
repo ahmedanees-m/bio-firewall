@@ -3,7 +3,7 @@ shortcut that Benchmark-2 flagged (composition probe AUROC 0.93 / TPR@1%FPR 0.56
 margin). Three independent lines of evidence, all reusing the FROZEN Benchmark-2 artifacts (bf_b2/, local-only,
 never committed - only vectors + sequences that were already public UniProt proxies):
 
-  1. COMPOSITION-MATCHED EVALUATION (the cleanest test). Build a benign negative test set whose 20-dim AA-frequency
+  1. COMPOSITION-MATCHED EVALUATION. Build a benign negative test set whose 20-dim AA-frequency
      distribution MATCHES the toxin positives (greedy k:1 nearest-neighbour matching + a 2-sample energy/MMD
      permutation test, p>0.05 = indistinguishable). On that set composition CANNOT discriminate by construction, so
      a composition-reliant classifier collapses to chance while a function-aware one RETAINS signal.
@@ -14,7 +14,7 @@ never committed - only vectors + sequences that were already public UniProt prox
 
 PRE-REGISTERED GATE (prereg upgrade_v04_v10.cargo_decorr): the decorrelated head on the matched set retains
 TPR@1%FPR >= 0.60 with a cluster-bootstrap CI lower bound > 0.562. FALLBACK (pre-committed): if the CI does
-not exclude 0.562 -> report 'cargo signal is substantially compositional', demote claim C, lead on D + operational.
+not exclude 0.562 -> report 'cargo signal is substantially compositional' and fall back to D + operational.
 We additionally report a PAIRED bootstrap of (ESM - composition) on the matched set (a lower-variance test of the
 same hypothesis) and the composition-probe collapse, and we do NOT tune the matched set to rescue the margin.
 
@@ -349,8 +349,8 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
             "PRE-REGISTERED gate does NOT pass. (3) The POWERED adjudication is AUROC: the composition-INVARIANT "
             "(DANN) representation retains AUROC ~0.985 vs composition-alone ~0.93 with the PAIRED CI excluding 0, "
             "and decorrelation costs only ~0.003 AUROC -> the signal is SUBSTANTIALLY NON-COMPOSITIONAL in RANKING. "
-            "(4) Per the pre-committed pre-registered fallback path we DEMOTE C from 'cleanest claim': it is not a clean "
-            "operating-point win; the manuscript leads on D + operational properties, reporting the cargo gate as "
+            "(4) Per the pre-committed pre-registered fallback path, claim C is not carried: it is not a clean "
+            "operating-point win. The reported result is D plus the operational properties, with the cargo gate as "
             "AUROC-level-non-compositional with an explicit 1%-FPR operating-point caveat."),
         "fallback_invoked": True,
     }

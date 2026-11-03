@@ -13,13 +13,13 @@ lint:                          ## ruff (the CI lint gate)
 test:                          ## the full unit suite (validates every committed metric/logic path)
 	pytest -q
 
-# `make reproduce` regenerates every headline number that is reproducible FROM THE COMMITTED REPO ALONE
+# `make reproduce` regenerates every reported number that is reproducible FROM THE COMMITTED REPO ALONE
 # (open data only): the monotone-combiner monotonicity proof + the full test suite (which validates the cargo/
 # conformal/decomp/edit-mech/locus-pos/struct MATH). The data-dependent benchmarks (B1/B2/B6/B8/B9/B10) need the
 # local-only data (COSMIC, VISDB, the frozen ESM vectors) and AlphaFold-DB/Foldseek; run them with `reproduce-local`.
-reproduce: lint test           ## regenerate the committed-data-reproducible headline numbers
+reproduce: lint test           ## regenerate the committed-data-reproducible numbers
 	@echo "=============================================================="
-	@echo "BioFirewall: reproduce (committed-data-only headline numbers)"
+	@echo "BioFirewall: reproduce (committed-data-only numbers)"
 	@echo "=============================================================="
 	$(PY) -c "from bio_firewall.hazard.combine_mono import verify_monotone; import json; r=verify_monotone(); \
 print('B7 monotone combiner:', 'PASS' if r['provably_monotone'] and r['hard_rule_exact_refuse'] else 'FAIL', \

@@ -14,6 +14,6 @@ def test_germline_bool_is_coerced_not_thrown():
 
 
 def test_screen_degrades_gracefully_on_a_malformed_plan():
-    # the reviewer's scenario: a bool where a dict was documented reaches the whole screen
+    # a bool where a dict was documented reaches the whole screen
     v = screen({"intent": "edit a gene", "gene": "TP53", "germline": True})
     assert v["decision"] in ("allow", "flag_for_review", "refuse")

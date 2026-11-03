@@ -1,4 +1,4 @@
-"""Experiment A - FABRICATION (the strongest, cleanest, most fundamental result).
+"""Experiment A - FABRICATION.
 
 Asked for a specific checkable quantity, the LLM emits a confident fabricated number; the grounded system returns a
 value computed from data (with provenance) or ABSTAINS. No prompt fixes this: an LLM has no mechanism to know which of
@@ -7,7 +7,7 @@ its own tokens are grounded vs generated - the firewall structurally only emits 
 Two query sets:
   - ANSWERABLE (ground truth computable from the firewall's data): gnomAD pLI / LOEUF of a gene; bp distance from an
     insertion to the nearest known oncogene on the same chromosome.
-  - UNANSWERABLE-without-computation (the killer; correct answer = ABSTAIN): genome-wide off-target count (needs a scan
+  - UNANSWERABLE-without-computation (correct answer = ABSTAIN): genome-wide off-target count (needs a scan
     not run), in-vivo titer (clinical endpoint), patient anti-capsid immune magnitude, malignant-transformation fraction.
 
 The LLM gets its BEST config: it is explicitly told to answer 'CANNOT BE DETERMINED' rather than guess."""

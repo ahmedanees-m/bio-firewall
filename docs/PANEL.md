@@ -72,7 +72,7 @@ shift A/B/D, but C (the function-aware sequence screen) and the operational prop
 The reported panel numbers are a pre-registered, dated measurement (2026-06-17): the prompt, rubric, abstention
 option, temperature, and model set were fixed before scoring, and the frozen per-model results (rates, confidence
 intervals, and the per-call parsed verdicts) are committed at [`results/nvidia_headtohead/`](../results/nvidia_headtohead).
-Those are the numbers in [docs/HEADTOHEAD.md](HEADTOHEAD.md) and the manuscript.
+Those are the numbers in [docs/HEADTOHEAD.md](HEADTOHEAD.md) and the accompanying paper.
 
 The harness now records every model call verbatim to `results/nvidia_headtohead/transcripts/<model>.jsonl`
 (`{model, temperature, experiment, plan_id, prompt, raw_response, parsed_verdict, timestamp}`; the cargo transcript

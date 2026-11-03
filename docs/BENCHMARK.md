@@ -116,7 +116,7 @@ in Benchmark 2b below.**
 
 # Cargo decorrelation and the certified false-refuse bound (pre-registered: `prereg/ws_biofirewall.yaml`)
 
-This release hardens the two load-bearing things before manuscript drafting: it follows the composition confound under
+This release hardens the two load-bearing things: it follows the composition confound under
 Benchmark 2 to ground (2b), and converts the *inverted* calibration of Benchmark 4 into a certified false-refuse
 ceiling + a monotone confidence (4b). Both pre-registered criteria carry a **pre-committed pre-registered fallback path**.
 
@@ -147,7 +147,7 @@ evidence. Code: [`bio_firewall/eval/cargo_bench/decorr.py`](../bio_firewall/eval
 **Verdict (pre-registered fallback path, pre-committed):** the function-aware signal is real and substantially
 non-compositional (AUROC + TPR@5%FPR), but the strict **1%-FPR operating-point** advantage over a composition
 baseline is **not** statistically established on this held-out set. Under the pre-registered fallback path, **C is demoted**
-from "cleanest claim": the manuscript leads on **D + the operational properties**, reporting the cargo gate as
+from the primary claim set: the reported result is **D + the operational properties**, with the cargo gate as
 *AUROC-level non-compositional with an explicit 1%-FPR operating-point caveat*. We did **not** tune the matched set to
 rescue the margin. (Per-residue attribution is declared supporting future detail; the powered AUROC/TPR@5%FPR
 decorrelation is the primary evidence.)

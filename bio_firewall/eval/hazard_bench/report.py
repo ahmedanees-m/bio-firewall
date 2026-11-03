@@ -1,4 +1,4 @@
-"""Persist a Benchmark-1 run: full JSON + a manuscript-style markdown report (framing built in)."""
+"""Persist a Benchmark-1 run: full JSON + a markdown report."""
 from __future__ import annotations
 
 import json

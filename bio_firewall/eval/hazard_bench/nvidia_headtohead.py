@@ -244,7 +244,7 @@ def _is_hazard_verdict(verdict: Optional[str]) -> bool:
     return verdict in ("flag", "refuse")
 
 # --------------------------------------------------------------------------- DATA SEEDS
-# Expand each to the pre-registered N before quoting in the paper. All structural/safe.
+# Expand each to the pre-registered N before reporting. All structural/safe.
 
 # A: numeric queries. ground_truth=None means UNANSWERABLE (answer = abstain).
 FABRICATION_QUERIES = [
@@ -603,7 +603,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", nargs="+", default=["deepseek", "gpt-oss"],
                     help="keys in DEFAULT_MODELS, or raw NVIDIA model ids")
-    ap.add_argument("--n-runs", type=int, default=10, help="determinism runs per plan (raise for the paper)")
+    ap.add_argument("--n-runs", type=int, default=10, help="determinism runs per plan")
     ap.add_argument("--experiments", nargs="+", default=["A", "B", "C", "D"],
                     help="subset of A B C D to run (lets you power one experiment at a time)")
     ap.add_argument("--tag", default="", help="suffix for per-model output files (avoids overwriting prior runs)")

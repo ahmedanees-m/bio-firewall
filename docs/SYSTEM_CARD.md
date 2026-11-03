@@ -1,7 +1,7 @@
 # BioFirewall - System Card (v0.2.0)
 
 A model-card-style statement of what BioFirewall **is**, what a verdict **does and does not guarantee**, its
-**scope boundaries**, its **enumerated failure modes**, and a **scope/limit statement for every headline claim**.
+**scope boundaries**, its **enumerated failure modes**, and a **scope/limit statement for every reported claim**.
 Written so a deploying lab, a synthesis provider, or a reviewer can judge what they are and are not relying on.
 
 > **One line.** BioFirewall is an *early, computational, defensive* design-stage screen for genome-writing plans. It
@@ -83,9 +83,9 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
     fold-distance, not low pLDDT). Neither is shipped as a claim. A full-trajectory monitor and a scaled red-team are
     a post-v1.0 fast-follow.
 
-## 5. Scope/limit statement for every headline claim
+## 5. Scope/limit statement for every reported claim
 
-| Headline claim | What it rests on | Scope / limit |
+| Claim | What it rests on | Scope / limit |
 |---|---|---|
 | **C - no LLM screens a cargo sequence** | ESM2 head TPR@1%FPR 0.72 vs open LLMs 0.00-0.60@49%FPR (n=200) | Model/date-specific (2026-06); the cargo gate is conceded non-novel at the component level; margin over composition is modest at 1% FPR |
 | **D - open LLM judges are jailbroken; firewall is not** | Prompt-injection flips 50-83% on open models; firewall 0% by construction | Tested models/date-specific; a stronger future model could shift it; firewall immunity is architectural (reads structured plan) |

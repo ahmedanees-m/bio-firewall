@@ -1,4 +1,4 @@
-"""Benchmark 1 - de-circularized structural-hazard interception (the headline).
+"""Benchmark 1 - de-circularized structural-hazard interception.
 
 Run:  python -c "from bio_firewall.eval.hazard_bench import run_benchmark1, summary; print(summary(run_benchmark1()))"
 B1 (frontier) verdicts are loaded from BF_B1_VERDICTS (a JSON {gene: decision}) if present; otherwise B1 is skipped."""

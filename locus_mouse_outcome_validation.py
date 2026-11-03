@@ -27,7 +27,7 @@ PRE-REGISTERED ACCEPTANCE (prereg/ws_locus_mouse_outcome.yaml, SHA-locked before
   0.5 OR odds-ratio CI excluding 1. FAILURE PATH: if (B) fails, report it; the axis's outcome signal is then
   confined to its curated list (a real limit). Do NOT tune the gene sets or thresholds to rescue (B).
 
-CAVEATS (carried verbatim into the manuscript):
+CAVEATS:
   - Mouse, not human (species gap) - but the tumor-prone mouse model is the field's PRECLINICAL standard for vector
     genotoxicity (cf. Montini et al.). State it; do not hide it.
   - Gene-level; the event-level POSITIONAL score (TSS/enhancer distance) needs coordinate-level data with clonality

@@ -3,7 +3,7 @@ assert, that the artifact contract is not PEN-STACK-specific. The plan schema he
 Biomni family - it uses different field names than PEN-STACK's design dict (`task`/`target_gene`/`cell_line`/
 `payload_function` rather than `edit_intent`/`gene`/`cell_type`/`cargo_function`) - and this thin adapter maps them
 onto the shared five-axis artifact and screens it. A plan of the same substance receives the same decision whichever
-tool produced it, which is the point: the governance layer does not depend on the tool it sits in front of.
+tool produced it: the governance layer does not depend on the tool it sits in front of.
 """
 from __future__ import annotations
 

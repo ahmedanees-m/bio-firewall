@@ -3,7 +3,7 @@
 AI homologs that evade SEQUENCE similarity often retain FOLD. So we add a structure-based signal: predict/fetch a
 candidate's structure (AlphaFold-DB; ESMFold when GPU is free) and Foldseek-search it against a reference of hazard
 FOLDS (public folds only - no hazard sequences shipped). Being a fold signal, it is COMPOSITION-INDEPENDENT, so it
-also backstops the cargo composition-decorrelation analysis (the cleanest refutation of the composition confound).
+also backstops the cargo composition-decorrelation analysis (the refutation of the composition confound).
 
 The cargo screen then fuses THREE orthogonal signals and ABSTAINS on disagreement (routes to human):
   - sequence-profile / homology (the Benchmark-2 baseline),

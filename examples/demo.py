@@ -16,7 +16,7 @@ for label, plan in PLANS:
     triggered = ", ".join(e["rule_id"] for e in v["evidence"]) or "-"
     print(f"{v['decision']:16}  {label:34}  [{triggered}]")
 
-# the headline experiment: per-axis interception of homology-evading structural hazards (safe proxies).
+# the primary experiment: per-axis interception of homology-evading structural hazards (safe proxies).
 from bio_firewall.eval import run  # noqa: E402
 r = run()
 print(f"\nhomology-only baseline interception: {r['homology_baseline_interception']:.0%}"

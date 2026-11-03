@@ -76,7 +76,7 @@ external data and no network.
 ```bash
 docker pull ghcr.io/ahmedanees-m/bio-firewall:0.2.0
 docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.2.0                # runs examples/demo.py
-docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.2.0 make reproduce # headline numbers + full test suite
+docker run --rm ghcr.io/ahmedanees-m/bio-firewall:0.2.0 make reproduce # reported numbers + full test suite
 ```
 
 To build it yourself instead:
@@ -112,7 +112,7 @@ Run the demo, the benchmark, and the in-workflow agent trace:
 python examples/demo.py
 python -c "from bio_firewall.eval import run; print(run()['by_axis'])"
 python examples/agent_integration.py        # a design-agent loop gated by the firewall
-make reproduce                              # committed-data headline numbers + the test suite
+make reproduce                              # committed-data numbers + the test suite
 ```
 
 ## Architecture
@@ -315,8 +315,8 @@ as claims, and the simpler method is retained in each case.
 ### Reproducibility and disclosure
 
 - **System card** ([docs/SYSTEM_CARD.md](docs/SYSTEM_CARD.md)): what a green `allow` does and does not
-  guarantee, nine enumerated failure modes, and a scope and limit statement for every headline claim.
-- **One-command reproduction.** `make reproduce` regenerates the committed-data headline numbers and runs the
+  guarantee, nine enumerated failure modes, and a scope and limit statement for every reported claim.
+- **One-command reproduction.** `make reproduce` regenerates the committed-data numbers and runs the
   full test suite that validates every metric path; `make reproduce-local` regenerates the data-dependent
   benchmarks. Data releases are pinned, and `.zenodo.json` and `CITATION.cff` carry the deposit metadata. See
   [REPRODUCTION.md](REPRODUCTION.md).

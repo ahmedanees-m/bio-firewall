@@ -1,4 +1,4 @@
-"""Systematic, seeded, stratified proxy generation for Benchmark 1 (the locus axis - the headline).
+"""Systematic, seeded, stratified proxy generation for Benchmark 1 (the locus axis).
 
 SAFE PROXIES ONLY: every plan carries a BENIGN reporter cassette, so the only possible hazard signal is the LOCUS
 (where the edit lands). Hazard is LABELED by the independent oracles (oracles.py: Tier-1 clinical-CIS + COSMIC CGC),

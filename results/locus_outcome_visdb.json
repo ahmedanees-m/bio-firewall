@@ -61,6 +61,6 @@
       "gate": "OR CI excludes 1 OR AUROC CI excludes 0.5 (enrichment of firewall-flagged loci for the outcome)"
     }
   },
-  "honest_status": "ASSOCIATIVE retrospective enrichment on open VISDB data - 'tumor sample-source' is not a causal insertional-oncogenesis outcome and is confounded by virus biology. The CAUSAL / prospective clonal-outcome validation (controlled-access dbGaP/EGA) is DEFERRED -> 'outcome-validation pending'. A passing gate here is a floor, not a validated risk model.",
+  "scope_status": "ASSOCIATIVE retrospective enrichment on open VISDB data - 'tumor sample-source' is not a causal insertional-oncogenesis outcome and is confounded by virus biology. The CAUSAL / prospective clonal-outcome validation (controlled-access dbGaP/EGA) is DEFERRED -> 'outcome-validation pending'. A passing gate here is a floor, not a validated risk model.",
   "seed": 1234
 }
