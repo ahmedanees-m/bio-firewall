@@ -13,7 +13,7 @@ identifiers:
     description: Concept DOI (resolves to the newest version)
   - type: doi
     value: 10.5281/zenodo.23930681
-    description: Version DOI (pins v0.2.1)
+    description: Version DOI (pins the corrected v0.2.0 deposit)
   - type: doi
     value: 10.5281/zenodo.22917596
     description: Version DOI (pins v0.2.0)
@@ -51,7 +51,7 @@ authors:
     email: everette.nelson@vit.ac.in
 license: Apache-2.0
 repository-code: "https://github.com/ahmedanees-m/bio-firewall"
-version: "0.2.1"
+version: "0.2.0"
 keywords:
   - biosecurity
   - genome-writing

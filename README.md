@@ -10,7 +10,7 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 ![Tests](https://img.shields.io/badge/tests-201%20passing%2C%202%20skipped-success.svg)
-![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)
+![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)
 [![Container](https://img.shields.io/badge/ghcr.io-bio--firewall%3A0.2.0-blue.svg)](https://github.com/ahmedanees-m/bio-firewall/pkgs/container/bio-firewall)
 ![pen-stack](https://img.shields.io/badge/pen--stack-0.2.0-blue.svg)
 [![RRID](https://img.shields.io/badge/RRID-SCR__028785-8A2BE2.svg)](https://scicrunch.org/resolver/RRID:SCR_028785)
