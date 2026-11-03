@@ -48,7 +48,7 @@ authors:
     email: everette.nelson@vit.ac.in
 license: Apache-2.0
 repository-code: "https://github.com/ahmedanees-m/bio-firewall"
-version: "0.2.0"
+version: "0.2.1"
 keywords:
   - biosecurity
   - genome-writing

@@ -8,7 +8,7 @@ PEN-STACK (and any tool) through the adapter contract.
 Note (inherited from PEN-STACK): the locus axis FLAGS on mechanism - the genotoxicity proxy is NOT
 outcome-validated (PEN-STACK) - it does not predict a cancer rate. Stratification, not a blocklist.
 """
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 from bio_firewall.intercept.spine import screen          # noqa: F401  the public entry point
 
