@@ -3,7 +3,7 @@ hand-tuned max-severity cascade.
 
 Two properties a cascade cannot give you together:
   1. MONOTONICITY - adding a hazard finding, or strengthening one, NEVER lowers the combined severity (verified on
-     a perturbation suite, `verify_monotone`). This is what makes a stricter screen provably stricter.
+     a perturbation suite, `verify_monotone`), so a stricter input cannot produce a weaker decision.
   2. CROSS-AXIS INTERACTION - three co-occurring MODERATE signals are more concerning than one. A `max` cascade is
      flat across them; a noisy-OR `1 - prod(1 - r_i)` rises with each signal (and is monotone by construction:
      d/dr_i = prod_{j!=i}(1 - r_j) >= 0).

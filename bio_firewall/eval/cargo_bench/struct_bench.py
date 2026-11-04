@@ -1,7 +1,7 @@
 """Benchmark 10: structural-channel incremental value. Does adding the structure channel to the ESM head raise
 TPR@1%FPR on the <=40%-identity held-out cargo clusters? Reuses the frozen Benchmark-2 vectors (ESM) + a Foldseek
 structural score per held-out accession (AlphaFold-DB v6 structures searched against a train-toxin fold reference;
-both produced by the VM runner - AF-DB fetch + Foldseek easy-search, no GPU). Composition-independent by construction.
+both produced by the structure runner - AF-DB fetch + Foldseek easy-search, no GPU). Composition-independent by construction.
 
 Pre-specified gate (prereg upgrade_v04_v10.struct): incremental TPR@1%FPR over ESM-alone (paired CI) on the holdout;
 ensemble disagreement correctly triggers abstention. Fallback: if the paired CI includes 0, report that the

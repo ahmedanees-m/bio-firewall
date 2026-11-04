@@ -5,18 +5,18 @@ benchmarks (COSMIC 80.4%, OncoKB 82.0%) are recall-against-curation, not validat
 tests whether the firewall's locus-risk ENRICHES for an integration-site OUTCOME signal in real data.
 
 Open-data floor: **VISDB** (Viral Integration Site DataBase, Tang et al. 2020, NAR 10.1093/nar/gkz867) - the same
-catalogue PEN-STACK's genotoxicity oracle uses (local-only on the VM; never committed). Each integration site
+catalogue PEN-STACK's genotoxicity oracle uses (local-only; never committed). Each integration site
 carries a **Sample type** (Tumor vs non-tumor); we map each site to its nearest gene (GENCODE coords) and test
 whether firewall-flagged loci are enriched among TUMOR-associated integration sites.
 
 PRE-SPECIFIED gate (prereg upgrade_v04_v10.locus_outcome): OR with CI excluding 1, OR AUROC with CI excluding 0.5.
-STATUS (pre-committed, user deferred controlled-access dbGaP/EGA 2026-06-18): this VISDB floor is an
+STATUS (pre-committed; controlled-access dbGaP/EGA data is out of scope here): this VISDB floor is an
 ASSOCIATIVE, RETROSPECTIVE enrichment - 'tumor sample-source' is not a causal insertional-oncogenesis outcome and
 is confounded by virus biology (HTLV->ATL, HIV in cancer patients). A modest validated enrichment is the floor; the
 CAUSAL / prospective clonal-outcome validation remains 'outcome-validation pending - data access in review'.
 
 Harness (`validate_enrichment`) is generic + torch-free (numpy/sklearn); the VISDB run (`run_visdb`) needs pandas +
-the local VISDB + gene_coords (VM only).
+the local VISDB + gene_coords (local-only data).
 """
 from __future__ import annotations
 
@@ -102,7 +102,7 @@ def _gene_risk_cache():
 
 
 # --------------------------------------------------------------------------------------------------------------
-# VISDB open-data floor run (VM only)
+# VISDB open-data floor run (needs the local VISDB extract)
 # --------------------------------------------------------------------------------------------------------------
 def _nearest_gene(sites, genes, window_bp):
     """Map each (chrom,pos) site to its nearest gene within window_bp. Vectorized per chromosome via searchsorted."""

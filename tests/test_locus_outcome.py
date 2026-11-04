@@ -1,5 +1,5 @@
 """The generic enrichment harness (OR/AUROC + gene-clustered bootstrap). Synthetic
-data, no VISDB/pandas; the real VISDB open-data floor (run_visdb) runs on the VM."""
+data, no VISDB/pandas; the VISDB open-data floor (run_visdb) needs the local VISDB extract."""
 from __future__ import annotations
 
 import numpy as np

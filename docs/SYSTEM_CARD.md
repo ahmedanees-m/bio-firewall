@@ -63,7 +63,7 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
    TEVV methodological necessity, not a claim about real agents-of-concern.
 4. **The cargo signal's operating-point margin over composition is modest.** At a strict 1% FPR the function-aware
    advantage over a composition baseline is *not* statistically established (fallback invoked); the signal is
-   substantially non-compositional in **ranking** (AUROC) but the paper does not lead on the cargo gate.
+   substantially non-compositional in **ranking** (AUROC), and the cargo gate is not the leading claim.
 5. **The structural channel does not add at 1% FPR** on the held-out proxy set (negative-result); it is shipped
    with abstain-on-disagreement but is not relied on for the operating-point claim.
 6. **Decomposition is caught only for the mechanisms modeled.** The session aggregator catches assembly/scale/
@@ -99,7 +99,7 @@ sequence/protein screener structurally cannot see (locus, edit-type, germline, s
 | **Managed access (P9) completes the NTI guardrail set** | Deterministic (verdict x tier) matrix; tier bound into the passport + audit | A built mechanism, not a deployed credentialing authority (an integration point) |
 | **Graded taxonomy + partial content gate** | Deterministic map from axis verdicts; regex content gate with negative controls | A deterministic content tier, not a learned judgment; ambiguous axes collapse to review |
 | **NP conformal selection** | Controls false-escalation at alpha on the firewall corpus | Documented null: calibrated control, NOT higher power at matched alpha; the certified bound stands |
-| **Confidence-gated structural fusion** | pLDDT-gated re-run on the <=40%-id holdout | Documented null: no 1%-FPR lift (high-pLDDT structures; failure is fold-distance); AUROC corroborator only |
+| **Confidence-gated structural fusion** | pLDDT-gated scoring on the <=40%-id holdout | Documented null: no 1%-FPR lift (high-pLDDT structures; failure is fold-distance); AUROC corroborator only |
 
 ## 6. Responsible use
 

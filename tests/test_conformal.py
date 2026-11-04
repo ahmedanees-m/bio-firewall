@@ -1,5 +1,5 @@
 """Unit tests for the conformal machinery (the false-refuse certificate + Mondrian reliability + monotonicity +
-selective curve). Pure stats, no torch/esm/COSMIC needed - the full corpus run is on the VM (conformal_bench)."""
+selective curve). Pure stats, no torch/esm/COSMIC needed - the full corpus run is eval/hazard_bench/conformal_bench.py."""
 from __future__ import annotations
 
 from bio_firewall.calibrate.conformal import (

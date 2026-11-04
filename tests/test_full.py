@@ -102,7 +102,7 @@ def test_verify_returns_false_on_a_malformed_entry():
 
 
 def test_tampered_file_is_flagged_on_load(tmp_path):
-    """A log was previously extended without checking what it was being extended onto."""
+    """Extending a log must check what it is being extended onto."""
     import json
     from bio_firewall.audit.log import AuditLog
     p = tmp_path / "audit.jsonl"

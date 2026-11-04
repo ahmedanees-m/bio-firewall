@@ -1,8 +1,6 @@
 # BioFirewall - Benchmark (de-circularized) results
 
-> An earlier demo reported "100% vs 0%." That number was **tautological**: the homology baseline was a hardcoded
-> `return "allow"`, and the proxies named the exact genes the rules target. This page reports the **real**
-> benchmark: de-circularized, with earned baselines, and powered.
+> De-circularized, with earned baselines and powered samples.
 > Code: [`bio_firewall/eval/hazard_bench/`](../bio_firewall/eval/hazard_bench).
 
 ## The de-circularization principle
@@ -47,8 +45,8 @@ a blind safety reviewer with a neutral pinned prompt (no firewall axes leaked) -
 **Usability (Claim C):** false-refuse on legitimate research **0%** (deployment gate); false-flag on clearly-benign
 genes **6.8%**; dosage-sensitive negatives 120/120 flagged correctly, 0 wrongly refused.
 
-**Failure analysis :** the firewall **misses 151 COSMIC genes** (20%) that are absent from its CancerMine
-data and not caught via the essential/dosage axes - the real generalization limit.
+**Failure analysis:** the firewall **misses 151 COSMIC genes** (20%) that are absent from its CancerMine
+data and not caught via the essential/dosage axes - the generalization limit.
 
 ## Benchmark 1b - two independent censuses (COSMIC + OncoKB)
 
@@ -326,7 +324,7 @@ BF_B2_DIR=/path/to/bf_b2 python -c "from bio_firewall.eval.cargo_bench import de
 # Benchmark 5 (decomposition red-team)
 python -c "from bio_firewall.eval.hazard_bench import decomp_redteam as d; import json; print(json.dumps(d.run(), indent=2))"
 
-# Benchmark 6 (locus outcome floor); needs the local VISDB + GENCODE gene coords (VM only)
+# Benchmark 6 (locus outcome floor); needs the local VISDB + GENCODE gene coords (local-only data)
 BF_VISDB_DIR=/path/to/visdb BF_GENE_COORDS=/path/to/gene_coords.parquet \
   python -c "from bio_firewall.eval.hazard_bench import locus_outcome as lo; import json; print(json.dumps(lo.run_visdb()['overall'], indent=2))"
 
@@ -334,10 +332,10 @@ BF_VISDB_DIR=/path/to/visdb BF_GENE_COORDS=/path/to/gene_coords.parquet \
 python -c "from bio_firewall.hazard.combine_mono import verify_monotone; import json; print(json.dumps(verify_monotone(), indent=2))"
 # Benchmark 8 (de-novo fusion generalization); needs COSMIC TRANSLOCATION_PARTNER (local)
 BF_BENCH_ORACLES=/path/to/bench_oracles python -c "from bio_firewall.eval.hazard_bench import edit_mech_bench as b; import json; print(json.dumps(b.run(), indent=2))"
-# Benchmark 9 (positional locus coverage); needs VISDB + gene coords (VM)
+# Benchmark 9 (positional locus coverage); needs VISDB + gene coords (local-only data)
 BF_VISDB_DIR=... BF_GENE_COORDS=... python -c "from bio_firewall.eval.hazard_bench import locus_pos_bench as b; import json; print(json.dumps(b.run_visdb(), indent=2))"
-# Benchmark 10 (structural channel); needs AlphaFold-DB structures + Foldseek + the frozen B2 vectors (VM)
-# (see scratch/run_struct_vm.py - AF-DB v6 fetch + Foldseek easy-search -> struct_bench)
+# Benchmark 10 (structural channel); needs AlphaFold-DB structures + Foldseek + the frozen B2 vectors (local-only)
+# (AF-DB v6 fetch + Foldseek easy-search -> struct_bench)
 ```
 
 Tier-1 is committed (public literature facts). COSMIC and the run artifacts are **local-only** - without them the

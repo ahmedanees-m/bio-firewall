@@ -4,7 +4,7 @@ insertion is not inside an oncogene's coding body)? That gap is the SCID-X1/LMO2
 
 The outcome-AUROC-improvement claim is DEFERRED (no validated integration-site outcome data - controlled-access,
 deferred). This reports a COUNT, not a validated rate. Needs the local VISDB + gene coords + the vendored
-oncogene_tss reference (VM)."""
+oncogene_tss reference (local-only data)."""
 from __future__ import annotations
 
 import json
@@ -72,7 +72,7 @@ def run_visdb(out_dir: str = "bf_locus_pos", visdb_dir: str | None = None,
         "examples_genebody_missed": examples,
         "note": ("positional flags promoter/enhancer-proximal insertions a gene-BODY lookup misses (the LMO2 "
                  "mechanism). COUNT only - the outcome-AUROC-improvement claim is DEFERRED (controlled-access "
-                 "integration-site outcome data deferred 2026-06-18; the open VISDB floor was the wrong virus biology)."),
+                 "integration-site outcome data is out of scope; the open VISDB floor is the wrong virus biology)."),
         "source": "VISDB (10.1093/nar/gkz867) x GENCODE TSS x CancerMine roles; all local-only",
     }
     (wd / "results.json").write_text(json.dumps(result, indent=2, default=str))

@@ -2,7 +2,7 @@
 
 The firewall flags loci via CancerMine + DepMap + gnomAD (its vendored data). The benchmark must therefore LABEL
 hazard from sources the firewall DOES NOT use, so a high score means the firewall *generalized* to an independent
-definition of hazard - not that it recognized its own gene list (the initial demo's tautology).
+definition of hazard - not that it recognized its own gene list.
 
 Two tiers:
   - TIER-1 (GOLD): genes implicated in ACTUAL insertional-oncogenesis ADVERSE EVENTS in human gene-therapy trials.

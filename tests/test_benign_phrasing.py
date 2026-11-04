@@ -1,8 +1,8 @@
 """Ordinary research phrasing must not hard-reject.
 
-Two rules previously fired on free prose: the bare staphylococcal abbreviations `sea`, `sec`, `sed` and
-`see` are ordinary English words, and the oncogene-activation rule matched `activate` inside `inactivate`
-with no direction check. The screen reaches these through `screen_cargo`'s fallback to `plan["intent"]`
+Two rules are exposed to false positives on free prose: the bare staphylococcal abbreviations `sea`,
+`sec`, `sed` and `see` are ordinary English words, and the oncogene-activation rule can match `activate`
+inside `inactivate` without a direction check. The screen reaches these through `screen_cargo`'s fallback to `plan["intent"]`
 when a plan declares no cargo function, so the suite pins the benign side as well as the hazardous one."""
 from __future__ import annotations
 

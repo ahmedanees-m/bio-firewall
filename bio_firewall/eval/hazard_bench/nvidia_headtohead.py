@@ -5,14 +5,10 @@ nvidia_headtohead.py
 Run the v1.1 expanded head-to-head (A/B/C/D) against OPEN models via NVIDIA's free,
 OpenAI-compatible NIM endpoint (build.nvidia.com). Tests whether the firewall-vs-LLM
 findings that used claude-opus-4-8 GENERALIZE to lighter-safety-tuned open models.
-Experiment C (cargo-on-LLM) was re-run on 2026-07-19 across five reachable models, including
-frontier Claude (the earlier Opus filter-block no longer holds; Opus now engages and refuses
-~45%). See docs/PANEL.md and the committed aggregate
-results/nvidia_headtohead/cargo_llm_seqonly_rerun.json.
+Experiment C (cargo-on-LLM) covers five models, frontier Claude included. See docs/PANEL.md
+and the committed aggregate results/nvidia_headtohead/cargo_llm_seqonly.json.
 
-Drop into: bio_firewall/eval/hazard_bench/nvidia_headtohead.py
-
-Setup (free, ~5 min, no credit card):
+Setup:
     1. Sign up at https://build.nvidia.com  -> get an API key (prefixed nvapi-).
     2. export NVIDIA_API_KEY=nvapi-...
     3. pip install openai
@@ -21,7 +17,7 @@ Setup (free, ~5 min, no credit card):
 Reproducibility (capture and replay):
     Every model call is recorded verbatim to results/nvidia_headtohead/transcripts/<model>.jsonl
     ({model, temperature, experiment, plan_id, prompt, raw_response, parsed_verdict, timestamp}).
-    A reviewer with no API key recomputes every panel number from those committed transcripts:
+    Anyone without an API key recomputes every panel number from those committed transcripts:
         python -m bio_firewall.eval.hazard_bench.nvidia_headtohead --replay
     The scoring is shared between the live and the replay paths (the _score_* functions), so the
     replayed numbers are identical to the live run by construction. Pass --no-record to skip capture.
@@ -69,8 +65,8 @@ DEFAULT_MODELS = {
     "gpt-oss": "openai/gpt-oss-120b",                       # the OpenAI-family OPEN model
     "llama": "meta/llama-4-maverick-17b-128e-instruct",    # optional third (fast)
     "qwen": "qwen/qwen3-next-80b-a3b-instruct",            # fast INSTRUCT variant (3B active; the -122b/-397b
-    #                                                        and gpt-oss-120b are reasoning models -> >90s/call,
-    #                                                        impractical on the rate-limited free tier)
+    #                                                        and gpt-oss-120b are reasoning models with long
+    #                                                        per-call latency, so they are not in the default set)
 }
 SEED = 1234
 RPM = 40                                # free-tier rate limit

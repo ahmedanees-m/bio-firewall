@@ -1,5 +1,5 @@
 """Unit tests for the cargo composition-decorrelation helpers (composition matching + bootstrap math). Synthetic data, no torch/
-esm/bf_b2 needed - the DANN head + the full run() execute on the VM with the frozen Benchmark-2 vectors. Here we
+esm/bf_b2 needed - the DANN head + the full run() execute with the frozen Benchmark-2 vectors. Here we
 just verify the matching and the permutation test are correct, so the 'composition-matched' claim is sound."""
 from __future__ import annotations
 

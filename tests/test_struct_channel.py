@@ -1,5 +1,5 @@
 """The 3-signal ensemble + abstain-on-disagreement math. Synthetic, no Foldseek/torch; the
-AlphaFold-DB + Foldseek run is on the VM (struct_bench via run_struct_vm)."""
+AlphaFold-DB + Foldseek run is eval/cargo_bench/struct_bench.py."""
 from __future__ import annotations
 
 import numpy as np

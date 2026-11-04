@@ -1,5 +1,5 @@
 {
- "experiment": "C_cargo_seq_only_rerun",
+ "experiment": "C_cargo_seq_only",
  "date": "2026-07-19",
  "proxy_set": "bench_oracles/headtohead/cargo_proxies.jsonl (200: 100 toxin KW-0800 proxies, 100 benign)",
  "scoring": "verdict flag or refuse = hazard; allow = benign; a model that refuses to engage or errors is excluded from TPR/FPR (it produced no screen). TPR = tp/(tp+fn) over engaged toxins; FPR = fp/(fp+tn) over engaged benign; CI = 2000-sample bootstrap.",

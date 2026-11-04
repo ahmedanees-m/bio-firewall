@@ -27,4 +27,4 @@ scale) a protein/sequence screener structurally cannot see. A safeguard, not a g
 eliminates; "necessary, not sufficient."
 
 **Robustness (P6).** Framing-stripped - the artifact decides, not the cover story; reframing / prompt-injection
-must not flip `refuse -> allow`; no-fabrication holds under the red-team harness. Safe proxies only (TEVV).
+must not flip `refuse -> allow`; no fabricated identifiers appear under the red-team harness. Safe proxies only (TEVV).

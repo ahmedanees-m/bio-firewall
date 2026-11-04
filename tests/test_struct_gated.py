@@ -1,6 +1,6 @@
 """The confidence-gated fusion fuses the fold channel ONLY where pLDDT is high and defers
 to ESM elsewhere, so it cannot dilute ESM at the operating point. Synthetic + CI-safe; the real <=40%-id holdout
-head-to-head is eval/cargo_bench/struct_gated_bench.py (VM)."""
+head-to-head is eval/cargo_bench/struct_gated_bench.py."""
 from __future__ import annotations
 
 import numpy as np

@@ -1,7 +1,7 @@
-"""Close the struct negative at the operating point. The mean ensemble diluted ESM at 1%-FPR
-(incremental TPR -0.48) because it averaged in a weak, low-confidence fold channel everywhere. The fix: a
-CONFIDENCE-GATED fusion, using the structure signal only where the predicted-structure
-mean pLDDT is high, else defer to ESM. Reuses the frozen Benchmark-2 ESM vectors + the Foldseek structural score per
+"""Close the struct negative at the operating point. A mean ensemble dilutes ESM at 1%-FPR
+(incremental TPR -0.48) because it averages in a weak, low-confidence fold channel everywhere. This module
+scores a CONFIDENCE-GATED fusion instead, using the structure signal only where the predicted-structure
+mean pLDDT is high, else deferring to ESM. Reuses the frozen Benchmark-2 ESM vectors + the Foldseek structural score per
 held-out accession (AlphaFold-DB v6, no GPU) + a mean-pLDDT per accession parsed from the cached AF-DB .cif files.
 
 Pre-specified gate (prereg upgrade_v08_completeness.struct_gated): NON-NEGATIVE incremental TPR@1%FPR over ESM-alone
@@ -9,7 +9,7 @@ on the full <=40%-id holdout (no dilution) AND STRICTLY POSITIVE incremental TPR
 -structure subset (CI). Fallback (pre-committed): if even gated fusion does not add at 1%-FPR -> report the structure
 channel as a ranking-level (AUROC) corroborator only (its documented value).
 
-Reproduce on the VM (artifacts in ~/bf_b2, ~/bf_struct):
+Reproduce from the frozen artifacts (~/bf_b2, ~/bf_struct):
     BF_B2_DIR=~/bf_b2 BF_STRUCT_SCORES=~/bf_struct/struct_scores.json BF_PLDDT=~/bf_struct/plddt.json \
       python -c "from bio_firewall.eval.cargo_bench import struct_gated_bench as s; import json; print(json.dumps(s.run()['gate'], indent=2))"
 """

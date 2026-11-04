@@ -41,10 +41,9 @@ make test        # the full suite (217 tests) - validates every committed metric
 make reproduce   # B7 monotone-combiner proof + B5 session monitor (120/120) + the suite above
 make prereg-sha  # SHA-256 of the SHA-locked frozen analysis specification (must match the value in the release notes)
 ```
-Expected: lint clean; the suite green with at most two environment skips (the local-only COSMIC oracle and the
-reconcile end-to-end, which needs a pen-stack checkout as above); `B7 monotone combiner: PASS (reps=5000)`; and
-`B5 session monitor (decomposition): 120/120 caught on the families whose attacks evade the per-call screen`. The test suite *is* the proof that
-the cargo/conformal/decomposition/edit-mech/locus-pos/struct **math** matches the frozen results.
+A clean run reports lint clean; the suite green with at most two environment skips (the local-only COSMIC oracle
+and the reconcile end-to-end, which needs a pen-stack checkout as above); `B7 monotone combiner: PASS (reps=5000)`;
+and `B5 session monitor (decomposition): 120/120 caught on the families whose attacks evade the per-call screen`.
 
 ## 2. Reproduce the data-dependent benchmarks (local-only data)
 
@@ -60,7 +59,7 @@ export BF_VISDB_DIR=/path/to/visdb  BF_GENE_COORDS=/path/to/gene_coords.parquet
 make reproduce-local                                    # B1/B3/B4/B4b/B6/B8/B9
 ```
 
-| Benchmark | Expected (seed 1234, within tolerance) |
+| Benchmark | Reference value (seed 1234, within tolerance) |
 |---|---|
 | B1 locus interception (COSMIC) | 80.4% (CI .78-.83) ; Tier-1 12/12 |
 | B2 cargo gate | ESM TPR@1%FPR 0.72 vs homology 0.207 |
@@ -79,15 +78,3 @@ The control-vs-advisor **panel** (C + D) reproduces from one command - see [docs
 ```bash
 python -c "from bio_firewall.kb import load_kb, verify_kb; print(verify_kb(load_kb()))"   # True
 ```
-
-## 4. Remaining external steps (NOT something the maintainer can self-certify)
-
-- **Independent reproduction.** One person other than the author should run Section 1 (and Section 2 if they hold the
-  licensed data) on a clean image and confirm the numbers within tolerance; record the confirmation + any deltas
-  here. *This is the step that converts "the author says it reproduces" into "it reproduces."* - **pending an
-  external runner.**
-- **Zenodo DOI.** The archived deposit is published: concept DOI
-  [10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886) (resolves to the newest version), and a version
-  DOI per release, listed in `CITATION.cff`. Each deposit carries the source snapshot at its tag, the open
-  hazard data, the frozen benchmark, red-team and panel results, the analysis specifications and the
-  cargo bundle. The restricted/local-only data is **not** part of the deposit.

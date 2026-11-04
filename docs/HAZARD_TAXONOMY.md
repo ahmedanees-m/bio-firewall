@@ -3,7 +3,7 @@
 The five axes, each with its hazard, differentiating signal, data, rules, and scope. This file tracks implementation
 status per axis.
 
-| Axis | Current | Planned |
+| Axis | In this release | Not implemented |
 |---|---|---|
 | **1 Cargo** | reuses PEN-STACK Guardian (Pfam/InterPro + Select-Agent + Australia-Group); gene-drive keyword stub | function-aware ML (ESM, homology-clustered <=40%-id eval + shortcut probes); real gene-drive architecture |
 | **2 Locus** *(the edge)* | genotoxic-CIS (LMO2/MECOM/...) + oncogene-activation-by-design flags | wire PEN-STACK site-safety classifier + genotox proxy; explicit TSG-disruption / dosage (DepMap, gnomAD pLI/LOEUF, ClinGen) / enhancer-hijack rules on CancerMine (CC0) |

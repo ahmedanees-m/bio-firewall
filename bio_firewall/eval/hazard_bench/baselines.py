@@ -1,8 +1,8 @@
-"""The REAL baselines - replacing the earlier `return "allow"` stub.
+"""The two earned baselines the benchmark scores the firewall against.
 
 B0 - Homology / signature screen (the Layer-C floor). Runs the actual PEN-STACK Guardian signature screen on the
      cargo function ONLY - blind to where/how/inheritance/scale (exactly what a synthesis screen sees). For benign
-     cargo it returns `allow`, but now EARNED by running a screen, not hardcoded; for a declared toxin it refuses,
+     cargo it returns `allow`, earned by running the screen rather than asserted; for a declared toxin it refuses,
      so the cargo-hazard stratum shows the firewall is a strict SUPERSET, not a disjoint trick.
 
 B1 - Frontier-model safety reasoning (the key comparison; the open question). Each plan is handed to a current

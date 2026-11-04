@@ -1,6 +1,6 @@
 """The Neyman-Pearson conformal selector controls the false-selection rate at alpha
 (finite-sample, via conformal p-values) and extracts MULTIVARIATE power a scalar threshold discards. Synthetic +
-CI-safe; the firewall-corpus head-to-head is eval/hazard_bench/conformal_np_bench.py (VM)."""
+CI-safe; the firewall-corpus head-to-head is eval/hazard_bench/conformal_np_bench.py."""
 from __future__ import annotations
 
 import numpy as np

@@ -1,5 +1,5 @@
 """Driver: run Benchmark 1 (structural-hazard, de-circularized) + Benchmark 3 (red-team) + Benchmark 4
-(calibration), persist JSON + reports. Benchmark 2 (cargo ML) runs separately on the GPU VM (cargo_bench/).
+(calibration), persist JSON + reports. Benchmark 2 (cargo ML) runs separately under cargo_bench/ (needs torch + the ESM vectors).
 
 Env: PEN_STACK_HOME (Guardian configs), BF_BENCH_ORACLES (COSMIC etc.), BF_B1_VERDICTS (frontier sample)."""
 from __future__ import annotations

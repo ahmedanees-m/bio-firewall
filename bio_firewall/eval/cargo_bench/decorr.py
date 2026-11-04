@@ -18,7 +18,7 @@ not exclude 0.562 -> report 'cargo signal is substantially compositional' and fa
 We additionally report a PAIRED bootstrap of (ESM - composition) on the matched set (a lower-variance test of the
 same hypothesis) and the composition-probe collapse, and we do NOT tune the matched set to rescue the margin.
 
-Runs on the VM (system torch CPU + the bf_b2 vectors). Reproduce:
+Requires torch (CPU) and the frozen Benchmark-2 vectors. Reproduce:
     BF_B2_DIR=~/bf_b2 python -c "from bio_firewall.eval.cargo_bench import decorr; decorr.run(out_dir='bf_decorr')"
 """
 from __future__ import annotations

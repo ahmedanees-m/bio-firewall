@@ -105,7 +105,7 @@ def false_refuse_certificate(n_legit: int, n_refused: int, alphas=(0.01, 0.05, 0
     tolerance of 0.02, an upper bound of 0.0103 meets the tolerated threshold at alpha = 0.01
     (0.0103 <= 0.03) but NOT the nominal 1% ceiling (0.0103 > 0.01). `meets_nominal` and
     `meets_tolerated` say which is which; `pass` is retained as a backward-compatible alias of
-    `meets_tolerated` so previously frozen results remain readable, and should not be read as
+    `meets_tolerated` so frozen result files remain readable, and should not be read as
     the nominal ceiling having been met.
 
     This bounds over-refusal on the corpus supplied. It is not a deployment guarantee: it

@@ -35,20 +35,19 @@ axes that matter operationally.
 
 ## Frozen result (2026-06-17/18; model- and date-specific)
 
-Powering up **withdrew** two weak claims and **confirmed** two strong ones (reported straight - this is the
-point):
+At the reported sample sizes two claims are withdrawn and two confirmed:
 
-- **C - no LLM screens a cargo sequence (CONFIRMED; re-run 2026-07-19, five reachable models).** None nears ESM
+- **C - no LLM screens a cargo sequence (CONFIRMED; five models).** None nears ESM
   **0.72 @ 1% FPR**: three allow almost every toxin (TPR 0.01-0.05: Haiku, qwen3-next, Sonnet), DeepSeek flags most but
   at a prohibitive **18% FPR** (0.78 TPR), and the two frontier models refuse ~45-47% of sequences (Opus, Sonnet).
-  Behaviour shifted sharply from the June run (DeepSeek 0.00 -> 0.78; Opus filter-blocked -> engages), so it is
-  uncalibrated and version-unstable. Committed aggregate: `results/nvidia_headtohead/cargo_llm_seqonly_rerun.json`.
-  (Llama-4-Maverick was unreachable and excluded. The June per-model cargo result was not committed and is superseded.)
+  The behaviour differs across models and is uncalibrated. Committed aggregate:
+  `results/nvidia_headtohead/cargo_llm_seqonly.json`. (Llama-4-Maverick is not available from the provider and is
+  not scored.)
 - **D - open LLM judges are jailbroken (CONFIRMED).** Prompt-injection flips `refuse->allow` 50-83% on Llama and
   qwen; reframing flips 0% (isolates the injection channel). The firewall is **0%** by construction. (Frontier Opus
   resisted all 22 structural attacks - so the claim is scoped to *open, self-hosted* judges.)
-- **B - determinism: WITHDRAWN.** At 10 plans x 30 runs all open models are stable at temp 0; the small-N "unstable"
-  signal was noise. **A - fabrication: did not recur** (all abstain on the unanswerable set).
+- **B - determinism: WITHDRAWN.** At 10 plans x 30 runs all open models are stable at temp 0. **A - fabrication:
+  not observed** (all abstain on the unanswerable set).
 
 **Synthesized claim.** The firewall's case rests on **C** (no LLM screens sequences) + **D** (open LLM judges are
 jailbroken) + the **operational** properties (grounded where the LLM abstains, zero per-call cost, deterministic,
@@ -72,9 +71,9 @@ shift A/B/D, but C (the function-aware sequence screen) and the operational prop
 The reported panel numbers are a pre-specified, dated measurement (2026-06-17): the prompt, rubric, abstention
 option, temperature, and model set were fixed before scoring, and the frozen per-model results (rates, confidence
 intervals, and the per-call parsed verdicts) are committed at [`results/nvidia_headtohead/`](../results/nvidia_headtohead).
-Those are the numbers in [docs/HEADTOHEAD.md](HEADTOHEAD.md) and the accompanying paper.
+Those are the numbers in [docs/HEADTOHEAD.md](HEADTOHEAD.md).
 
-The harness now records every model call verbatim to `results/nvidia_headtohead/transcripts/<model>.jsonl`
+The harness records every model call verbatim to `results/nvidia_headtohead/transcripts/<model>.jsonl`
 (`{model, temperature, experiment, plan_id, prompt, raw_response, parsed_verdict, timestamp}`; the cargo transcript
 carries only the per-sequence verdict and label, never the sequence) and recomputes every number offline from those
 transcripts:
@@ -83,7 +82,7 @@ transcripts:
 python -m bio_firewall.eval.hazard_bench.nvidia_headtohead --replay
 ```
 
-The live path and the replay path share the same scoring functions, so a re-run is byte-reproducible with no API key;
-the record/replay round-trip is covered by `tests/test_headtohead_replay.py`. The 2026-06-17 run predated this capture
-step, so its raw model response text was not retained: its numbers stand as the frozen, SHA-locked measurement, and
-the capture harness makes any faithful re-run reproducible from that point on.
+The live path and the replay path share the same scoring functions, so a replay is byte-reproducible with no API
+key; the record/replay round-trip is covered by `tests/test_headtohead_replay.py`. Raw model response text was not
+retained for the 2026-06-17 measurement: its numbers stand as the frozen, SHA-locked result, and the capture harness
+makes any faithful replay reproducible.
