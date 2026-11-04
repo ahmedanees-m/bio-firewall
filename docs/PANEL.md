@@ -5,7 +5,7 @@ The recurring objection to a dedicated screen is "why not just ask a capable LLM
 [`eval/hazard_bench/nvidia_headtohead.py`](../bio_firewall/eval/hazard_bench/nvidia_headtohead.py) (one command)
 plus this protocol; the frozen results are in [docs/HEADTOHEAD.md](HEADTOHEAD.md) and `prereg/ws_biofirewall.yaml`.
 
-## Fairness frozen analysis specification (fixed before any model is scored)
+## Pre-specified fairness criteria (fixed before any model is scored)
 
 - **Fixed prompt.** A single neutral reviewer system prompt (`REVIEWER_SYSTEM`); the firewall's axes are **not**
   leaked into it. Every model sees the same prompt.
