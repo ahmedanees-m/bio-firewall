@@ -330,9 +330,9 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
     # adjudication via AUROC: the decorrelated head's signal is non-compositional iff the paired AUROC CI excludes 0
     auroc_decorr_beats_comp = auroc_dann_vs_comp["ci95"][0] > 0
     res["gate"] = {
-        "preregistered_criterion": "decorrelated head TPR@1%FPR >= 0.60 with CI-lower > 0.562 (composition probe)",
+        "prespecified_criterion": "decorrelated head TPR@1%FPR >= 0.60 with CI-lower > 0.562 (composition probe)",
         "dann_tpr1": dann_tpr1, "dann_tpr1_ci": dann_tpr1_ci, "composition_shortcut": 0.562,
-        "preregistered_pass": bool(dann_tpr1 >= 0.60 and dann_tpr1_ci[0] > 0.562),
+        "prespecified_pass": bool(dann_tpr1 >= 0.60 and dann_tpr1_ci[0] > 0.562),
         "operating_point_margin_over_composition_established": bool(op_margin_established),
         "dann_tpr1_unstable": bool(dann_tpr1_unstable),
         "composition_genuinely_separable": not res["match"]["matched_ok"],

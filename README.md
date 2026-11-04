@@ -156,15 +156,15 @@ test fails the build if a restricted source appears in the committed data. See
 ## Results
 
 Each benchmark is pre-specified in `prereg/ws_biofirewall.yaml`; full method and interpretation are in
-[docs/BENCHMARK.md](docs/BENCHMARK.md). Hazard is labeled by independent oracles the firewall does not use
-(12 clinical insertional-oncogenesis genes plus the COSMIC Cancer Gene Census v104), so a high score reflects
-generalization rather than recognition of the firewall's own gene list. Baselines are earned: B0 runs the real
-Guardian signature screen; B1 is a frontier language model (`claude-opus-4-8`) acting as a blind safety
-reviewer.
+[docs/BENCHMARK.md](docs/BENCHMARK.md). Hazard labels come from two strata. The COSMIC Cancer Gene Census v104 stratum is independent of the
+firewall, so a score there reflects generalization. The 12 clinical insertional-oncogenesis genes are the
+screen's own `_GENOTOXIC_CIS` list, so that row is a completeness check on the list, not a test of
+generalization. B0 runs the real Guardian signature screen; B1 is a frontier language model
+(`claude-opus-4-8`) acting as a blind safety reviewer.
 
 | Benchmark | Firewall | B0 homology | B1 frontier LLM |
 |---|:--:|:--:|:--:|
-| Tier-1 clinical-CIS gold (mandatory) | 100% (12/12) | 0% | 100% |
+| Tier-1 clinical-CIS completeness, by construction | 100% (12/12) | 0% | 100% |
 | structural-hazard interception (n=771) | 80.4% (CI .78-.83) | 0% | 77.3% (1) |
 | false-refuse on legitimate research | 0% | - | 40% (refused TP53, APC) |
 | red-team flip refuse->allow (46 attacks) | 0% | - | - |

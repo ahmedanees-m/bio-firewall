@@ -7,6 +7,8 @@ does not certify safety or output a validated cancer rate - it routes elevated r
 hazardous genome-write is also legitimate research (disrupting a TSG is standard cancer modeling) -> flag, not block."""
 from __future__ import annotations
 
+import re
+
 from bio_firewall.data import dosage, gene_roles
 from bio_firewall.hazard.finding import Finding, finding
 from bio_firewall.hazard.locus_pos import positional_finding
@@ -18,6 +20,12 @@ from bio_firewall.hazard.locus_pos import positional_finding
 _GENOTOXIC_CIS = {"LMO2", "LMO1", "MECOM", "EVI1", "MDS1", "CCND2", "CCND1",
                   "PRDM16", "HMGA2", "SETBP1", "MN1", "BMI1"}
 
+# Direction matters. Word-bounded so 'activate' does not match inside 'inactivate', and a negating or
+# repressing construction excludes the rule: disrupting, silencing or knocking out a proto-oncogene is
+# ordinary cancer research, not designed activation.
+_ACTIVATING = re.compile(r"\b(activat\w*|enhancer|promoter|overexpress\w*|upregulat\w*|gain[- ]of[- ]function)\b")
+_NEGATING = re.compile(r"\b(inactivat\w*|silenc\w*|knock\s?outs?|knockouts?|knock\s?downs?|knockdowns?|disrupt\w*|repress\w*|crispri|delet\w*|degrad\w*|ablat\w*|loss[- ]of[- ]function|interferenc\w*)\b")
+
 
 def screen_locus(plan: dict) -> Finding:
     locus = plan.get("locus") or {}
@@ -27,7 +35,8 @@ def screen_locus(plan: dict) -> Finding:
     src = {"source": "CancerMine (CC0) + DepMap (CC BY); genotoxic-CIS literature list"}
 
     # hard_reject - designed oncogene activation (the SCID-X1/LMO2 mechanism)
-    if "oncogene" in roles and any(w in intent for w in ("activate", "enhancer", "promoter")) and "oncogene" in intent:
+    if ("oncogene" in roles and "oncogene" in intent
+            and _ACTIVATING.search(intent) and not _NEGATING.search(intent)):
         return finding("hard_reject", "locus.oncogene_activation_by_design", "locus",
                        f"insertion designed to activate the proto-oncogene {gene} via enhancer/promoter placement",
                        provenance={**src, "doi": ["10.1126/science.1088547"], "note": "SCID-X1/LMO2"})

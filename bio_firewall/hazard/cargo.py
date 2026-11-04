@@ -125,14 +125,48 @@ def _normalise(func: str) -> str:
     return " " + " ".join(flat.split()) + " "
 
 
+# 'sea', 'sec', 'sed' and 'see' are listed enterotoxin abbreviations AND ordinary English words. Matched
+# bare on lowercased free text they refuse ordinary phrasing ("to see the effect", "sea urchin embryos",
+# "10 sec intervals"), which the screen reaches because screen_cargo falls back to the intent field when no
+# cargo function is declared. The primary literature and GenBank write them uppercase (SEA-SEE), so they are
+# recognised either uppercase, or lowercase beside an enterotoxin descriptor. 'seb' is not an English word
+# and stays case-insensitive. The residual gap is a lowercase bare abbreviation with no descriptor, which is
+# a deliberate trade: the alternative refuses ordinary research prose.
+_AMBIGUOUS_ABBREVS = frozenset({"sea", "sec", "sed", "see"})
+_ENTEROTOXIN_CUES = ("enterotoxin", "staphylococcal", "staphylococcus", "staph")
+_WORD_CHARS_ANYCASE = frozenset(
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-")
+
+
+def _normalise_keepcase(func: str) -> str:
+    """_normalise without the lowercase fold, so an uppercase-only abbreviation test is possible."""
+    s = unicodedata.normalize("NFKC", func)
+    s = "".join(c for c in s if unicodedata.category(c) not in ("Cf", "Mn", "Cc"))
+    s = s.translate(_CONFUSABLES)
+    flat = "".join(c if c in _WORD_CHARS_ANYCASE else " " for c in s)
+    return " " + " ".join(flat.split()) + " "
+
+
+def _token_present(hay: str, needle: str) -> bool:
+    """Whole-word, or attached at a hyphen boundary, exactly as the direct matcher tests."""
+    return (" " + needle + " ") in hay or ("-" + needle + " ") in hay or (" " + needle + "-") in hay
+
+
 def _listed_select_toxin(func: str) -> str | None:
     """A listed select-agent toxin named DIRECTLY. Whole-word matched, so 'ricinus' is not read as 'ricin'; the
     Greek-letter-prefix case (omega-conotoxin, alpha-conotoxin, mu-conotoxin) matches at a hyphen boundary
     because that is how conotoxins are named in the primary literature."""
     f = _normalise(func)
+    fc = _normalise_keepcase(func)
     for t in sorted(SELECT_AGENT_TOXINS):
+        if t in _AMBIGUOUS_ABBREVS:
+            # uppercase as written in the literature, or lowercase beside an enterotoxin descriptor
+            if _token_present(fc, t.upper()) or (
+                    _token_present(f, t) and any(c in f for c in _ENTEROTOXIN_CUES)):
+                return t
+            continue
         # standalone token, or attached at a hyphen boundary (alpha-conotoxin / conotoxin-i-like)
-        if " " + t + " " in f or "-" + t + " " in f or " " + t + "-" in f:
+        if _token_present(f, t):
             return t
     return None
 

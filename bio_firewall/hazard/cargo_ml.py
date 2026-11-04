@@ -1,13 +1,17 @@
-"""Function-aware cargo screen (the ToxDL / OmniTox direction): an ESM2 embedding scored by nearest-centroid
-(toxin vs benign). It catches low-identity homologs that EVADE signature/homology screens, because the ESM
-embedding captures protein FUNCTION beyond sequence identity.
+"""Function-aware cargo screen (the ToxDL / OmniTox direction): an ESM2-8M (`esm2_t6_8M_UR50D`) embedding
+scored by nearest-centroid against the vendored 320-dimensional centroids (toxin vs benign). It catches
+low-identity homologs that EVADE signature/homology screens, because the ESM embedding captures protein
+FUNCTION beyond sequence identity.
 
 OPTIONAL + graceful: it needs `fair-esm` + torch (the `ml` extra) for live embedding, and the vendored centroids
 (`bio_firewall/vendored_data/cargo_centroids.npz`, derived from PUBLIC toxin/benign reference proteins - only the centroid
 VECTORS ship, never sequences). When ESM/centroids are unavailable the caller falls back to the Guardian screen.
 
-NOTE: this is a probabilistic signal -> it routes to REVIEW (scope_flag), not an auto-block; the prereg gate is a
-homology-clustered <=40%-identity evaluation (TPR@1%FPR + shortcut probes), declared in prereg/ws_biofirewall.yaml."""
+NOTE: this is a probabilistic signal -> it routes to REVIEW (scope_flag), not an auto-block.
+
+The TPR@1%FPR evaluation declared in prereg/ws_biofirewall.yaml scores a SEPARATE benchmark classifier
+(ESM2-650M embeddings plus a logistic head over MMseqs2 40%-identity clusters, in eval/cargo_bench/). That
+classifier is not wired into `screen()`; what ships here is the 8M nearest-centroid signal above."""
 from __future__ import annotations
 
 from functools import lru_cache
