@@ -27,22 +27,23 @@ The published image is built from the tagged tree by `.github/workflows/release-
 `screen()` and the signed hazard KB at build time and re-verifies the pushed image before the job succeeds.
 
 **pen-stack compatibility.** The dependency is bounded `>=0.2.0,<0.3.0`, capped below the next minor; the suite is verified green against the pinned pen-stack release.
-Verified on a clean `pip install`: 201 passed / 2 skipped. The 2 skips are the local-only COSMIC oracle and the reconcile end-to-end test: the latter
-drives pen-stack's real `safety_gate`, which needs a pen-stack source **checkout** (`export PEN_STACK_HOME=/path/to/pen-stack`)
-because the pip wheel ships the library, not `configs/safety/policy.yaml`. With that checkout the reconcile test runs
-and the count is **202 passed / 1 skipped**. The reconcile adapter's decision logic is fully covered by mocked-gate
-unit tests regardless.
+The suite is 217 tests. Two can skip for environment reasons: the local-only COSMIC oracle, and the reconcile end-to-end
+test, which drives pen-stack's real `safety_gate` and needs a pen-stack source **checkout** (`export PEN_STACK_HOME=/path/to/pen-stack`)
+because the pip wheel ships the library, not `configs/safety/policy.yaml`. Where pen-stack resolves to a source checkout the
+reconcile test runs and the result is **216 passed / 1 skipped**, the single skip being the COSMIC oracle. The reconcile
+adapter's decision logic is fully covered by mocked-gate unit tests regardless.
 
 ## 1. Reproduce from the committed repo (open data only)
 
 ```bash
 make lint        # ruff - clean
-make test        # the full suite (203 tests) - validates every committed metric/logic path
-make reproduce   # the monotone-combiner monotonicity proof (B7 PASS) + the suite above
+make test        # the full suite (217 tests) - validates every committed metric/logic path
+make reproduce   # B7 monotone-combiner proof + B5 session monitor (120/120) + the suite above
 make prereg-sha  # SHA-256 of the SHA-locked frozen analysis specification (must match the value in the release notes)
 ```
-Expected on a clean `pip install`: lint clean; **201 passed** (2 skipped: the local-only COSMIC oracle and the
-reconcile end-to-end, which needs a pen-stack checkout as above); `B7 monotone combiner: PASS (reps=5000)`. The test suite *is* the proof that
+Expected: lint clean; the suite green with at most two environment skips (the local-only COSMIC oracle and the
+reconcile end-to-end, which needs a pen-stack checkout as above); `B7 monotone combiner: PASS (reps=5000)`; and
+`B5 session monitor (decomposition): 120/120 caught on the families whose attacks evade the per-call screen`. The test suite *is* the proof that
 the cargo/conformal/decomposition/edit-mech/locus-pos/struct **math** matches the frozen results.
 
 ## 2. Reproduce the data-dependent benchmarks (local-only data)

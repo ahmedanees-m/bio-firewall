@@ -9,7 +9,7 @@ evidence and a signed design passport. It is the missing design-stage guardrail:
 [![CI](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedanees-m/bio-firewall/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
-![Tests](https://img.shields.io/badge/tests-201%20passing%2C%202%20skipped-success.svg)
+![Tests](https://img.shields.io/badge/tests-216%20passing%2C%201%20skipped-success.svg)
 ![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)
 [![Container](https://img.shields.io/badge/ghcr.io-bio--firewall%3A0.2.0-blue.svg)](https://github.com/ahmedanees-m/bio-firewall/pkgs/container/bio-firewall)
 ![pen-stack](https://img.shields.io/badge/pen--stack-0.2.0-blue.svg)
@@ -401,7 +401,7 @@ bio-firewall/
 |                                     export_nist_benchmark.py (regenerate the NIST export)
 |-- prereg/                           ws_biofirewall.yaml, ws_locus_mouse_outcome.yaml, ws_cloudlab_gate.yaml,
 |                                     ws_writespec.yaml, ws_verify_reconcile.yaml
-|-- tests/                            203 tests, including the data-license gate, the Tier-1 100%-catch
+|-- tests/                            217 tests, including the data-license gate, the Tier-1 100%-catch
 |                                     regression gate, and 22 adversarial cargo-screen regression tests
 |                                     (2 are environment-gated skips: the local-only oracle and a
 |                                     pen-stack-checkout end-to-end test)
