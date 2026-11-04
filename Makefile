@@ -24,6 +24,12 @@ reproduce: lint test           ## regenerate the committed-data-reproducible num
 	$(PY) -c "from bio_firewall.hazard.combine_mono import verify_monotone; import json; r=verify_monotone(); \
 print('B7 monotone combiner:', 'PASS' if r['provably_monotone'] and r['hard_rule_exact_refuse'] else 'FAIL', \
 '(reps=%d)' % r['reps'])"
+	$(PY) -c "from bio_firewall.eval.hazard_bench import decomp_redteam as d; r=d.run(); \
+fam=('cumulative_scale','fragment_assembly','coordinated_loci'); \
+ev=[k for k in fam if r[k]['attacks_that_evade_per_call']==1.0]; \
+n=sum(r[k]['n'] for k in ev); c=sum(round(r[k]['n']*r[k]['catch_rate']) for k in ev); \
+fp=max(r[k]['false_positive_rate'] for k in fam); \
+print('B5 session monitor (decomposition): %d/%d caught on the families whose attacks evade the per-call screen (%s), max false-positive rate %.3f, seed %d' % (c, n, ' + '.join(ev), fp, r['seed']))"
 	@echo ""
 	@echo "Frozen, pre-specified results for the data-dependent benchmarks are in prereg/ws_biofirewall.yaml"
 	@echo "(blocks results_2026_06_17 / tier1_results / tier2_results / tier3_results). Regenerate them with:"
