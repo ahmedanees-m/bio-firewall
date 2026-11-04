@@ -1,5 +1,6 @@
-"""The tool-agnostic artifact contract - maps any design AI's output onto the five-axis plan. This is what makes
-"supervises any design AI" true: Biomni / CRISPR-GPT / a raw design all normalize to the same plan shape."""
+"""The tool-agnostic artifact contract - maps a design tool's plan onto the five-axis plan shape.
+A planner reaches the screen through this contract via its own adapter, so the screen does not depend
+on the planner's own field names."""
 from __future__ import annotations
 
 

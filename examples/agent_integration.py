@@ -12,7 +12,7 @@ from bio_firewall.integrate import run_gated_loop
 
 
 def design_agent():
-    """A stand-in design agent (PEN-STACK / Biomni / CRISPR-GPT would emit the same artifact shape). The hazardous
+    """A stand-in design agent, emitting the artifact shape the contract maps. The hazardous
     plans here trip FIREWALL-NATIVE rules (germline / fusion / scale / locus) so the trace is deterministic across
     pen-stack versions; the cargo Guardian's select-agent screen is an additional, pen-stack-provided layer."""
     yield {"intent": "insert a therapeutic Factor IX cassette", "gene": "AAVS1", "cell_type": "hepatocyte",

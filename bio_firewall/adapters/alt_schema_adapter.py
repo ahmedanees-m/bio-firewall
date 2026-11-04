@@ -1,16 +1,20 @@
-"""Second reference integration: govern a CRISPR-GPT-shaped design plan. This exists to demonstrate, not merely
-assert, that the artifact contract is not PEN-STACK-specific. The plan schema here is a mock of the CRISPR-GPT /
-Biomni family - it uses different field names than PEN-STACK's design dict (`task`/`target_gene`/`cell_line`/
-`payload_function` rather than `edit_intent`/`gene`/`cell_type`/`cargo_function`) - and this thin adapter maps them
-onto the shared five-axis artifact and screens it. A plan of the same substance receives the same decision whichever
-tool produced it: the governance layer does not depend on the tool it sits in front of.
+"""Second reference adapter: a planner whose plan schema uses different field names.
+
+The field vocabulary here (`task`, `target_gene`, `cell_line`, `payload_function`) is defined for this
+adapter rather than taken from any released planner's interface, and no third-party tool is called. The
+adapter renames those fields onto the shared five-axis artifact and calls the same `screen` the PEN-STACK
+adapter calls, so a substantively identical plan reaches the same decision through either adapter.
+Interoperability with an independently developed planner is not demonstrated.
 """
 from __future__ import annotations
 
 
-def govern_crispr_gpt_plan(plan: dict, *, reconcile_penstack: bool = False) -> dict:
-    """Screen a CRISPR-GPT-shaped plan via the five-axis firewall. The adapter is deliberately thin: it renames the
-    planner's fields onto the artifact and calls the same `screen` the PEN-STACK adapter calls."""
+def govern_alt_schema_plan(plan: dict, *, reconcile_penstack: bool = False) -> dict:
+    """Screen a plan given in this adapter's field vocabulary through the five-axis firewall.
+
+    Thin by design: it renames the planner's fields onto the artifact and calls the same `screen` the
+    PEN-STACK adapter calls.
+    """
     edit: dict = {}
     if plan.get("fusion_genes"):
         edit["fusion_genes"] = plan["fusion_genes"]

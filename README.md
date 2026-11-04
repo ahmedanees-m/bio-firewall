@@ -121,7 +121,7 @@ BioFirewall imports `pen-stack` for reusable machinery (the biosecurity Guardian
 calibration) and governs any design tool through a tool-agnostic artifact contract. It vendors open data only.
 
 ```
-        design AI  (PEN-STACK / Biomni / CRISPR-GPT / raw)
+        design AI  (PEN-STACK, or any planner via its own adapter)
                         |   genome-writing plan (artifact)
                         v
    +---------------------------------------------------------------+
@@ -356,7 +356,7 @@ bio-firewall/
 |   |   |                                 conformal_np.py (Neyman-Pearson likelihood-ratio conformal selection)
 |   |-- adapters/                     tool-agnostic artifact contract + two reference integrations
 |   |   |-- pen_stack_adapter.py         govern a PEN-STACK design plan
-|   |   |-- crispr_gpt_adapter.py        govern a CRISPR-GPT-shaped plan (the contract is not PEN-STACK-specific)
+|   |   |-- alt_schema_adapter.py        govern a plan whose fields are named differently
 |   |   |-- generic_artifact.py          the neutral artifact contract any planner can target
 |   |   |-- cloudlab_gate.py             gate the PEN-STACK cloud-lab bridge on a verified allow passport
 |   |   |-- writespec.py                 screen the typed PEN-STACK WriteRequest (SBOL3) directly
