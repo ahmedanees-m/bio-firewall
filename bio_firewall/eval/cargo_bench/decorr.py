@@ -12,7 +12,7 @@ never committed - only vectors + sequences that were already public UniProt prox
   3. ATTRIBUTION. Per-residue saliency on sampled true positives - show the signal is sparse/localized (motif-like),
      not spread uniformly across the sequence (which is what a bulk-composition signal would look like).
 
-PRE-REGISTERED GATE (prereg upgrade_v04_v10.cargo_decorr): the decorrelated head on the matched set retains
+PRE-SPECIFIED GATE (prereg upgrade_v04_v10.cargo_decorr): the decorrelated head on the matched set retains
 TPR@1%FPR >= 0.60 with a cluster-bootstrap CI lower bound > 0.562. FALLBACK (pre-committed): if the CI does
 not exclude 0.562 -> report 'cargo signal is substantially compositional' and fall back to D + operational.
 We additionally report a PAIRED bootstrap of (ESM - composition) on the matched set (a lower-variance test of the
@@ -320,7 +320,7 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
         },
         "seed": SEED,
     }
-    # pre-registered gate (TPR@1%FPR-based) - evaluated
+    # pre-specified gate (TPR@1%FPR-based) - evaluated
     dann_tpr1 = res["full_test"]["esm_dann"]["TPR@1%FPR"]
     dann_tpr1_ci = res["full_test"]["esm_dann"]["TPR@1%FPR_CI"]
     orig_tpr1_ci = res["full_test"]["esm_orig"]["TPR@1%FPR_CI"]
@@ -346,10 +346,10 @@ def run(out_dir: str = "bf_decorr", bf_b2: str | None = None) -> dict:
             "over the composition probe (0.562) is NOT statistically established: the original head is 0.72 but its "
             "CI lower bound (~0.45) does not exclude 0.562, and the decorrelated head's TPR@1%FPR is unstable "
             "(CI ~[0.02,0.92]) because the held-out negatives set the 1%-FPR threshold on ~3-4 proteins -> the "
-            "PRE-REGISTERED gate does NOT pass. (3) The POWERED adjudication is AUROC: the composition-INVARIANT "
+            "PRE-SPECIFIED gate does NOT pass. (3) The POWERED adjudication is AUROC: the composition-INVARIANT "
             "(DANN) representation retains AUROC ~0.985 vs composition-alone ~0.93 with the PAIRED CI excluding 0, "
             "and decorrelation costs only ~0.003 AUROC -> the signal is SUBSTANTIALLY NON-COMPOSITIONAL in RANKING. "
-            "(4) Per the pre-committed pre-registered fallback path, claim C is not carried: it is not a clean "
+            "(4) Per the pre-committed pre-specified fallback path, claim C is not carried: it is not a clean "
             "operating-point win. The reported result is D plus the operational properties, with the cargo gate as "
             "AUROC-level-non-compositional with an explicit 1%-FPR operating-point caveat."),
         "fallback_invoked": True,

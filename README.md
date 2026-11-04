@@ -155,7 +155,7 @@ test fails the build if a restricted source appears in the committed data. See
 
 ## Results
 
-Each benchmark is pre-registered in `prereg/ws_biofirewall.yaml`; full method and interpretation are in
+Each benchmark is pre-specified in `prereg/ws_biofirewall.yaml`; full method and interpretation are in
 [docs/BENCHMARK.md](docs/BENCHMARK.md). Hazard is labeled by independent oracles the firewall does not use
 (12 clinical insertional-oncogenesis genes plus the COSMIC Cancer Gene Census v104), so a high score reflects
 generalization rather than recognition of the firewall's own gene list. Baselines are earned: B0 runs the real
@@ -170,7 +170,7 @@ reviewer.
 | red-team flip refuse->allow (46 attacks) | 0% | - | - |
 | cargo ML gate, TPR@1%FPR, <=40%-id clusters | 0.72 (CI .43-.89) | 0.207 | - |
 
-(1) B1 is measured on a pre-registered stratified sample. The homology floor catches 0% of structural-locus
+(1) B1 is measured on a pre-specified stratified sample. The homology floor catches 0% of structural-locus
 hazards, which is the design-stage gap in one number. A frontier language model is a strong locus-recall
 baseline, but it over-refuses legitimate research and is neither deterministic nor auditable. The firewall's
 contribution on the locus axis is deterministic, flag-not-block, auditable governance, not higher raw recall.
@@ -266,7 +266,7 @@ forward-genetic screens (CCGD, the Candidate Cancer Gene Database; Abbott et al.
   annotation. Human clinical clonal-outcome validation and wet-lab confirmation are the higher evidential
   rungs.
 
-The validation is pre-registered ([prereg/ws_locus_mouse_outcome.yaml](prereg/ws_locus_mouse_outcome.yaml)),
+The validation is pre-specified ([prereg/ws_locus_mouse_outcome.yaml](prereg/ws_locus_mouse_outcome.yaml)),
 the CCGD-derived positive sets and the results are committed
 ([data/locus_outcome_inputs/](data/locus_outcome_inputs),
 [results/locus_mouse_outcome.json](results/locus_mouse_outcome.json)), and it reproduces deterministically
@@ -274,13 +274,13 @@ with `python locus_mouse_outcome_validation.py --positives data/locus_outcome_in
 
 ### Reported negative results
 
-Three pre-registered strengtheners did not meet their criteria. They ship as reported negatives rather than
+Three pre-specified strengtheners did not meet their criteria. They ship as reported negatives rather than
 as claims, and the simpler method is retained in each case.
 
 - **Neyman-Pearson conformal selection.** The likelihood-ratio selector controls the false-escalation rate at
   the target alpha (0.05 to 0.017, 0.10 to 0.064), which the discrete scalar threshold cannot do. At matched
   alpha, however, its power gap is negative and tightly estimated (-0.040, CI -0.067 to -0.015 at alpha 0.20),
-  so the pre-registered criterion of strictly higher catch is not met. NP provides calibrated control rather
+  so the pre-specified criterion of strictly higher catch is not met. NP provides calibrated control rather
   than added power; the certified false-refuse bound is the operational result.
 - **Confidence-gated structural fusion.** Gating the fold channel on mean pLDDT does not lift the 1%-FPR
   operating point (gated TPR@1%FPR 0.21 against ESM-alone 0.72). The cached structures are high-confidence
@@ -327,7 +327,7 @@ as claims, and the simpler method is retained in each case.
   agent run through the gate. Four of six plans are intercepted mid-workflow, including a reframed oncogenic
   fusion with benign prose and a hazardous artifact, refused on its artifact; two benign plans reach
   synthesis; the audit chain stays intact. `synthesize()` is hard-gated on a verifiable allow passport.
-- **Fair, pre-registered panel** ([docs/PANEL.md](docs/PANEL.md)): the control-versus-advisor comparison as a
+- **Fair, pre-specified panel** ([docs/PANEL.md](docs/PANEL.md)): the control-versus-advisor comparison as a
   reusable artifact with a fixed prompt, rubric and offline replay, the language model given its best
   configuration, and an explicit on-prem-versus-API axis.
 

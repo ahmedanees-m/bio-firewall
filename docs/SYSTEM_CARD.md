@@ -110,6 +110,6 @@ it is an additional, auditable layer that makes a capable design AI safer to ope
 
 ---
 
-*This system card is versioned with the package. Every claim above maps to a pre-registered, frozen result in
+*This system card is versioned with the package. Every claim above maps to a pre-specified, frozen result in
 `prereg/ws_biofirewall.yaml` and a benchmark in `docs/BENCHMARK.md`. Limitations are carried verbatim from the
 prereg and README; nothing here is softened relative to those.*

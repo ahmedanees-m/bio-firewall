@@ -5,7 +5,7 @@ train / calibration / test, and compares two escalate / route-to-review selector
   baseline:        threshold the SCALAR risk score, conformal-calibrated on the benign null (P(escalate|benign)<=alpha).
   NP:              a likelihood-ratio statistic over the FULL feature vector + conformal selection on the same null.
 
-Pre-registered gate (prereg upgrade_v08_completeness.conformal_np): the NP selector controls the false-escalation
+Pre-specified gate (prereg upgrade_v08_completeness.conformal_np): the NP selector controls the false-escalation
 rate at alpha AND beats the baseline on catch-rate (power) at matched alpha, with a gene-clustered bootstrap CI on
 the power gap EXCLUDING 0. Fallback (pre-committed): if it does not beat the baseline -> report the null, keep the
 certified bound.

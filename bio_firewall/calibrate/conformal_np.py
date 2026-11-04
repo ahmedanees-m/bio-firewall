@@ -10,7 +10,7 @@ so the power only moves when the selector uses the FULL feature vector (per-axis
 that the scalar collapse discards.
 
 The head-to-head (scalar threshold vs NP likelihood-ratio conformal selection at matched alpha) is OUR
-pre-registered experiment - the NP paper neither names Clopper-Pearson nor uses conformal p-values in its rule. We
+pre-specified experiment - the NP paper neither names Clopper-Pearson nor uses conformal p-values in its rule. We
 claim the upgrade only if the NP selector controls the false-escalation rate at alpha AND beats the scalar method on
 catch-rate (power) at matched alpha with a CI on the gap excluding 0 (else: keep the certified bound; report the null).
 

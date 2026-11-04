@@ -1,6 +1,6 @@
 """The locus scorer reads the correct Finding field (a regression guard on the
 decision-vs-severity bug that zeroed every score), the held-out (non-circular) logic is correct, and the committed
-CCGD-derived inputs + the frozen result are internally consistent and clear the pre-registered gate."""
+CCGD-derived inputs + the frozen result are internally consistent and clear the pre-specified gate."""
 from __future__ import annotations
 
 import json
@@ -37,7 +37,7 @@ def test_committed_result_passes_gate_and_is_consistent():
     res = json.loads((_ROOT / "results" / "locus_mouse_outcome.json").read_text())
     b = res["B_heldout_non_cancermine"]
     assert b["gate_pass"] is True
-    assert b["AUROC_CI"][0] > 0.5 or b["odds_ratio_CI"][0] > 1.0          # the pre-registered gate
+    assert b["AUROC_CI"][0] > 0.5 or b["odds_ratio_CI"][0] > 1.0          # the pre-specified gate
     assert b["n_positives"] == 3625
     assert abs(b["AUROC"] - 0.605) < 0.01 and abs(b["odds_ratio"] - 3.34) < 0.05
     d = res["held_out_feature_decomposition"]

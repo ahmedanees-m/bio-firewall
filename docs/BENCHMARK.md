@@ -30,7 +30,7 @@ a blind safety reviewer with a neutral pinned prompt (no firewall axes leaked) -
 | cosmic_generalization | 250 | **40%** (CI 0.33-0.46) | 0% | 50% |
 | **overall** | 771 | **80.4%** (CI 0.776-0.831) | **0.0%** | 77.3% |
 
- B1 measured on the pre-registered stratified sample (n = 142; 75 hazardous).
+ B1 measured on the pre-specified stratified sample (n = 142; 75 hazardous).
 
 **Interpretation:**
 - The homology / synthesis-screen floor (**B0**) catches **0%** of these structural-locus hazards (the cargo is
@@ -86,7 +86,7 @@ COSMIC genes absent from its data. Abstention cannot rescue confident misses (ha
 plainly as a limitation of data-membership calibration. **-> This is resolved with a competence-conditioned,
 conformal calibration in Benchmark 4b below.**
 
-## Benchmark 2 - cargo function-aware ML (the pre-registered gate)
+## Benchmark 2 - cargo function-aware ML (the pre-specified gate)
 
 ESM2-650M embeddings + a logistic head vs a homology baseline on **MMseqs2 <=40%-identity held-out clusters** (no test
 protein has a >40%-id neighbour in training - the "never-before-seen homolog" setting). Public UniProt toxins
@@ -114,11 +114,11 @@ in Benchmark 2b below.**
 
 ---
 
-# Cargo decorrelation and the certified false-refuse bound (pre-registered: `prereg/ws_biofirewall.yaml`)
+# Cargo decorrelation and the certified false-refuse bound (pre-specified: `prereg/ws_biofirewall.yaml`)
 
 This release hardens the two load-bearing things: it follows the composition confound under
 Benchmark 2 to ground (2b), and converts the *inverted* calibration of Benchmark 4 into a certified false-refuse
-ceiling + a monotone confidence (4b). Both pre-registered criteria carry a **pre-committed pre-registered fallback path**.
+ceiling + a monotone confidence (4b). Both pre-specified criteria carry a **pre-committed pre-specified fallback path**.
 
 ## Benchmark 2b - composition-decorrelation, seed 1234
 
@@ -136,7 +136,7 @@ evidence. Code: [`bio_firewall/eval/cargo_bench/decorr.py`](../bio_firewall/eval
 - **Composition is GENUINELY SEPARABLE from toxins** - even bidirectional common-support matching cannot build a
   composition-matched benign set from the pool (energy-distance permutation *p* < 0.05 on the tight overlap region).
   So the confound is real: toxins (e.g. cysteine-rich) have distinctive composition.
-- **The pre-registered TPR@1%FPR gate is UNDERPOWERED and does NOT pass.** With only 362 held-out negatives, the
+- **The pre-specified TPR@1%FPR gate is UNDERPOWERED and does NOT pass.** With only 362 held-out negatives, the
   1%-FPR threshold rests on ~3-4 proteins, so all three heads' CIs span ~0.0-0.9; the paired (DANN-composition)
   TPR@1%FPR difference is -0.005 (CI -0.57...+0.52) - the operating-point question is simply not adjudicable here.
 - **The POWERED adjudication is AUROC and TPR@5%FPR**, and it is decisive: a **composition-INVARIANT** representation
@@ -144,9 +144,9 @@ evidence. Code: [`bio_firewall/eval/cargo_bench/decorr.py`](../bio_firewall/eval
   composition probe's 0.930 / 0.768 - with the **paired AUROC difference +0.054 (CI 0.025...0.099, excludes 0)**.
   Decorrelation costs only ~0.003 AUROC. **The cargo signal is substantially NON-COMPOSITIONAL in its ranking.**
 
-**Verdict (pre-registered fallback path, pre-committed):** the function-aware signal is real and substantially
+**Verdict (pre-specified fallback path, pre-committed):** the function-aware signal is real and substantially
 non-compositional (AUROC + TPR@5%FPR), but the strict **1%-FPR operating-point** advantage over a composition
-baseline is **not** statistically established on this held-out set. Under the pre-registered fallback path, **C is demoted**
+baseline is **not** statistically established on this held-out set. Under the pre-specified fallback path, **C is demoted**
 from the primary claim set: the reported result is **D + the operational properties**, with the cargo gate as
 *AUROC-level non-compositional with an explicit 1%-FPR operating-point caveat*. We did **not** tune the matched set to
 rescue the margin. (Per-residue attribution is declared supporting future detail; the powered AUROC/TPR@5%FPR
@@ -193,7 +193,7 @@ for; the low tier *flags* this boundary, it does not eliminate it.)
 
 ---
 
-# Cross-call decomposition defence (pre-registered: `prereg/ws_biofirewall.yaml`)
+# Cross-call decomposition defence (pre-specified: `prereg/ws_biofirewall.yaml`)
 
 ## Benchmark 5 - decomposition red-team, seed 1234
 
@@ -234,7 +234,7 @@ genotoxicity oracle uses). Each of **127,234** integration sites (mapped to 35,0
 | HIV | 82,995 | 0.494 [0.481, 0.506] | 0.925 [0.816, 1.038] | no (null) |
 | HTLV | 44,239 | 0.455 [0.443, 0.468] | 0.607 [0.532, 0.701] | no |
 
-**Result - ACCESS-GATED PATH (pre-committed; controlled-access deferred):** the pre-registered enrichment
+**Result - ACCESS-GATED PATH (pre-committed; controlled-access deferred):** the pre-specified enrichment
 gate is **not met** - flagged loci are if anything slightly *depleted* among tumor-associated sites (OR < 1), and
 HIV is null. **The diagnosis is the informative part:** 96% of the open "tumor" sites are **HTLV** (adult T-cell
 leukemia), whose integration biology is **viral-oncoprotein-driven, not insertional-oncogenesis-at-oncogenes**;
@@ -297,7 +297,7 @@ calibrated rate.
 | structure-alone | 0.118 | **0.882** |
 | ESM + structure (mean ensemble) | 0.197 | 0.983 |
 
-**Gate: FAIL (pre-registered fallback path).** Incremental TPR@1%FPR (ensemble - ESM) median **-0.48**, CI [-0.76, 0.20] -
+**Gate: FAIL (pre-specified fallback path).** Incremental TPR@1%FPR (ensemble - ESM) median **-0.48**, CI [-0.76, 0.20] -
 the structural channel does **not** add at the strict 1%-FPR point: the same <=40%-id cluster split that weakens
 sequence-homology (0.207) makes a held-out toxin **structurally distant** from the train-toxin reference, and
 short-peptide AlphaFold models are low-confidence, so a mean-ensemble dilutes ESM. **But** structure-alone AUROC

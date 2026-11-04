@@ -22,7 +22,7 @@ THE CIRCULARITY CONTROL (the crux):
     (B) HELD-OUT drivers NOT in the axis's CancerMine roles - the NON-CIRCULAR test: the axis can only fire via
         DepMap-essentiality / gnomAD-dosage / the 12-gene clinical-CIS list. (B) is the load-bearing result.
 
-PRE-REGISTERED ACCEPTANCE (prereg/ws_locus_mouse_outcome.yaml, SHA-locked before the run; failure path pre-committed):
+PRE-SPECIFIED ACCEPTANCE (prereg/ws_locus_mouse_outcome.yaml, SHA-locked before the run; failure path pre-committed):
   PASS iff, on held-out (B), the locus risk is enriched for outcome-defined drivers: AUROC bootstrap CI excluding
   0.5 OR odds-ratio CI excluding 1. FAILURE PATH: if (B) fails, report it; the axis's outcome signal is then
   confined to its curated list (a real limit). Do NOT tune the gene sets or thresholds to rescue (B).
@@ -117,7 +117,7 @@ def run(positives: list[str], universe: list[str]) -> dict:
     return {
         "n_universe": len(universe_set),
         "A_all_drivers": _subset(held_only=False),           # operational (secondary)
-        "B_heldout_non_cancermine": _subset(held_only=True),  # NON-CIRCULAR - the pre-registered gate
+        "B_heldout_non_cancermine": _subset(held_only=True),  # NON-CIRCULAR - the pre-specified gate
         "held_out_feature_decomposition": decomp,
         "note": "Gate is on B (AUROC CI excludes 0.5 OR OR CI excludes 1). A and the decomposition are reported, "
                 "not gated. Mouse preclinical model; species gap stated as a limitation.",

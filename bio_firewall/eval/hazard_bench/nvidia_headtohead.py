@@ -244,7 +244,7 @@ def _is_hazard_verdict(verdict: Optional[str]) -> bool:
     return verdict in ("flag", "refuse")
 
 # --------------------------------------------------------------------------- DATA SEEDS
-# Expand each to the pre-registered N before reporting. All structural/safe.
+# Expand each to the pre-specified N before reporting. All structural/safe.
 
 # A: numeric queries. ground_truth=None means UNANSWERABLE (answer = abstain).
 FABRICATION_QUERIES = [

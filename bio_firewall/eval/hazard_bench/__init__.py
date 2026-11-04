@@ -70,7 +70,7 @@ def summary(result: dict) -> str:
 
 
 def dump_b1_sample(result: dict, path: str, per_stratum: int = 40, seed: int = 99) -> dict:
-    """Pre-registered stratified sample of plans for the blind frontier reviewer (cost control). Writes a JSON of
+    """Pre-specified stratified sample of plans for the blind frontier reviewer (cost control). Writes a JSON of
     {gene: {prompt, stratum, plan}} the orchestrator runs through Claude sub-agents; returns the sample dict."""
     import random
     rng = random.Random(seed)

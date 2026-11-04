@@ -9,7 +9,7 @@ for accredited researchers. The contribution is the BUILT MECHANISM that impleme
 tool-agnostically; the credentialing authority is an integration point, not an operational claim here.
 
 Determinism: `resolve(decision, legitimacy_rank, low_confidence)` is a total function over a small finite domain, so
-the same (verdict, tier) always yields the same resolution - the pre-registered (verdict x tier) matrix.
+the same (verdict, tier) always yields the same resolution - the pre-specified (verdict x tier) matrix.
 """
 from __future__ import annotations
 

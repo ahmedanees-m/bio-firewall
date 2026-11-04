@@ -15,7 +15,7 @@ competence-conditioned confidence. Three pieces:
      inside the clear band, so constrained off-list genes rank above random benigns) drives a threshold sweep: each
      operating point trades auto-allow MISS-rate against ESCALATION-rate, giving the achievable Pareto frontier.
 
-Pure numpy/scipy, no torch/esm. Pre-registered gate: prereg/ws_biofirewall.yaml::upgrade_v04_v10.conformal.
+Pure numpy/scipy, no torch/esm. Pre-specified gate: prereg/ws_biofirewall.yaml::upgrade_v04_v10.conformal.
 """
 from __future__ import annotations
 
@@ -91,7 +91,7 @@ def clopper_pearson_upper(k: int, n: int, conf: float = 0.95) -> float:
     return float(beta.ppf(conf, k + 1, n - k))
 
 
-TOLERANCE = 0.02   # the pre-registered slack; kept unchanged so frozen results stay comparable
+TOLERANCE = 0.02   # the pre-specified slack; kept unchanged so frozen results stay comparable
 
 
 def false_refuse_certificate(n_legit: int, n_refused: int, alphas=(0.01, 0.05, 0.10),
@@ -101,7 +101,7 @@ def false_refuse_certificate(n_legit: int, n_refused: int, alphas=(0.01, 0.05, 0
     Empirical rate plus a one-sided Clopper-Pearson UPPER bound at `conf`.
 
     The nominal target and the tolerated threshold are reported SEPARATELY, because they are not
-    the same criterion and conflating them overstates what was met. With the pre-registered
+    the same criterion and conflating them overstates what was met. With the pre-specified
     tolerance of 0.02, an upper bound of 0.0103 meets the tolerated threshold at alpha = 0.01
     (0.0103 <= 0.03) but NOT the nominal 1% ceiling (0.0103 > 0.01). `meets_nominal` and
     `meets_tolerated` say which is which; `pass` is retained as a backward-compatible alias of

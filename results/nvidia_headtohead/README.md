@@ -19,4 +19,4 @@ models abstain on the unanswerable set) and B (determinism) was stable, so both 
 response text. The current harness (`bio_firewall/eval/hazard_bench/nvidia_headtohead.py`) adds a capture step that
 records every call verbatim to `transcripts/<model>.jsonl` and an offline `--replay` mode that recomputes every number
 from those transcripts (round-trip covered by `tests/test_headtohead_replay.py`), so any faithful re-run is
-byte-reproducible with no API key. The numbers above stand as the frozen, pre-registered measurement.
+byte-reproducible with no API key. The numbers above stand as the frozen, pre-specified measurement.

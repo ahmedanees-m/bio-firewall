@@ -25,7 +25,7 @@ reproduce: lint test           ## regenerate the committed-data-reproducible num
 print('B7 monotone combiner:', 'PASS' if r['provably_monotone'] and r['hard_rule_exact_refuse'] else 'FAIL', \
 '(reps=%d)' % r['reps'])"
 	@echo ""
-	@echo "Frozen, pre-registered results for the data-dependent benchmarks are in prereg/ws_biofirewall.yaml"
+	@echo "Frozen, pre-specified results for the data-dependent benchmarks are in prereg/ws_biofirewall.yaml"
 	@echo "(blocks results_2026_06_17 / tier1_results / tier2_results / tier3_results). Regenerate them with:"
 	@echo "    make reproduce-local"
 	@echo "All committed math is validated by the test suite above (make test)."
@@ -43,7 +43,7 @@ reproduce-local:               ## full regeneration (needs the local-only data +
 	$(PY) -c "from bio_firewall.eval.hazard_bench import locus_pos_bench as b; import json; print(json.dumps(b.run_visdb()))"     # B9
 	@echo "B2 (cargo gate) / B2b (decorr) / B10 (struct) need mmseqs/torch/Foldseek + AF-DB; see docs/BENCHMARK.md."
 
-prereg-sha:                    ## print the SHA-256 of the SHA-locked pre-registration
+prereg-sha:                    ## print the SHA-256 of the SHA-locked frozen analysis specification
 	$(PY) -c "import hashlib; print('prereg/ws_biofirewall.yaml sha256 =', hashlib.sha256(open('prereg/ws_biofirewall.yaml','rb').read()).hexdigest())"
 
 docker-build:                  ## build the reproducible container image (pins Python 3.11)

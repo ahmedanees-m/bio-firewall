@@ -16,7 +16,7 @@ _REFUSE = {"intent": "clinical embryo edit", "gene": "CCR5",
 _ALLOW = {"intent": "insert a therapeutic FIX cassette", "gene": "AAVS1", "cell_type": "hepatocyte"}
 
 
-# --- the pre-registered (verdict x tier) matrix: resolve() is total + deterministic ---
+# --- the pre-specified (verdict x tier) matrix: resolve() is total + deterministic ---
 def test_resolve_matrix_is_total_and_as_specified():
     for lvl in LEGITIMACY.values():                                   # refuse is never unlocked by any tier
         assert resolve("refuse", lvl) == "refused"

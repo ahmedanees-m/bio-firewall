@@ -39,7 +39,7 @@ unit tests regardless.
 make lint        # ruff - clean
 make test        # the full suite (203 tests) - validates every committed metric/logic path
 make reproduce   # the monotone-combiner monotonicity proof (B7 PASS) + the suite above
-make prereg-sha  # SHA-256 of the SHA-locked pre-registration (must match the value in the release notes)
+make prereg-sha  # SHA-256 of the SHA-locked frozen analysis specification (must match the value in the release notes)
 ```
 Expected on a clean `pip install`: lint clean; **201 passed** (2 skipped: the local-only COSMIC oracle and the
 reconcile end-to-end, which needs a pen-stack checkout as above); `B7 monotone combiner: PASS (reps=5000)`. The test suite *is* the proof that

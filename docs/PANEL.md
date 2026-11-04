@@ -1,11 +1,11 @@
-# BioFirewall - The Control-vs-Advisor Panel (fair, pre-registered)
+# BioFirewall - The Control-vs-Advisor Panel (fair, pre-specified)
 
 The recurring objection to a dedicated screen is "why not just ask a capable LLM?" The **panel** answers it as a
-*fair, reusable, pre-registered* comparison rather than a one-off. It is the harness
+*fair, reusable, pre-specified* comparison rather than a one-off. It is the harness
 [`eval/hazard_bench/nvidia_headtohead.py`](../bio_firewall/eval/hazard_bench/nvidia_headtohead.py) (one command)
 plus this protocol; the frozen results are in [docs/HEADTOHEAD.md](HEADTOHEAD.md) and `prereg/ws_biofirewall.yaml`.
 
-## Fairness pre-registration (fixed before any model is scored)
+## Fairness frozen analysis specification (fixed before any model is scored)
 
 - **Fixed prompt.** A single neutral reviewer system prompt (`REVIEWER_SYSTEM`); the firewall's axes are **not**
   leaked into it. Every model sees the same prompt.
@@ -69,7 +69,7 @@ shift A/B/D, but C (the function-aware sequence screen) and the operational prop
 
 ## Frozen results and offline replay
 
-The reported panel numbers are a pre-registered, dated measurement (2026-06-17): the prompt, rubric, abstention
+The reported panel numbers are a pre-specified, dated measurement (2026-06-17): the prompt, rubric, abstention
 option, temperature, and model set were fixed before scoring, and the frozen per-model results (rates, confidence
 intervals, and the per-call parsed verdicts) are committed at [`results/nvidia_headtohead/`](../results/nvidia_headtohead).
 Those are the numbers in [docs/HEADTOHEAD.md](HEADTOHEAD.md) and the accompanying paper.

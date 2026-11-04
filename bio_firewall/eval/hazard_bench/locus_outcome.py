@@ -9,7 +9,7 @@ catalogue PEN-STACK's genotoxicity oracle uses (local-only on the VM; never comm
 carries a **Sample type** (Tumor vs non-tumor); we map each site to its nearest gene (GENCODE coords) and test
 whether firewall-flagged loci are enriched among TUMOR-associated integration sites.
 
-PRE-REGISTERED gate (prereg upgrade_v04_v10.locus_outcome): OR with CI excluding 1, OR AUROC with CI excluding 0.5.
+PRE-SPECIFIED gate (prereg upgrade_v04_v10.locus_outcome): OR with CI excluding 1, OR AUROC with CI excluding 0.5.
 STATUS (pre-committed, user deferred controlled-access dbGaP/EGA 2026-06-18): this VISDB floor is an
 ASSOCIATIVE, RETROSPECTIVE enrichment - 'tumor sample-source' is not a causal insertional-oncogenesis outcome and
 is confounded by virus biology (HTLV->ATL, HIV in cancer patients). A modest validated enrichment is the floor; the
@@ -69,7 +69,7 @@ def _cluster_boot(metric, clusters, reps=800, seed=SEED):
 def validate_enrichment(risk, flag, outcome, clusters) -> dict:
     """risk: continuous firewall locus-risk per site; flag: 1 if the firewall intercepts the site's gene; outcome:
     1 if the site is outcome-associated (tumor); clusters: the site's gene (the resample unit). Returns OR + AUROC
-    with gene-clustered bootstrap CIs and the pre-registered gate."""
+    with gene-clustered bootstrap CIs and the pre-specified gate."""
     import numpy as np
     risk, flag, outcome = np.asarray(risk, float), np.asarray(flag, int), np.asarray(outcome, int)
     auroc = round(_auroc(outcome, risk), 4)

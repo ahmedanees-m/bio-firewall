@@ -4,7 +4,7 @@ CONFIDENCE-GATED fusion, using the structure signal only where the predicted-str
 mean pLDDT is high, else defer to ESM. Reuses the frozen Benchmark-2 ESM vectors + the Foldseek structural score per
 held-out accession (AlphaFold-DB v6, no GPU) + a mean-pLDDT per accession parsed from the cached AF-DB .cif files.
 
-Pre-registered gate (prereg upgrade_v08_completeness.struct_gated): NON-NEGATIVE incremental TPR@1%FPR over ESM-alone
+Pre-specified gate (prereg upgrade_v08_completeness.struct_gated): NON-NEGATIVE incremental TPR@1%FPR over ESM-alone
 on the full <=40%-id holdout (no dilution) AND STRICTLY POSITIVE incremental TPR@1%FPR on the high-confidence
 -structure subset (CI). Fallback (pre-committed): if even gated fusion does not add at 1%-FPR -> report the structure
 channel as a ranking-level (AUROC) corroborator only (its documented value).

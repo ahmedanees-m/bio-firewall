@@ -50,7 +50,7 @@ def b1_prompt_for(plan: dict) -> str:
 
 def load_b1_verdicts(path: str | Path) -> dict[str, str]:
     """Load collected frontier verdicts: {gene_key -> decision}. Produced by the orchestrator running the
-    blind reviewers on the pre-registered stratified sample. Missing file -> {} (B1 simply not scored)."""
+    blind reviewers on the pre-specified stratified sample. Missing file -> {} (B1 simply not scored)."""
     if not path:
         return {}
     p = Path(path)

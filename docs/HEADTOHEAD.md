@@ -98,7 +98,7 @@ homology 0.207) fills exactly this gap.
 
 v1.0 found the LLM over-refused legitimate research 2/5 (TP53, APC knockout cancer-modeling) vs the firewall's 0/5. A
 powered re-test (N>=50 x three prompts) to determine whether this is **prompt-fixable** is designed (`headtohead/`) but
-not yet run; per the pre-registered rule, if usability-tuning drives false-refuse to ~0 it is demoted (prompt-fixable),
+not yet run; per the pre-specified rule, if usability-tuning drives false-refuse to ~0 it is demoted (prompt-fixable),
 otherwise it is a bonus result. Left open.
 
 ## Open-model generalization (NVIDIA NIM) - the firewall's case gets *stronger*
