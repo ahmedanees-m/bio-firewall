@@ -1,6 +1,6 @@
 # BioFirewall - Reproduction Guide
 
-Reproducing a single-maintainer result is what makes it credible. This guide lets a stranger regenerate every
+Reproducing a single-maintainer result is what makes it credible. This guide lets anyone regenerate every
 reported number on a clean machine, separating what reproduces **from the committed repo alone** (open data) from
 what needs the **local-only** data (COSMIC/OncoKB/VISDB/controlled-access - never committed).
 

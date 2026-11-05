@@ -481,9 +481,7 @@ If you use BioFirewall, please cite the preprint:
 ```
 
 Cite the concept DOI [10.5281/zenodo.21788886](https://doi.org/10.5281/zenodo.21788886), which always
-resolves to the newest version, or the version DOI of the release you used; each release carries its own.
-The version DOIs are listed in [CITATION.cff](CITATION.cff).
-Author and ORCID metadata is in [CITATION.cff](CITATION.cff).
+resolves to the newest version. Author and ORCID metadata is in [CITATION.cff](CITATION.cff).
 
 ## License and attribution
 
